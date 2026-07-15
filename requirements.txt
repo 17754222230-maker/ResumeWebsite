@@ -1,0 +1,12 @@
+# LangChain 核心库（1.x）
+langchain>=1.0
+langchain-core>=1.0
+
+# 第三方集成支持（含 DeepSeek 等模型）
+langchain-community>=0.3
+
+# DeepSeek 使用 OpenAI 兼容 API，通过 langchain-openai 集成
+langchain-openai
+
+# 传统 Chain / Memory API（含 ConversationSummaryBufferMemory、OutputFixingParser 等）
+langchain-classic
