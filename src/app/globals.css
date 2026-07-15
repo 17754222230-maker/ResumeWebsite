@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+/* ===== 八字喜用色 — 金水配色系统 ===== */
+/* 日主己土极旺，取金泄秀、水润局，喜金水，忌火土 */
+
+@theme inline {
+  /* 主色（水）：深蓝 — 代表财富与流动 */
+  --color-deep-blue-900: #0B1D3A;
+  --color-deep-blue-800: #102A43;
+  --color-deep-blue-700: #1A3B5C;
+  --color-deep-blue-600: #25507A;
+  --color-deep-blue-500: #326996;
+
+  /* 辅色（金）：金色 — 代表才华泄秀 */
+  --color-gold-500: #D4AF37;
+  --color-gold-400: #C5A860;
+  --color-gold-300: #D4C080;
+  --color-gold-200: #E3D6A0;
+  --color-gold-100: #F2EBC0;
+
+  /* 背景色 */
+  --color-cool-bg: #F0F4F8;
+  --color-cool-bg-alt: #E8EDF2;
+  --color-cool-bg-card: #FFFFFF;
+
+  /* 文字色 */
+  --color-text-primary: #1A202C;
+  --color-text-secondary: #4A5568;
+  --color-text-on-dark: #E2E8F0;
+  --color-text-white: #FFFFFF;
+
+  /* 点缀色（水木） */
+  --color-accent-teal: #A0D2DB;
+  --color-accent-teal-dark: #7EB8C9;
+  --color-accent-teal-light: #C5E5F0;
+
+  /* 语义色 */
+  --color-border-light: rgba(11, 29, 58, 0.08);
+  --color-border-medium: rgba(11, 29, 58, 0.15);
+  --color-shadow: rgba(11, 29, 58, 0.06);
+
+  /* 保留默认字体 */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* 全局基础样式 */
+:root {
+  --background: var(--color-cool-bg);
+  --foreground: var(--color-text-primary);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* 选中文本色 */
+::selection {
+  background-color: var(--color-gold-500);
+  color: var(--color-deep-blue-900);
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cool-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-deep-blue-600);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-deep-blue-700);
+}
+
+/* 水波纹装饰效果 — 通过伪元素实现 */
+.water-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.water-ripple::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    ellipse at var(--ripple-x, 50%) var(--ripple-y, 50%),
+    rgba(212, 175, 55, 0.03) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+/* 金属光泽 渐变 */
+.gold-shimmer {
+  background: linear-gradient(
+    135deg,
+    var(--color-gold-500) 0%,
+    var(--color-gold-300) 40%,
+    var(--color-gold-100) 60%,
+    var(--color-gold-500) 100%
+  );
+  background-size: 200% 200%;
+}

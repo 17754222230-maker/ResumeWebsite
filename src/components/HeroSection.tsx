@@ -1,0 +1,110 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { ArrowDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { profile } from "@/lib/knowledge";
+
+export default function HeroSection() {
+  return (
+    <section
+      id="hero"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-deep-blue-900"
+    >
+      {/* 水波纹背景装饰 */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-gold-500/10 blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-accent-teal/10 blur-3xl" />
+      </div>
+
+      {/* 网格纹理 */}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 1px 1px, #F0F4F8 1px, transparent 0)",
+          backgroundSize: "40px 40px",
+        }}
+      />
+
+      <div className="container relative z-10 mx-auto flex flex-col items-center px-6 text-center">
+        {/* 头像 */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mb-8"
+        >
+          <div className="flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-gold-500 to-gold-300 p-[3px] shadow-xl shadow-gold-500/20">
+            <div className="flex h-full w-full items-center justify-center rounded-full bg-deep-blue-900 text-3xl font-bold text-gold-500">
+              {profile.name.charAt(0).toUpperCase()}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* 姓名与标题 */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mb-3 text-4xl font-bold tracking-tight text-text-white md:text-6xl"
+        >
+          {profile.name}
+          <span className="ml-2 text-gold-500">.</span>
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="mb-4 text-lg text-gold-400 md:text-xl"
+        >
+          {profile.title}
+        </motion.p>
+
+        {/* Slogan */}
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mb-10 max-w-xl text-base leading-relaxed text-text-on-dark/70 md:text-lg"
+        >
+          "{profile.slogan}"
+        </motion.p>
+
+        {/* CTA 按钮 */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.65 }}
+          className="flex flex-wrap items-center justify-center gap-4"
+        >
+          <Button variant="gold" size="lg" asChild>
+            <a href="#projects">查看项目</a>
+          </Button>
+          <Button variant="outline" size="lg" asChild className="border-gold-500/30 text-text-white hover:bg-gold-500/10 hover:text-gold-400">
+            <a href="#footer">联系我</a>
+          </Button>
+        </motion.div>
+
+        {/* 向下滚动指示 */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+          className="absolute bottom-10"
+        >
+          <motion.a
+            href="#tech-stack"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="flex flex-col items-center gap-2 text-text-on-dark/50 transition-colors hover:text-gold-500"
+          >
+            <span className="text-xs">向下滚动</span>
+            <ArrowDown size={18} />
+          </motion.a>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
