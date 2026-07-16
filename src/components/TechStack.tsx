@@ -2,13 +2,13 @@
 
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-import { skills, getSkillCategories } from "@/lib/knowledge";
+import { experiences, getSkillCategories, skills as allSkills } from "@/lib/knowledge";
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 },
+    transition: { staggerChildren: 0.08 },
   },
 };
 
@@ -17,34 +17,16 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeOut" as const },
+    transition: { duration: 0.4, ease: "easeOut" as const },
   },
 };
 
-const categoryLabels: Record<string, string> = {
-  "前端框架": "Frontend",
-  "编程语言": "Languages",
-  "前端基础": "Foundations",
-  "后端技术": "Backend",
-  "数据库": "Database",
-  "DevOps": "DevOps",
-  "工具": "Tools",
-  "云服务": "Cloud",
-};
-
-const categoryIcons: Record<string, string> = {
-  "前端框架": "⚛️",
-  "编程语言": "💻",
-  "前端基础": "🌐",
-  "后端技术": "⚙️",
-  "数据库": "🗄️",
-  "DevOps": "🔧",
-  "工具": "🛠️",
-  "云服务": "☁️",
-};
+const featuredCategories = ["后端技术", "AI 与智能化"];
 
 export default function TechStack() {
   const categories = getSkillCategories();
+  const featuredCats = categories.filter((c) => featuredCategories.includes(c));
+  const otherCats = categories.filter((c) => !featuredCategories.includes(c));
 
   return (
     <section id="tech-stack" className="relative bg-cool-bg py-24">
@@ -55,85 +37,160 @@ export default function TechStack() {
       </div>
 
       <div className="container relative mx-auto max-w-6xl px-6">
-        {/* 标题区 */}
+        {/* ===== 标题区 ===== */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
+          className="mb-14 text-center"
         >
           <Badge variant="gold" className="mb-4">
-            技术栈
+            技术能力
           </Badge>
           <h2 className="mb-4 text-3xl font-bold text-deep-blue-900 md:text-4xl">
-            技术能力
+            工作经历 &amp; 技术栈
           </h2>
           <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-gold-500 to-gold-300" />
+          <p className="mx-auto mt-4 max-w-xl text-text-secondary">
+            四年全栈经验，深耕 Java 后端与微服务，持续探索 AI 赋能开发
+          </p>
         </motion.div>
 
-        {/* 技能分类 */}
+        {/* ===== 工作经历（紧凑双卡） ===== */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid gap-10 md:grid-cols-2 lg:grid-cols-3"
+          viewport={{ once: true, margin: "-60px" }}
+          className="mb-16"
         >
-          {categories.map((category) => {
-            const categorySkills = skills.filter(
-              (s) => s.category === category,
-            );
-            return (
-              <motion.div
-                key={category}
-                variants={itemVariants}
-                className="group"
-              >
-                <div className="rounded-xl border border-border-light bg-cool-bg-card p-6 shadow-sm transition-all duration-300 hover:shadow-md hover:border-gold-500/20">
-                  {/* 分类标题 */}
-                  <div className="mb-5 flex items-center gap-3">
-                    <span className="text-2xl">
-                      {categoryIcons[category] || "📦"}
-                    </span>
-                    <div>
-                      <h3 className="text-base font-semibold text-deep-blue-900">
-                        {category}
-                      </h3>
-                      <p className="text-xs text-text-secondary">
-                        {categoryLabels[category] || category}
-                      </p>
-                    </div>
-                  </div>
+          {/* 小标题 */}
+          <motion.div variants={itemVariants} className="mb-6 flex items-center gap-3">
+            <span className="h-4 w-1 rounded-full bg-gold-500" />
+            <h3 className="text-lg font-semibold text-deep-blue-900">工作经历</h3>
+          </motion.div>
 
-                  {/* 技能标签 */}
-                  <div className="flex flex-wrap gap-2">
-                    {categorySkills.map((skill) => (
-                      <div
-                        key={skill.name}
-                        className="group/tag relative"
+          {/* 双列卡片 */}
+          <div className="grid gap-4 md:grid-cols-2">
+            {experiences.map((exp, i) => (
+              <motion.div
+                key={i}
+                variants={itemVariants}
+                className="rounded-xl border border-border-light bg-cool-bg-card p-5 shadow-sm transition-shadow hover:shadow-md"
+              >
+                {/* 头部：时间段 + 角色 */}
+                <div className="mb-3 flex flex-wrap items-center gap-2">
+                  <span className="inline-block rounded-full bg-gold-500/10 px-2.5 py-0.5 font-mono text-xs text-gold-500">
+                    {exp.period}
+                  </span>
+                  <Badge variant="default" className="text-[10px] font-normal">
+                    {exp.role}
+                  </Badge>
+                </div>
+
+                {/* 公司名称 */}
+                <h4 className="mb-3 text-base font-semibold text-deep-blue-900">
+                  {exp.company}
+                </h4>
+
+                {/* 亮点列表 */}
+                <ul className="space-y-1.5">
+                  {exp.highlights.map((h, j) => (
+                    <li
+                      key={j}
+                      className="flex items-start gap-2 text-sm text-text-secondary"
+                    >
+                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-gold-400" />
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* ===== 技术栈 ===== */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+        >
+          {/* 小标题 */}
+          <motion.div variants={itemVariants} className="mb-6 flex items-center gap-3">
+            <span className="h-4 w-1 rounded-full bg-gold-500" />
+            <h3 className="text-lg font-semibold text-deep-blue-900">技术栈</h3>
+          </motion.div>
+
+          {/* ★ 重点卡片：后端 + AI */}
+          <div className="mb-4 grid gap-4 md:grid-cols-2">
+            {featuredCats.map((cat) => {
+              const skills = allSkills.filter((s) => s.category === cat);
+              return (
+                <motion.div
+                  key={cat}
+                  variants={itemVariants}
+                  className="rounded-xl border border-gold-500/20 bg-gradient-to-br from-cool-bg-card to-gold-500/[0.03] p-5 shadow-sm transition-shadow hover:shadow-md"
+                >
+                  <div className="mb-3 flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-gold-500" />
+                    <h4 className="text-sm font-semibold text-deep-blue-900">
+                      {cat}
+                    </h4>
+                    <Badge
+                      variant="gold"
+                      className="ml-auto text-[10px] font-normal"
+                    >
+                      {cat === "后端技术" ? "核心" : "前沿"}
+                    </Badge>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {skills.map((s) => (
+                      <Badge
+                        key={s.name}
+                        variant="skill"
+                        className="text-[11px] transition-all hover:bg-deep-blue-900 hover:text-gold-500"
                       >
-                        <Badge
-                          variant="skill"
-                          className="cursor-default transition-all duration-200 hover:bg-deep-blue-900 hover:text-gold-500"
-                        >
-                          {skill.name}
-                        </Badge>
-                        {/* 熟练度指示器 */}
-                        {skill.level && (
-                          <div className="absolute -bottom-1 left-1/2 hidden -translate-x-1/2 group-hover/tag:block">
-                            <div className="whitespace-nowrap rounded bg-deep-blue-900 px-2 py-0.5 text-[10px] text-text-white shadow-lg">
-                              {skill.level}%
-                            </div>
-                          </div>
-                        )}
-                      </div>
+                        {s.name}
+                      </Badge>
                     ))}
                   </div>
-                </div>
-              </motion.div>
-            );
-          })}
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* 其他技能卡片 */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {otherCats.map((cat) => {
+              const skills = allSkills.filter((s) => s.category === cat);
+              return (
+                <motion.div
+                  key={cat}
+                  variants={itemVariants}
+                  className="rounded-xl border border-border-light bg-cool-bg-card p-5 shadow-sm transition-shadow hover:shadow-md"
+                >
+                  <h4 className="mb-3 flex items-center gap-2 text-sm font-semibold text-deep-blue-900">
+                    <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
+                    {cat}
+                  </h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {skills.map((s) => (
+                      <Badge
+                        key={s.name}
+                        variant="skill"
+                        className="text-[11px]"
+                      >
+                        {s.name}
+                      </Badge>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </motion.div>
       </div>
     </section>
