@@ -28,7 +28,7 @@ export default function AiAgentCharacter() {
   const handleMouseLeave = () => {
     hideTimerRef.current = setTimeout(() => {
       setIsHovered(false);
-    }, 5000);
+    }, 3000);
   };
 
   useEffect(() => {
