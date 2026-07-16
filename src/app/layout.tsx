@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -35,8 +34,7 @@ export default function RootLayout({
       className="scroll-smooth"
     >
       <body className="min-h-screen flex flex-col bg-cool-bg text-text-primary font-sans antialiased">
-        <Navbar />
-        <main className="flex-1">{children}</main>
+        {children}
         <Footer />
       </body>
     </html>

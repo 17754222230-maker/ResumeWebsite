@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(mkdir -p \"d:/Users/Desktop/ResumeWebsite/src/app/projects/[slug]\")"
+    ],
+    "additionalDirectories": [
+      "d:\\Users\\Desktop\\ResumeWebsite\\src\\app\\projects"
     ]
   }
 }

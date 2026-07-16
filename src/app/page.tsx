@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import TechStack from "@/components/TechStack";
 import ProjectGrid from "@/components/ProjectGrid";
@@ -6,6 +7,7 @@ import AiAgentCharacter from "@/components/AiAgentCharacter";
 export default function Home() {
   return (
     <>
+      <Navbar />
       {/* 英雄区 */}
       <HeroSection />
 

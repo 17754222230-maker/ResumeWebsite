@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { ExternalLink, Code2, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -32,14 +33,15 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group"
-    >
-      <Card className="flex h-full flex-col overflow-hidden border-border-light transition-all duration-300 hover:border-gold-500/30 hover:shadow-lg hover:-translate-y-1">
+    <Link href={`/projects/${project.slug}`} className="block group">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+        className="h-full"
+      >
+        <Card className="flex h-full flex-col overflow-hidden border-border-light transition-all duration-300 hover:border-gold-500/30 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
         {/* 卡片顶部装饰条 */}
         <div className="h-1.5 w-full bg-gradient-to-r from-deep-blue-900 via-gold-500 to-deep-blue-900 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
@@ -114,5 +116,6 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         </CardFooter>
       </Card>
     </motion.div>
+    </Link>
   );
 }
