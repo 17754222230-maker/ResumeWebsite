@@ -7,12 +7,30 @@ import { projects } from "@/lib/knowledge";
 
 export default function ProjectGrid() {
   return (
-    <section id="projects" className="relative bg-cool-bg-alt py-24">
-      {/* 背景装饰 */}
+    <section id="projects" className="relative bg-cool-bg-alt py-24 overflow-hidden">
+      {/* 纵深背景层 — 动态光晕 */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-deep-blue-900/3 blur-3xl" />
-        <div className="absolute -right-40 -bottom-40 h-80 w-80 rounded-full bg-gold-500/5 blur-3xl" />
+        {/* 深蓝光晕 — 缓慢漂移 */}
+        <motion.div
+          animate={{ x: [0, -20, 0], y: [0, 15, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-deep-blue-900/10 blur-[100px]"
+        />
+        {/* 金色光晕 — 反向漂移 */}
+        <motion.div
+          animate={{ x: [0, 25, 0], y: [0, -20, 0] }}
+          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -right-40 -bottom-40 h-80 w-80 rounded-full bg-gold-500/10 blur-[100px]"
+        />
       </div>
+      {/* 微渐变背景 — 往中心聚拢的纵深感 */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 100% 60% at 50% 60%, rgba(11,29,58,0.03) 0%, transparent 70%)",
+        }}
+      />
 
       <div className="container relative mx-auto max-w-6xl px-6">
         {/* 标题区 */}

@@ -52,11 +52,11 @@ export interface Experience {
 // ===== 个人信息 =====
 export const profile: Profile = {
   name: "Wangziyan",
-  title: "Java 开发工程师",
+  title: "AI 全栈开发工程师",
   slogan:
-    "计算机科班出身，四年全栈经验，用代码驱动业务价值。",
+    "以代码构筑数字世界，用技术驱动业务价值。",
   summary:
-    "计算机科班出身，四年工作经验，两年高并发项目经历。具备扎实的 Java 后端功底与全栈思维，熟练使用 Spring Cloud Alibaba 微服务生态、Redis 多级缓存、RocketMQ 消息中间件等核心技术。热衷于探索 AI 赋能开发（Spring AI / AI Coding），致力于用技术驱动业务价值。",
+    "深耕 Java 后端与微服务架构，积极探索 AI 赋能开发（Spring AI / LangChain / AI Coding）。具备全栈思维，致力于用技术驱动业务价值。",
   contact: {
     email: "17754222230@163.com",
     github: "https://github.com/17754222230-maker",
