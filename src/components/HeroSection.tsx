@@ -9,12 +9,37 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-deep-blue-900"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden"
+      style={{
+        background: `
+          radial-gradient(ellipse 100% 70% at 50% 45%,
+            #102A43 0%,
+            #0B1D3A 35%,
+            #081530 65%,
+            #040B18 100%)
+        `,
+      }}
     >
-      {/* 水波纹背景装饰 */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-gold-500/10 blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-accent-teal/10 blur-3xl" />
+      {/* 深邃背景层 — 动态光晕，营造往屏幕里延伸的纵深感 */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* 金色光晕 — 缓慢漂移（金泄秀，代表才华） */}
+        <motion.div
+          animate={{ x: [0, 40, 0], y: [0, -25, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[20%] -left-10 h-[450px] w-[450px] rounded-full bg-gold-500/10 blur-[120px]"
+        />
+        {/* 青色光晕 — 反向漂移（水润局，代表流动） */}
+        <motion.div
+          animate={{ x: [0, -30, 0], y: [0, 30, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[20%] -right-10 h-[400px] w-[400px] rounded-full bg-accent-teal/10 blur-[120px]"
+        />
+        {/* 中心纵深感光晕 — 缓慢脉动 */}
+        <motion.div
+          animate={{ scale: [1, 1.08, 1], opacity: [0.08, 0.15, 0.08] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-deep-blue-600/20 blur-[150px]"
+        />
       </div>
 
       {/* 网格纹理 */}
@@ -86,25 +111,25 @@ export default function HeroSection() {
             <a href="#footer">联系我</a>
           </Button>
         </motion.div>
-
-        {/* 向下滚动指示 */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="absolute bottom-10"
-        >
-          <motion.a
-            href="#tech-stack"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center gap-2 text-text-on-dark/50 transition-colors hover:text-gold-500"
-          >
-            <span className="text-xs">向下滚动</span>
-            <ArrowDown size={18} />
-          </motion.a>
-        </motion.div>
       </div>
+
+      {/* 向下滚动指示 — 右下角 */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+        className="absolute bottom-8 right-8"
+      >
+        <motion.a
+          href="#tech-stack"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="flex flex-col items-center gap-2 text-text-on-dark/50 transition-colors hover:text-gold-500"
+        >
+          <span className="text-xs">向下滚动</span>
+          <ArrowDown size={18} />
+        </motion.a>
+      </motion.div>
     </section>
   );
 }
