@@ -2,8 +2,10 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import AiChatDialog from "@/components/AiChatDialog";
 
 export default function AiAgentCharacter() {
+  const [chatOpen, setChatOpen] = useState(false);
   const [isHeroVisible, setIsHeroVisible] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -44,8 +46,10 @@ export default function AiAgentCharacter() {
       className="fixed right-0 top-1/2 z-50 -translate-y-1/2 select-none"
       animate={{ x: isFullyVisible ? "0%" : "55%" }}
       transition={{ type: "spring", stiffness: 260, damping: 28 }}
+      onClick={() => setChatOpen(true)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      style={{ cursor: "pointer" }}
     >
       {/* 对话气泡 */}
       <AnimatePresence>
@@ -259,6 +263,9 @@ export default function AiAgentCharacter() {
           }
         />
       </svg>
+
+      {/* AI 对话窗口 */}
+      <AiChatDialog open={chatOpen} onClose={() => setChatOpen(false)} />
     </motion.div>
   );
 }
