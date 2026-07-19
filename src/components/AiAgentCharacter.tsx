@@ -67,201 +67,104 @@ export default function AiAgentCharacter() {
         )}
       </AnimatePresence>
 
-      {/* SVG 简约男生数字人 */}
+      {/* SVG 小龙人 — Q 版简约 */}
       <svg
         width="200"
         height="300"
-        viewBox="0 0 100 160"
+        viewBox="0 0 100 150"
         className="drop-shadow-xl"
-        aria-label="AI 助手数字人"
+        aria-label="AI 助手小龙人"
       >
-        {/* ===== 头发（深蓝色短发） ===== */}
+        <defs>
+          <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#0ea5e9" />
+            <stop offset="100%" stopColor="#6366f1" />
+          </linearGradient>
+          <linearGradient id="hornGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+            <stop offset="0%" stopColor="#D4AF37" />
+            <stop offset="100%" stopColor="#F2EBC0" />
+          </linearGradient>
+        </defs>
+
+        {/* 尾巴 */}
         <path
-          d="M 18 28 C 16 10 28 6 40 6 C 52 6 64 10 62 28 C 62 16 52 12 40 12 C 28 12 18 16 18 28 Z"
-          fill="#0B1D3A"
-        />
-        {/* 头发刘海碎发 */}
-        <path
-          d="M 20 24 Q 30 14 40 14 Q 50 14 60 24"
-          stroke="#1A3B5C"
-          strokeWidth="1"
-          fill="none"
-          opacity="0.3"
-        />
-        {/* 两侧头发 */}
-        <path
-          d="M 18 28 Q 16 34 18 40"
-          stroke="#0B1D3A"
-          strokeWidth="3"
+          d="M 56 68 Q 68 64 72 54 Q 76 44 70 38"
+          stroke="url(#bodyGrad)"
+          strokeWidth="5"
           strokeLinecap="round"
           fill="none"
         />
         <path
-          d="M 62 28 Q 64 34 62 40"
-          stroke="#0B1D3A"
-          strokeWidth="3"
+          d="M 70 38 L 66 32 L 74 34 Z"
+          fill="#D4AF37"
+          opacity="0.7"
+        />
+
+        {/* 身体 */}
+        <ellipse cx="42" cy="56" rx="16" ry="20" fill="url(#bodyGrad)" />
+        <ellipse cx="42" cy="60" rx="10" ry="13" fill="#BAE6FD" opacity="0.35" />
+
+        {/* 脊背金色小棘刺 */}
+        <path d="M 56 44 L 61 42 L 57 48 Z" fill="#D4AF37" opacity="0.6" />
+        <path d="M 57 52 L 62 50 L 58 56 Z" fill="#D4AF37" opacity="0.5" />
+        <path d="M 56 60 L 61 58 L 57 64 Z" fill="#D4AF37" opacity="0.4" />
+
+        {/* 小翅膀 */}
+        <path
+          d="M 54 42 Q 68 32 64 48 Q 58 44 54 46 Z"
+          fill="#818CF8"
+          opacity="0.35"
+        />
+
+        {/* 脚 */}
+        <ellipse cx="34" cy="78" rx="7" ry="3.5" fill="url(#bodyGrad)" />
+        <ellipse cx="50" cy="78" rx="7" ry="3.5" fill="url(#bodyGrad)" />
+
+        {/* 左手臂 */}
+        <path
+          d="M 26 52 Q 14 58 18 72"
+          stroke="url(#bodyGrad)"
+          strokeWidth="5"
           strokeLinecap="round"
           fill="none"
         />
+        <circle cx="18" cy="72" r="3" fill="url(#bodyGrad)" />
 
-        {/* ===== 面部 ===== */}
-        <circle cx="40" cy="30" r="18" fill="#FDE8D0" />
+        {/* 右手臂（往上挥手动画） */}
+        <motion.path
+          d="M 56 52 Q 70 56 66 72"
+          stroke="url(#bodyGrad)"
+          strokeWidth="5"
+          strokeLinecap="round"
+          fill="none"
+          animate={isHovered ? { d: ["M 56 52 Q 70 56 66 72","M 56 52 Q 64 34 52 32","M 56 52 Q 70 56 66 72","M 56 52 Q 64 34 52 32","M 56 52 Q 70 56 66 72","M 56 52 Q 66 38 54 34","M 56 52 Q 70 56 66 72"] } : { d: "M 56 52 Q 70 56 66 72" }}
+          transition={isHovered ? { duration: 1.2, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
+        />
+        <motion.circle
+          cx="66" cy="72" r="3" fill="url(#bodyGrad)"
+          animate={isHovered ? { cx: [66, 52, 66, 52, 66, 54, 66], cy: [72, 32, 72, 32, 72, 34, 72] } : { cx: 66, cy: 72 }}
+          transition={isHovered ? { duration: 1.2, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
+        />
 
-        {/* 眼睛（简约） */}
-        <ellipse cx="33" cy="28" rx="2.5" ry="3" fill="#0B1D3A" />
-        <circle cx="32" cy="26.5" r="1.2" fill="#FFFFFF" />
-        <ellipse cx="47" cy="28" rx="2.5" ry="3" fill="#0B1D3A" />
-        <circle cx="46" cy="26.5" r="1.2" fill="#FFFFFF" />
+        {/* 头部 */}
+        <circle cx="42" cy="30" r="15" fill="url(#bodyGrad)" />
+
+        {/* 龙角（三角） */}
+        <path d="M 30 18 L 27 6 L 34 15 Z" fill="url(#hornGrad)" />
+        <path d="M 54 18 L 57 6 L 50 15 Z" fill="url(#hornGrad)" />
+
+        {/* 眼睛 */}
+        <ellipse cx="35" cy="28" rx="3" ry="3.5" fill="#1E293B" />
+        <circle cx="33.5" cy="26" r="1.2" fill="#FFFFFF" />
+        <ellipse cx="49" cy="28" rx="3" ry="3.5" fill="#1E293B" />
+        <circle cx="47.5" cy="26" r="1.2" fill="#FFFFFF" />
+
+        {/* 腮红 */}
+        <ellipse cx="28" cy="33" rx="3" ry="2" fill="#F5A0A0" opacity="0.35" />
+        <ellipse cx="56" cy="33" rx="3" ry="2" fill="#F5A0A0" opacity="0.35" />
 
         {/* 微笑 */}
-        <path
-          d="M 36 34 Q 40 38 44 34"
-          stroke="#0B1D3A"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          fill="none"
-        />
-
-        {/* ===== 身体（白色 T 恤） ===== */}
-        <rect x="25" y="48" width="30" height="36" rx="6" fill="#FFFFFF" />
-
-        {/* 圆形领口 */}
-        <path
-          d="M 31 50 Q 40 56 49 50"
-          stroke="#0B1D3A"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          fill="none"
-          opacity="0.15"
-        />
-
-        {/* 胸前小 logo（金色 V 形） */}
-        <path
-          d="M 38 60 L 40 64 L 42 60"
-          stroke="#D4AF37"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-          opacity="0.6"
-        />
-
-        {/* ===== 裤子（深蓝） ===== */}
-        <rect x="26" y="84" width="10" height="26" rx="3" fill="#102A43" />
-        <rect x="44" y="84" width="10" height="26" rx="3" fill="#102A43" />
-
-        {/* ===== 鞋子（白色运动鞋） ===== */}
-        <ellipse cx="31" cy="112" rx="9" ry="3.5" fill="#FFFFFF" />
-        <ellipse cx="49" cy="112" rx="9" ry="3.5" fill="#FFFFFF" />
-        <path
-          d="M 24 112 Q 31 110 38 112"
-          stroke="#D4AF37"
-          strokeWidth="1"
-          fill="none"
-          opacity="0.4"
-        />
-        <path
-          d="M 42 112 Q 49 110 56 112"
-          stroke="#D4AF37"
-          strokeWidth="1"
-          fill="none"
-          opacity="0.4"
-        />
-
-        {/* ===== 左手（静止，始终可见） ===== */}
-        <path
-          d="M 25 54 Q 12 60 16 74"
-          stroke="#FDE8D0"
-          strokeWidth="4.5"
-          strokeLinecap="round"
-          fill="none"
-        />
-        {/* 袖子 */}
-        <path
-          d="M 25 54 Q 20 58 18 62"
-          stroke="#FFFFFF"
-          strokeWidth="3"
-          strokeLinecap="round"
-          fill="none"
-        />
-        <circle cx="16" cy="74" r="2.5" fill="#FDE8D0" />
-
-        {/* ===== 右手（往上挥手动画） ===== */}
-        <motion.path
-          d="M 55 54 Q 70 58 66 74"
-          stroke="#FDE8D0"
-          strokeWidth="4.5"
-          strokeLinecap="round"
-          fill="none"
-          animate={
-            isHovered
-              ? {
-                  d: [
-                    "M 55 54 Q 70 58 66 74",
-                    "M 55 54 Q 64 34 52 32",
-                    "M 55 54 Q 70 58 66 74",
-                    "M 55 54 Q 64 34 52 32",
-                    "M 55 54 Q 70 58 66 74",
-                    "M 55 54 Q 66 38 54 34",
-                    "M 55 54 Q 70 58 66 74",
-                  ],
-                }
-              : { d: "M 55 54 Q 70 58 66 74" }
-          }
-          transition={
-            isHovered
-              ? { duration: 1.2, repeat: Infinity, ease: "easeInOut" }
-              : { duration: 0.3 }
-          }
-        />
-        {/* 右手 */}
-        <motion.circle
-          cx="66"
-          cy="74"
-          r="2.5"
-          fill="#FDE8D0"
-          animate={
-            isHovered
-              ? {
-                  cx: [66, 52, 66, 52, 66, 54, 66],
-                  cy: [74, 32, 74, 32, 74, 34, 74],
-                }
-              : { cx: 66, cy: 74 }
-          }
-          transition={
-            isHovered
-              ? { duration: 1.2, repeat: Infinity, ease: "easeInOut" }
-              : { duration: 0.3 }
-          }
-        />
-        {/* 右手袖子 */}
-        <motion.path
-          d="M 55 54 Q 58 58 58 62"
-          stroke="#FFFFFF"
-          strokeWidth="3"
-          strokeLinecap="round"
-          fill="none"
-          animate={
-            isHovered
-              ? {
-                  d: [
-                    "M 55 54 Q 58 58 58 62",
-                    "M 55 54 Q 54 48 50 46",
-                    "M 55 54 Q 58 58 58 62",
-                    "M 55 54 Q 54 48 50 46",
-                    "M 55 54 Q 58 58 58 62",
-                    "M 55 54 Q 56 50 52 48",
-                    "M 55 54 Q 58 58 58 62",
-                  ],
-                }
-              : { d: "M 55 54 Q 58 58 58 62" }
-          }
-          transition={
-            isHovered
-              ? { duration: 1.2, repeat: Infinity, ease: "easeInOut" }
-              : { duration: 0.3 }
-          }
-        />
+        <path d="M 37 34 Q 42 38 47 34" stroke="#1E293B" strokeWidth="1.5" strokeLinecap="round" fill="none" />
       </svg>
 
       {/* AI 对话窗口 */}

@@ -1,13 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Code2, Mail, ArrowUp } from "lucide-react";
+import { Code2, Mail, ArrowUp, Check } from "lucide-react";
 import { profile } from "@/lib/knowledge";
 
 const footerLinks = [
   {
-    label: "GitHub",
-    href: profile.contact.github || "#",
+    label: "简历",
+    href: "/resume/王仔研的简历_17754222230_全.pdf",
     icon: Code2,
   },
   {
@@ -18,8 +19,21 @@ const footerLinks = [
 ];
 
 export default function Footer() {
+  const [copied, setCopied] = useState(false);
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleCopyEmail = async () => {
+    const email = profile.contact.email;
+    if (!email) return;
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.location.href = `mailto:${email}`;
+    }
   };
 
   return (
@@ -40,7 +54,7 @@ export default function Footer() {
               {profile.name}
               <span className="text-gold-500">.</span>
             </h3>
-            <p className="max-w-xs text-sm leading-relaxed text-text-on-dark/60">
+            <p className="whitespace-nowrap text-sm leading-relaxed text-text-on-dark/60">
               {profile.title} · 用代码构建数字世界的艺术与逻辑
             </p>
           </motion.div>
@@ -53,18 +67,32 @@ export default function Footer() {
             transition={{ delay: 0.1 }}
             className="flex items-center gap-4"
           >
-            {footerLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-text-on-dark/20 text-text-on-dark/60 transition-all duration-300 hover:border-gold-500/50 hover:bg-gold-500/10 hover:text-gold-500"
-                aria-label={link.label}
-              >
-                <link.icon size={18} />
-              </a>
-            ))}
+            {footerLinks.map((link) =>
+              link.label === "Email" ? (
+                <button
+                  key={link.label}
+                  onClick={handleCopyEmail}
+                  className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-text-on-dark/20 text-text-on-dark/60 transition-all duration-300 hover:border-gold-500/50 hover:bg-gold-500/10 hover:text-gold-500"
+                  aria-label={link.label}
+                  title={copied ? "已复制" : "复制邮箱"}
+                >
+                  {copied ? <Check size={18} className="text-green-400" /> : <link.icon size={18} />}
+                </button>
+              ) : (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download="王仔研的简历.pdf"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-text-on-dark/20 text-text-on-dark/60 transition-all duration-300 hover:border-gold-500/50 hover:bg-gold-500/10 hover:text-gold-500"
+                  aria-label={link.label}
+                  title="下载简历"
+                >
+                  <link.icon size={18} />
+                </a>
+              ),
+            )}
           </motion.div>
         </div>
 
