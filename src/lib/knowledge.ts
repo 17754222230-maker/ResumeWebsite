@@ -62,7 +62,7 @@ export const profile: Profile = {
   name: "Wangziyan",
   title: "AI 全栈开发工程师",
   slogan:
-    "以代码构筑数字世界，用技术驱动业务价值。",
+    "以匠心打造产品壁垒，用技术驱动业务价值。",
   summary:
     "深耕 Java 后端与微服务架构，积极探索 AI 赋能开发（Spring AI / LangChain / AI Coding）。具备全栈思维，致力于用技术驱动业务价值。",
   contact: {
