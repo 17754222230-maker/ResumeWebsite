@@ -355,12 +355,58 @@ export const projects: Project[] = [
     ],
     fullTechStack: ["C#", ".NET Framework", "WinForms", "DevExpress", "C++", "Oracle", "DB2", "EPEX"],
   },
+  // ===== 个人项目 =====
+  {
+    slug: "bp-agent",
+    title: "英魂之刃赛事 BP 智能决策系统（BP Agent）",
+    description:
+      "面向职业/半职业战队的电竞赛事 BP 实时决策与模拟训练系统。针对 BO5 全局单边 BP 赛制下后期决策空间指数级收缩、教练认知负荷过高的问题，设计并实现规则-模型-LLM 三层混合决策架构，在 30 秒操作时限内提供可解释、可信赖的针对性 BP 建议。",
+    tags: ["Python", "FastAPI", "LightGBM", "LangChain", "RAG", "大模型"],
+    role: "独立开发者（全栈 + AI）",
+    highlights: [
+      "规则-模型-LLM 三层混合决策架构：80% 常规决策由前两层处理，仅复杂博弈触发 LLM",
+      "硬超时降级 + 多模型档位切换，P99 延迟 <25s，决策链路零超时",
+      "自研 LightGBM 阵容协同评分模型，弥补纯 LLM 方案的组合评估盲区",
+      "对手画像 RAG + 预计算 80×80 Counter 矩阵，BP 会话期间零外部 IO",
+    ],
+    period: "2026.05 - 至今",
+    company: "个人项目",
+    responsibilities: [
+      "设计规则-模型-LLM 三层递进决策链路：规则引擎（<50ms）、LightGBM 协同评分模型（<10ms）、LLM 推理（2-8s），并实现硬超时自动降级与多模型档位切换的熔断机制",
+      "构建自动化爬虫 + 清洗管线，基于对手近 20 场 BO5 记录提取 Ban/Pick 偏好与关键局英雄池标签，通过 RAG 将对手画像注入 System Prompt（Token 预算 ≤300），实现针对性 BP 推荐",
+      "基于历史赛事数据训练 LightGBM 阵容协同评分模型，量化评估控制链衔接、伤害类型互补、节奏匹配度，作为 Layer 1 核心排序因子",
+      "预计算 80×80 Counter 矩阵与阵容协同特征，保障 BP 会话期间零外部 IO",
+      "制定结构化可解释输出规范：严格 JSON Schema 约束 LLM 输出，强制每条推荐附带 Counter 匹配度、协同分变化、选手熟练度、全局保留价值四维理由，并支持教练反馈标记形成闭环",
+      "设计标准 GameState 接口实现感知-决策解耦（输入层可插拔），并对 Counter 关系、Tier List 等知识引入类 Git 版本控制，支持版本回滚与影响分析",
+    ],
+    challenges: [
+      {
+        challenge: "30 秒 BP 操作时限 vs LLM 2-8s 推理延迟，直接调用 LLM 无法保障实时性与稳定性",
+        solution: "将决策链路拆为规则引擎（<50ms）、LightGBM 协同评分（<10ms）、LLM 推理（2-8s）三层递进调用，80% 常规决策由前两层处理；配合硬超时自动降级与多模型档位切换策略，P99 延迟 <25s，决策链路零超时",
+      },
+      {
+        challenge: "LLM 懂单英雄克制但不懂阵容的组合化学反应，纯 LLM 方案存在整体性评估盲区",
+        solution: "基于历史赛事数据训练 LightGBM 协同评分模型，量化控制链衔接、伤害类型互补、节奏匹配度，作为 Layer 1 核心排序因子弥补 LLM 组合盲区",
+      },
+      {
+        challenge: "通用推荐缺乏针对性，无法体现对手的 Ban/Pick 偏好与英雄池特征",
+        solution: "自动化爬虫 + 清洗管线提取对手近 20 场 BO5 的画像标签，通过 RAG 注入 System Prompt（Token 预算 ≤300）；预计算 80×80 Counter 矩阵与阵容协同特征，实现从通用推荐到针对性 BP 的升级",
+      },
+    ],
+    achievements: [
+      "P99 延迟 <25s，决策链路零超时",
+      "80% 常规决策由规则引擎与协同评分模型处理，仅复杂博弈场景触发 LLM",
+      "BP 会话期间零外部 IO",
+      "对手画像注入 Token 预算控制在 300 以内",
+    ],
+    fullTechStack: ["Python", "FastAPI", "LightGBM", "LangChain", "通义千问", "PostgreSQL", "Redis", "Next.js", "WebSocket"],
+  },
 ];
 
 // ===== 工作经历 =====
 export const experiences: Experience[] = [
   {
-    company: "飞猪（阿里巴巴旗下，中软国际外包）",
+    company: "飞猪（阿里巴巴旗下，易宝软件外包）",
     role: "Java 开发工程师",
     period: "2026.04 - 至今",
     description:
