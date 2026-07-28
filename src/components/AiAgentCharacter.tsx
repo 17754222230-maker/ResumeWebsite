@@ -67,54 +67,50 @@ export default function AiAgentCharacter() {
         )}
       </AnimatePresence>
 
-      {/* SVG 小龙人 — Q 版简约 */}
+      {/* SVG 小猫 — Q 版萌系（大头大眼、软耳朵、摇尾巴） */}
+      <motion.div
+        animate={{ y: [0, -5, 0] }}
+        transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+      >
       <svg
         width="200"
         height="300"
         viewBox="0 0 100 150"
         className="drop-shadow-xl"
-        aria-label="AI 助手小龙人"
+        aria-label="AI 助手小猫"
       >
         <defs>
           <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0ea5e9" />
-            <stop offset="100%" stopColor="#6366f1" />
+            <stop offset="0%" stopColor="#FCC580" />
+            <stop offset="100%" stopColor="#F59E0B" />
           </linearGradient>
-          <linearGradient id="hornGrad" x1="0%" y1="100%" x2="0%" y2="0%">
-            <stop offset="0%" stopColor="#D4AF37" />
-            <stop offset="100%" stopColor="#F2EBC0" />
+          <linearGradient id="earGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+            <stop offset="0%" stopColor="#F59E0B" />
+            <stop offset="100%" stopColor="#FBBF77" />
           </linearGradient>
         </defs>
 
-        {/* 尾巴 */}
-        <path
-          d="M 56 68 Q 68 64 72 54 Q 76 44 70 38"
+        {/* 尾巴（持续摇摆动画） */}
+        <motion.path
+          d="M 56 66 Q 72 62 74 48 Q 75 40 70 36"
           stroke="url(#bodyGrad)"
           strokeWidth="5"
           strokeLinecap="round"
           fill="none"
+          animate={{ d: ["M 56 66 Q 72 62 74 48 Q 75 40 70 36", "M 56 66 Q 70 66 76 56 Q 80 48 78 42", "M 56 66 Q 72 62 74 48 Q 75 40 70 36"] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         />
-        <path
-          d="M 70 38 L 66 32 L 74 34 Z"
-          fill="#D4AF37"
-          opacity="0.7"
+        <motion.circle
+          r="3.2"
+          fill="#D97706"
+          animate={{ cx: [70, 78, 70], cy: [36, 42, 36] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         />
 
         {/* 身体 */}
-        <ellipse cx="42" cy="56" rx="16" ry="20" fill="url(#bodyGrad)" />
-        <ellipse cx="42" cy="60" rx="10" ry="13" fill="#BAE6FD" opacity="0.35" />
-
-        {/* 脊背金色小棘刺 */}
-        <path d="M 56 44 L 61 42 L 57 48 Z" fill="#D4AF37" opacity="0.6" />
-        <path d="M 57 52 L 62 50 L 58 56 Z" fill="#D4AF37" opacity="0.5" />
-        <path d="M 56 60 L 61 58 L 57 64 Z" fill="#D4AF37" opacity="0.4" />
-
-        {/* 小翅膀 */}
-        <path
-          d="M 54 42 Q 68 32 64 48 Q 58 44 54 46 Z"
-          fill="#818CF8"
-          opacity="0.35"
-        />
+        <ellipse cx="42" cy="58" rx="15" ry="18" fill="url(#bodyGrad)" />
+        {/* 奶油色肚皮 */}
+        <ellipse cx="42" cy="62" rx="9.5" ry="12" fill="#FFF4E0" opacity="0.9" />
 
         {/* 脚 */}
         <ellipse cx="34" cy="78" rx="7" ry="3.5" fill="url(#bodyGrad)" />
@@ -122,13 +118,13 @@ export default function AiAgentCharacter() {
 
         {/* 左手臂 */}
         <path
-          d="M 26 52 Q 14 58 18 72"
+          d="M 28 52 Q 16 58 20 72"
           stroke="url(#bodyGrad)"
           strokeWidth="5"
           strokeLinecap="round"
           fill="none"
         />
-        <circle cx="18" cy="72" r="3" fill="url(#bodyGrad)" />
+        <circle cx="20" cy="72" r="3" fill="url(#bodyGrad)" />
 
         {/* 右手臂（往上挥手动画） */}
         <motion.path
@@ -146,26 +142,44 @@ export default function AiAgentCharacter() {
           transition={isHovered ? { duration: 1.2, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
         />
 
-        {/* 头部 */}
-        <circle cx="42" cy="30" r="15" fill="url(#bodyGrad)" />
+        {/* 软耳朵（外耳 + 粉色内耳） */}
+        <path d="M 29 18 Q 24 5 26 3 Q 27.5 1.5 31 5 L 40 12 Z" fill="url(#earGrad)" />
+        <path d="M 30.5 14 Q 28 7 29 6 Q 30 5.5 32.5 8.5 L 37 12 Z" fill="#FBAFB8" opacity="0.85" />
+        <path d="M 55 18 Q 60 5 58 3 Q 56.5 1.5 53 5 L 44 12 Z" fill="url(#earGrad)" />
+        <path d="M 53.5 14 Q 56 7 55 6 Q 54 5.5 51.5 8.5 L 47 12 Z" fill="#FBAFB8" opacity="0.85" />
 
-        {/* 龙角（三角） */}
-        <path d="M 30 18 L 27 6 L 34 15 Z" fill="url(#hornGrad)" />
-        <path d="M 54 18 L 57 6 L 50 15 Z" fill="url(#hornGrad)" />
+        {/* 头部（圆润大头） */}
+        <circle cx="42" cy="29" r="16" fill="url(#bodyGrad)" />
+        {/* 额头浅色斑纹 */}
+        <path d="M 39 14 L 40.5 19 L 42 14.5 L 43.5 19 L 45 14 Z" fill="#D97706" opacity="0.45" />
 
-        {/* 眼睛 */}
-        <ellipse cx="35" cy="28" rx="3" ry="3.5" fill="#1E293B" />
-        <circle cx="33.5" cy="26" r="1.2" fill="#FFFFFF" />
-        <ellipse cx="49" cy="28" rx="3" ry="3.5" fill="#1E293B" />
-        <circle cx="47.5" cy="26" r="1.2" fill="#FFFFFF" />
+        {/* 大眼睛（眨眼动画） */}
+        <motion.ellipse
+          cx="35" cy="27.5" rx="3.4" fill="#3B2A1A"
+          animate={{ ry: [4, 4, 0.4, 4] }}
+          transition={{ duration: 3.6, repeat: Infinity, times: [0, 0.92, 0.96, 1], ease: "easeInOut" }}
+        />
+        <motion.ellipse
+          cx="49" cy="27.5" rx="3.4" fill="#3B2A1A"
+          animate={{ ry: [4, 4, 0.4, 4] }}
+          transition={{ duration: 3.6, repeat: Infinity, times: [0, 0.92, 0.96, 1], ease: "easeInOut" }}
+        />
+        <circle cx="33.6" cy="25.5" r="1.3" fill="#FFFFFF" />
+        <circle cx="47.6" cy="25.5" r="1.3" fill="#FFFFFF" />
+
+        {/* 粉色小鼻子 + 猫嘴（ω） */}
+        <path d="M 40.6 32.4 L 43.4 32.4 L 42 34.6 Z" fill="#F472B6" />
+        <path d="M 39 36.4 Q 40.5 38.4 42 36.8 Q 43.5 38.4 45 36.4" stroke="#3B2A1A" strokeWidth="1.3" strokeLinecap="round" fill="none" />
+
+        {/* 胡须 */}
+        <path d="M 26 29.5 L 17.5 28.5 M 26 32.5 L 17.5 34" stroke="#D97706" strokeWidth="1" strokeLinecap="round" opacity="0.55" />
+        <path d="M 58 29.5 L 66.5 28.5 M 58 32.5 L 66.5 34" stroke="#D97706" strokeWidth="1" strokeLinecap="round" opacity="0.55" />
 
         {/* 腮红 */}
-        <ellipse cx="28" cy="33" rx="3" ry="2" fill="#F5A0A0" opacity="0.35" />
-        <ellipse cx="56" cy="33" rx="3" ry="2" fill="#F5A0A0" opacity="0.35" />
-
-        {/* 微笑 */}
-        <path d="M 37 34 Q 42 38 47 34" stroke="#1E293B" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+        <ellipse cx="29" cy="33.5" rx="3" ry="2" fill="#FB7185" opacity="0.4" />
+        <ellipse cx="55" cy="33.5" rx="3" ry="2" fill="#FB7185" opacity="0.4" />
       </svg>
+      </motion.div>
 
       {/* AI 对话窗口 */}
       <AiChatDialog open={chatOpen} onClose={() => setChatOpen(false)} />
