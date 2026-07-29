@@ -29,7 +29,15 @@ export default function TechStack() {
   const otherCats = categories.filter((c) => !featuredCategories.includes(c));
 
   return (
-    <section id="tech-stack" className="relative bg-cool-bg py-24 overflow-hidden">
+    <section
+      id="tech-stack"
+      className="relative py-24 overflow-hidden"
+      style={{
+        // 顶端从首屏深色 #120F17 渐变过渡到经历区天蓝（较亮档 #A8DCF5），滚动衔接不生硬
+        background:
+          "linear-gradient(180deg, #120F17 0%, #3D4A63 6%, #7FAECB 12%, #A8DCF5 18%, #A8DCF5 100%)",
+      }}
+    >
       {/* 纵深背景层 — 动态光晕 */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {/* 金色光晕 — 缓慢漂移 */}
@@ -71,7 +79,7 @@ export default function TechStack() {
           </h2>
           <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-gold-500 to-gold-300" />
           <p className="mx-auto mt-4 max-w-xl text-text-secondary">
-            四年全栈经验，深耕 Java 后端与微服务，持续探索 AI 赋能开发
+            Java 后端出身，做过 MES、ERP、在线教育到机票交易系统，近期在业务里落地 AI 能力
           </p>
         </motion.div>
 

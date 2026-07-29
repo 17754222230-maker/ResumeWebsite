@@ -13,7 +13,14 @@ const navLinks = [
   { label: "联系", href: "#footer" },
 ];
 
-export default function Navbar() {
+export interface NavbarProps {
+  /** W 字符是否处于金色联动态（仅在传入 onLogoClick 时生效） */
+  logoGold?: boolean;
+  /** 点击 W 的回调；不传时 Logo 保持原有链接行为，不影响其他页面 */
+  onLogoClick?: () => void;
+}
+
+export default function Navbar({ logoGold = false, onLogoClick }: NavbarProps = {}) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -33,14 +40,35 @@ export default function Navbar() {
       )}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        {/* Logo */}
-        <Link
-          href="#hero"
-          className="relative text-xl font-bold tracking-tight"
-        >
-          <span className="text-text-white">W</span>
-          <span className="text-gold-500">.</span>
-        </Link>
+        {/* Logo：有回调时为可点击按钮（W 白/金联动），无回调时保持原链接行为 */}
+        {onLogoClick ? (
+          <button
+            type="button"
+            onClick={onLogoClick}
+            className="relative cursor-pointer text-xl font-bold tracking-tight"
+            aria-pressed={logoGold}
+            aria-label="切换星空互动模式"
+          >
+            <span
+              className={cn(
+                "transition-colors duration-300",
+                logoGold ? "text-gold-500" : "text-white",
+              )}
+              style={logoGold ? undefined : { textShadow: "0 1px 3px rgba(11, 42, 74, 0.55)" }}
+            >
+              W
+            </span>
+            <span className="text-gold-500">.</span>
+          </button>
+        ) : (
+          <Link
+            href="#hero"
+            className="relative text-xl font-bold tracking-tight"
+          >
+            <span className="text-text-white">W</span>
+            <span className="text-gold-500">.</span>
+          </Link>
+        )}
 
         {/* Desktop Nav */}
         <ul className="hidden items-center gap-8 md:flex">

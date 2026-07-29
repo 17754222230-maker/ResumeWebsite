@@ -7,7 +7,16 @@ import { projects } from "@/lib/knowledge";
 
 export default function ProjectGrid() {
   return (
-    <section id="projects" className="relative bg-cool-bg-alt py-24 overflow-hidden">
+    <section
+      id="projects"
+      className="relative py-24 overflow-hidden"
+      style={{
+        // 顶端承接经历区 #A8DCF5，主体用稍深档天蓝 #87CEEB→#6BB8DD，
+        // 尾端向深蓝收敛，缓和与 Footer（深蓝底）的衔接
+        background:
+          "linear-gradient(180deg, #A8DCF5 0%, #87CEEB 25%, #6BB8DD 78%, #4A88AC 92%, #2E5F80 100%)",
+      }}
+    >
       {/* 纵深背景层 — 动态光晕 */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {/* 深蓝光晕 — 缓慢漂移 */}

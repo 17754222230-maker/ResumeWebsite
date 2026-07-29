@@ -97,13 +97,17 @@ export default function AiAgentCharacter() {
           strokeWidth="5"
           strokeLinecap="round"
           fill="none"
+          initial={{ d: "M 56 66 Q 72 62 74 48 Q 75 40 70 36" }}
           animate={{ d: ["M 56 66 Q 72 62 74 48 Q 75 40 70 36", "M 56 66 Q 70 66 76 56 Q 80 48 78 42", "M 56 66 Q 72 62 74 48 Q 75 40 70 36"] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.circle
+          cx="0"
+          cy="0"
           r="3.2"
           fill="#D97706"
-          animate={{ cx: [70, 78, 70], cy: [36, 42, 36] }}
+          initial={{ x: 70, y: 36 }}
+          animate={{ x: [70, 78, 70], y: [36, 42, 36] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         />
 
@@ -133,12 +137,14 @@ export default function AiAgentCharacter() {
           strokeWidth="5"
           strokeLinecap="round"
           fill="none"
+          initial={{ d: "M 56 52 Q 70 56 66 72" }}
           animate={isHovered ? { d: ["M 56 52 Q 70 56 66 72","M 56 52 Q 64 34 52 32","M 56 52 Q 70 56 66 72","M 56 52 Q 64 34 52 32","M 56 52 Q 70 56 66 72","M 56 52 Q 66 38 54 34","M 56 52 Q 70 56 66 72"] } : { d: "M 56 52 Q 70 56 66 72" }}
           transition={isHovered ? { duration: 1.2, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
         />
         <motion.circle
-          cx="66" cy="72" r="3" fill="url(#bodyGrad)"
-          animate={isHovered ? { cx: [66, 52, 66, 52, 66, 54, 66], cy: [72, 32, 72, 32, 72, 34, 72] } : { cx: 66, cy: 72 }}
+          cx="0" cy="0" r="3" fill="url(#bodyGrad)"
+          initial={{ x: 66, y: 72 }}
+          animate={isHovered ? { x: [66, 52, 66, 52, 66, 54, 66], y: [72, 32, 72, 32, 72, 34, 72] } : { x: 66, y: 72 }}
           transition={isHovered ? { duration: 1.2, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
         />
 
@@ -155,14 +161,18 @@ export default function AiAgentCharacter() {
 
         {/* 大眼睛（眨眼动画） */}
         <motion.ellipse
-          cx="35" cy="27.5" rx="3.4" fill="#3B2A1A"
-          animate={{ ry: [4, 4, 0.4, 4] }}
+          cx="35" cy="27.5" rx="3.4" ry="4" fill="#3B2A1A"
+          initial={{ scaleY: 1 }}
+          animate={{ scaleY: [1, 1, 0.1, 1] }}
           transition={{ duration: 3.6, repeat: Infinity, times: [0, 0.92, 0.96, 1], ease: "easeInOut" }}
+          style={{ transformBox: "fill-box", transformOrigin: "center" }}
         />
         <motion.ellipse
-          cx="49" cy="27.5" rx="3.4" fill="#3B2A1A"
-          animate={{ ry: [4, 4, 0.4, 4] }}
+          cx="49" cy="27.5" rx="3.4" ry="4" fill="#3B2A1A"
+          initial={{ scaleY: 1 }}
+          animate={{ scaleY: [1, 1, 0.1, 1] }}
           transition={{ duration: 3.6, repeat: Infinity, times: [0, 0.92, 0.96, 1], ease: "easeInOut" }}
+          style={{ transformBox: "fill-box", transformOrigin: "center" }}
         />
         <circle cx="33.6" cy="25.5" r="1.3" fill="#FFFFFF" />
         <circle cx="47.6" cy="25.5" r="1.3" fill="#FFFFFF" />
