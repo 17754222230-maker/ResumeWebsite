@@ -229,6 +229,13 @@ export default function Galaxy({
   // 热更新通道：saturation/mouseRepulsion/mouseInteraction 变化时直接写 uniform/ref，不重建 WebGL 上下文
   const programRef = useRef<Program | null>(null);
   const mouseInteractionRef = useRef(mouseInteraction);
+  // 热更新目标值：density/glow/twinkle 在 update 循环里 lerp 到目标（平滑过渡不重建）；
+  // starSpeed 用相位累积（phase += dt*speed）替代 t*speed 直算，切换时零相位跳变
+  const targetDensity = useRef(density);
+  const targetGlow = useRef(glowIntensity);
+  const targetTwinkle = useRef(twinkleIntensity);
+  const targetStarSpeed = useRef(starSpeed);
+  const currentStarSpeed = useRef(starSpeed);
 
   // 数组 props 序列化为稳定 key，避免每次渲染新数组导致 WebGL 反复重建
   const focalKey = focal.join(",");
@@ -304,12 +311,19 @@ export default function Galaxy({
     const mesh = new Mesh(gl, { geometry, program });
     programRef.current = program;
     let animateId: number;
+    // starSpeed 相位累积：保证 starSpeed 热更新时星层深度相位连续（无跳变）
+    let starPhase = (performance.now() * 0.001 * currentStarSpeed.current) / 10.0;
+    let lastT: number | null = null;
 
     function update(t: number) {
       animateId = requestAnimationFrame(update);
+      if (lastT === null) lastT = t;
+      const dt = (t - lastT) * 0.001;
+      lastT = t;
       if (!disableAnimation && program) {
         program.uniforms.uTime.value = t * 0.001;
-        program.uniforms.uStarSpeed.value = (t * 0.001 * starSpeed) / 10.0;
+        starPhase += (dt * currentStarSpeed.current) / 10.0;
+        program.uniforms.uStarSpeed.value = starPhase;
       }
 
       const lerpFactor = 0.05;
@@ -322,6 +336,14 @@ export default function Galaxy({
         (program.uniforms.uMouse.value as Float32Array)[0] = smoothMousePos.current.x;
         (program.uniforms.uMouse.value as Float32Array)[1] = smoothMousePos.current.y;
         program.uniforms.uMouseActiveFactor.value = smoothMouseActive.current;
+
+        // density/glow/twinkle/starSpeed 平滑逼近目标值（W 金/白切换的质感过渡）
+        const paramLerp = 0.06;
+        const u = program.uniforms;
+        u.uDensity.value += (targetDensity.current - (u.uDensity.value as number)) * paramLerp;
+        u.uGlowIntensity.value += (targetGlow.current - (u.uGlowIntensity.value as number)) * paramLerp;
+        u.uTwinkleIntensity.value += (targetTwinkle.current - (u.uTwinkleIntensity.value as number)) * paramLerp;
+        currentStarSpeed.current += (targetStarSpeed.current - currentStarSpeed.current) * paramLerp;
       }
 
       renderer.render({ scene: mesh });
@@ -362,13 +384,9 @@ export default function Galaxy({
     shouldReduceMotion,
     focalKey,
     rotationKey,
-    starSpeed,
-    density,
     hueShift,
     disableAnimation,
     speed,
-    glowIntensity,
-    twinkleIntensity,
     rotationSpeed,
     repulsionStrength,
     autoCenterRepulsion,
@@ -387,6 +405,16 @@ export default function Galaxy({
       program.uniforms.uMouseRepulsion.value = mouseRepulsion;
     }
   }, [mouseInteraction, mouseRepulsion, saturation]);
+
+  // density / glowIntensity / twinkleIntensity / starSpeed 热更新：
+  // 均为纯 fragment uniform（density 仅做 UV 缩放，不参与几何生成），
+  // 只写目标 ref，update 循环里 lerp 平滑过渡，不重建 WebGL 上下文
+  useEffect(() => {
+    targetDensity.current = density;
+    targetGlow.current = glowIntensity;
+    targetTwinkle.current = twinkleIntensity;
+    targetStarSpeed.current = starSpeed;
+  }, [density, glowIntensity, twinkleIntensity, starSpeed]);
 
   // prefers-reduced-motion：不渲染 WebGL 星空
   if (shouldReduceMotion) return null;

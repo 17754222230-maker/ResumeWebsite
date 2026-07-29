@@ -41,13 +41,13 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         transition={{ duration: 0.5, delay: index * 0.1 }}
         className="h-full"
       >
-        <Card className="flex h-full flex-col overflow-hidden border-border-light transition-all duration-300 hover:border-gold-500/30 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
+        <Card className="flex h-full flex-col overflow-hidden border-white/10 bg-white/[0.06] backdrop-blur-sm transition-all duration-300 hover:border-gold-500/30 hover:bg-white/[0.09] hover:shadow-lg hover:-translate-y-1 cursor-pointer">
         {/* 卡片顶部装饰条 */}
-        <div className="h-1.5 w-full bg-gradient-to-r from-deep-blue-900 via-gold-500 to-deep-blue-900 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="h-1.5 w-full bg-gradient-to-r from-gold-500/0 via-gold-500 to-gold-500/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
         <CardHeader>
           <div className="flex items-start justify-between gap-4">
-            <CardTitle className="text-lg text-deep-blue-900 md:text-xl">
+            <CardTitle className="text-lg text-text-white md:text-xl">
               {project.title}
             </CardTitle>
             {project.role && (
@@ -56,7 +56,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               </Badge>
             )}
           </div>
-          <CardDescription className="mt-2 leading-relaxed">
+          <CardDescription className="mt-2 leading-relaxed text-text-on-dark/70">
             {project.description}
           </CardDescription>
         </CardHeader>
@@ -65,7 +65,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           {/* 技术标签 */}
           <div className="mb-4 flex flex-wrap gap-1.5">
             {project.tags.map((tag) => (
-              <Badge key={tag} variant="skill" className="text-[11px]">
+              <Badge key={tag} variant="skill" className="border-white/10 bg-white/[0.08] text-text-on-dark text-[11px]">
                 {tag}
               </Badge>
             ))}
@@ -77,7 +77,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               {project.highlights.map((h, i) => (
                 <li
                   key={i}
-                  className="flex items-start gap-2 text-sm text-text-secondary"
+                  className="flex items-start gap-2 text-sm text-text-on-dark/75"
                 >
                   <ChevronRight
                     size={14}
@@ -96,7 +96,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               href={project.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm text-text-secondary transition-colors hover:text-deep-blue-900"
+              className="flex items-center gap-1.5 text-sm text-text-on-dark/70 transition-colors hover:text-gold-400"
             >
               <Code2 size={16} />
               <span>源码</span>
@@ -107,7 +107,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               href={project.links.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm text-text-secondary transition-colors hover:text-deep-blue-900"
+              className="flex items-center gap-1.5 text-sm text-text-on-dark/70 transition-colors hover:text-gold-400"
             >
               <ExternalLink size={16} />
               <span>演示</span>

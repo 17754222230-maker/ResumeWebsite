@@ -26,19 +26,26 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
   if (!project) notFound();
 
   return (
-    <div className="min-h-screen bg-cool-bg">
+    <div
+      className="min-h-screen"
+      style={{
+        // 与首页同一夜色链路：深蓝基调 + 轻微纵向渐变
+        background:
+          "linear-gradient(180deg, #0B1D3A 0%, #16283F 32%, #1B3A5C 72%, #0B1D3A 100%)",
+      }}
+    >
       {/* 顶栏 */}
-      <header className="border-b border-border-light bg-white/80 backdrop-blur-md sticky top-0 z-30">
+      <header className="border-b border-white/10 bg-deep-blue-900/80 backdrop-blur-md sticky top-0 z-30">
         <div className="mx-auto flex max-w-4xl items-center gap-4 px-6 py-4">
           <Link
             href="/#projects"
-            className="flex items-center gap-1.5 text-sm text-text-secondary transition-colors hover:text-deep-blue-900"
+            className="flex items-center gap-1.5 text-sm text-text-on-dark/70 transition-colors hover:text-gold-400"
           >
             <ArrowLeft size={16} />
             <span>返回列表</span>
           </Link>
-          <div className="h-3 w-px bg-border-medium" />
-          <span className="truncate text-sm font-medium text-deep-blue-900">
+          <div className="h-3 w-px bg-white/15" />
+          <span className="truncate text-sm font-medium text-text-white">
             {project.title}
           </span>
         </div>
@@ -51,39 +58,39 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
           <div className="mb-4 flex flex-wrap items-center gap-3">
             <Badge variant="gold">{project.role}</Badge>
             {project.period && (
-              <span className="font-mono text-xs text-text-secondary">
+              <span className="font-mono text-xs text-text-on-dark/60">
                 {project.period}
               </span>
             )}
           </div>
-          <h1 className="mb-4 text-3xl font-bold text-deep-blue-900 md:text-4xl">
+          <h1 className="mb-4 text-3xl font-bold text-text-white md:text-4xl">
             {project.title}
           </h1>
           {project.company && (
-            <p className="mb-4 text-sm text-gold-500">{project.company}</p>
+            <p className="mb-4 text-sm text-gold-400">{project.company}</p>
           )}
-          <p className="max-w-2xl text-base leading-relaxed text-text-secondary">
+          <p className="max-w-2xl text-base leading-relaxed text-text-on-dark/75">
             {project.description}
           </p>
 
           {/* 标签 */}
           <div className="mt-5 flex flex-wrap gap-2">
             {project.tags.map((tag) => (
-              <Badge key={tag} variant="skill" className="text-xs">
+              <Badge key={tag} variant="skill" className="border-white/10 bg-white/[0.08] text-text-on-dark text-xs">
                 {tag}
               </Badge>
             ))}
           </div>
         </section>
 
-        <div className="mb-12 h-px bg-gradient-to-r from-gold-500/30 via-border-light to-transparent" />
+        <div className="mb-12 h-px bg-gradient-to-r from-gold-500/40 via-white/10 to-transparent" />
 
         {/* ===== 项目职责 ===== */}
         {project.responsibilities && project.responsibilities.length > 0 && (
           <Section icon={Target} title="主要职责">
             <ul className="space-y-3">
               {project.responsibilities.map((r, i) => (
-                <li key={i} className="flex items-start gap-3 text-text-secondary">
+                <li key={i} className="flex items-start gap-3 text-text-on-dark/75">
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500" />
                   <span>{r}</span>
                 </li>
@@ -99,23 +106,23 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
               {project.challenges.map((c, i) => (
                 <div
                   key={i}
-                  className="rounded-xl border border-border-light bg-cool-bg-card p-5 shadow-sm"
+                  className="rounded-xl border border-white/10 bg-white/[0.06] p-5 shadow-sm backdrop-blur-sm"
                 >
                   <div className="mb-3">
-                    <h4 className="mb-1 flex items-center gap-2 text-sm font-semibold text-deep-blue-900">
+                    <h4 className="mb-1 flex items-center gap-2 text-sm font-semibold text-text-white">
                       <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
                       难点 {i + 1}
                     </h4>
-                    <p className="text-sm leading-relaxed text-text-secondary">
+                    <p className="text-sm leading-relaxed text-text-on-dark/75">
                       {c.challenge}
                     </p>
                   </div>
-                  <div className="rounded-lg bg-gold-500/5 p-3">
-                    <h4 className="mb-1 flex items-center gap-1.5 text-sm font-medium text-gold-500">
+                  <div className="rounded-lg bg-gold-500/10 p-3">
+                    <h4 className="mb-1 flex items-center gap-1.5 text-sm font-medium text-gold-400">
                       <CheckCircle2 size={14} />
                       解决方案
                     </h4>
-                    <p className="text-sm leading-relaxed text-text-secondary">
+                    <p className="text-sm leading-relaxed text-text-on-dark/75">
                       {c.solution}
                     </p>
                   </div>
@@ -132,9 +139,9 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
               {project.achievements.map((a, i) => (
                 <div
                   key={i}
-                  className="rounded-xl border border-gold-500/10 bg-gradient-to-br from-cool-bg-card to-gold-500/[0.02] p-4 text-center shadow-sm"
+                  className="rounded-xl border border-gold-500/25 bg-gradient-to-br from-white/[0.07] to-gold-500/[0.05] p-4 text-center shadow-sm backdrop-blur-sm"
                 >
-                  <p className="text-sm font-medium text-deep-blue-900">
+                  <p className="text-sm font-medium text-text-on-dark">
                     {a}
                   </p>
                 </div>
@@ -151,7 +158,7 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
                 <Badge
                   key={t}
                   variant="skill"
-                  className="text-xs transition-all hover:bg-deep-blue-900 hover:text-gold-500"
+                  className="border-white/10 bg-white/[0.08] text-text-on-dark text-xs transition-all hover:bg-gold-500/15 hover:text-gold-400"
                 >
                   {t}
                 </Badge>
@@ -161,10 +168,10 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
         )}
 
         {/* ===== 底部导航 ===== */}
-        <div className="mt-16 flex items-center justify-between border-t border-border-light pt-8">
+        <div className="mt-16 flex items-center justify-between border-t border-white/10 pt-8">
           <Link
             href="/#projects"
-            className="flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-deep-blue-900"
+            className="flex items-center gap-2 text-sm text-text-on-dark/70 transition-colors hover:text-gold-400"
           >
             <ArrowLeft size={14} />
             <span>返回项目列表</span>
@@ -174,7 +181,7 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
               href={project.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm text-text-secondary transition-colors hover:text-deep-blue-900"
+              className="flex items-center gap-1.5 text-sm text-text-on-dark/70 transition-colors hover:text-gold-400"
             >
               <Code2 size={14} />
               <span>查看源码</span>
@@ -205,9 +212,9 @@ function Section({
     <section className="mb-12">
       <div className="mb-5 flex items-center gap-2">
         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold-500/10">
-          <Icon size={16} className="text-gold-500" />
+          <Icon size={16} className="text-gold-400" />
         </div>
-        <h2 className="text-lg font-semibold text-deep-blue-900">{title}</h2>
+        <h2 className="text-lg font-semibold text-text-white">{title}</h2>
       </div>
       {children}
     </section>

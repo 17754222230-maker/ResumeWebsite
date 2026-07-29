@@ -122,8 +122,8 @@ export const skills: Skill[] = [
 export const projects: Project[] = [
   // ===== 飞猪项目（2026.04 - 至今）=====
   {
-    slug: "fliggy-ticket-agent",
-    title: "飞猪机票自营采购预订系统（agent-flight-buy）",
+    slug: "fliggy-flight-booking",
+    title: "飞猪机票自营采购预订系统",
     description:
       "飞猪机票交易域的核心预订引擎，B2C/B2B/B2B2C 全业务域预订占编的统一通道，覆盖验座、验价、询价、预订、取消、支付校验、辅营预订等 13 条核心业务流。在‘100% 保障出票’的承诺下，收益换货决策引擎从多个供给候选里实时选收益最优的供给，失败重选次优、兜底预订、静默换货层层保障。我负责预订主链路与收益换货决策引擎的开发。",
     tags: ["Java", "DDD 六边形架构", "TBBPM", "HSF", "Tair", "高并发"],

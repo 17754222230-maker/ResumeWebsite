@@ -10,8 +10,10 @@ import AiAgentCharacter from "@/components/AiAgentCharacter";
 
 /**
  * 首页客户端包装：持有 Navbar「W」与 Galaxy 星空的联动状态。
- * 默认态：W 白色，星空开启鼠标斥力跟随（saturation 0.7）；
- * 点击 W 切换：W 金色，星空关闭鼠标跟随且 saturation 0.2；再点切回。
+ * 默认态：W 白色，星空开启鼠标斥力跟随（saturation 0.7，稀疏静谧）；
+ * 点击 W 切换（金色锁定态）：关闭鼠标跟随，星辰明显增多（density 0.3→1.3）、
+ * 闪烁流动感增强（glow 0.7 / twinkle 0.5 / starSpeed 0.45），saturation 0.4 保持金色调不发灰；
+ * 再点切回，全部参数经 Galaxy 内部 lerp 平滑恢复原值，严格 toggle 对称。
  */
 export default function HomeClient() {
   const [starLocked, setStarLocked] = useState(false);
@@ -34,11 +36,11 @@ export default function HomeClient() {
       >
         <Galaxy
           hueShift={180}
-          saturation={starLocked ? 0.2 : 0.7}
-          glowIntensity={0.5}
-          twinkleIntensity={0.2}
-          density={0.3}
-          starSpeed={0.2}
+          saturation={starLocked ? 0.4 : 0.7}
+          glowIntensity={starLocked ? 0.7 : 0.5}
+          twinkleIntensity={starLocked ? 0.5 : 0.2}
+          density={starLocked ? 1.3 : 0.3}
+          starSpeed={starLocked ? 0.45 : 0.2}
           speed={0.4}
           rotationSpeed={0.1}
           mouseInteraction={!starLocked}

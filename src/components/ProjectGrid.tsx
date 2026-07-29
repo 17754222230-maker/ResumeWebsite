@@ -11,10 +11,10 @@ export default function ProjectGrid() {
       id="projects"
       className="relative py-24 overflow-hidden"
       style={{
-        // 顶端承接经历区 #D9F0FB，主体用稍深一档的淡蓝 #B3E0F2→#93CCE8，
-        // 尾端仍向深蓝收敛，缓和与 Footer（深蓝底）的衔接
+        // 顶端承接经历区尾端 #182E4A，主体用更蓝一档的 #1B3A5C，
+        // 尾端收敛到 #0B1D3A 与 Footer（bg-deep-blue-900）同色衔接
         background:
-          "linear-gradient(180deg, #D9F0FB 0%, #B3E0F2 25%, #93CCE8 78%, #5A94B8 92%, #2E5F80 100%)",
+          "linear-gradient(180deg, #182E4A 0%, #1B3A5C 18%, #1B3A5C 80%, #132C47 92%, #0B1D3A 100%)",
       }}
     >
       {/* 纵深背景层 — 动态光晕 */}
@@ -23,7 +23,7 @@ export default function ProjectGrid() {
         <motion.div
           animate={{ x: [0, -20, 0], y: [0, 15, 0] }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-deep-blue-900/10 blur-[100px]"
+          className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-deep-blue-500/15 blur-[100px]"
         />
         {/* 金色光晕 — 反向漂移 */}
         <motion.div
@@ -37,7 +37,7 @@ export default function ProjectGrid() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 100% 60% at 50% 60%, rgba(11,29,58,0.03) 0%, transparent 70%)",
+            "radial-gradient(ellipse 100% 60% at 50% 60%, rgba(251,191,36,0.05) 0%, transparent 70%)",
         }}
       />
 
@@ -53,11 +53,11 @@ export default function ProjectGrid() {
           <Badge variant="gold" className="mb-4">
             项目
           </Badge>
-          <h2 className="mb-4 text-3xl font-bold text-deep-blue-900 md:text-4xl">
+          <h2 className="mb-4 text-3xl font-bold text-text-white md:text-4xl">
             项目经历
           </h2>
           <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-gold-500 to-gold-300" />
-          <p className="mt-4 max-w-xl mx-auto text-text-secondary">
+          <p className="mt-4 max-w-xl mx-auto text-text-on-dark/70">
             以下是我参与和主导的部分项目，涵盖了全栈开发、AI 集成和 DevOps 自动化。
           </p>
         </motion.div>

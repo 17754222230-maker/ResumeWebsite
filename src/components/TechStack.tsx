@@ -33,9 +33,9 @@ export default function TechStack() {
       id="tech-stack"
       className="relative py-24 overflow-hidden"
       style={{
-        // 顶端从首屏深色 #120F17 渐变过渡到经历区淡蓝（调淡一档 #D9F0FB），滚动衔接不生硬
+        // 同一夜色世界：首屏 #120F17 缓升到深藏蓝主体 #16283F，尾端接项目区 #182E4A
         background:
-          "linear-gradient(180deg, #120F17 0%, #45536E 6%, #9BC4DD 12%, #D9F0FB 18%, #D9F0FB 100%)",
+          "linear-gradient(180deg, #120F17 0%, #131A26 7%, #152337 14%, #16283F 22%, #16283F 86%, #182E4A 100%)",
       }}
     >
       {/* 纵深背景层 — 动态光晕 */}
@@ -50,7 +50,7 @@ export default function TechStack() {
         <motion.div
           animate={{ x: [0, -20, 0], y: [0, 20, 0] }}
           transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-deep-blue-900/10 blur-[100px]"
+          className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-deep-blue-500/15 blur-[100px]"
         />
       </div>
       {/* 微渐变背景 — 往中心聚拢的纵深感 */}
@@ -58,7 +58,7 @@ export default function TechStack() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 100% 60% at 50% 30%, rgba(212,175,55,0.03) 0%, transparent 70%)",
+            "radial-gradient(ellipse 100% 60% at 50% 30%, rgba(212,175,55,0.05) 0%, transparent 70%)",
         }}
       />
 
@@ -74,11 +74,11 @@ export default function TechStack() {
           <Badge variant="gold" className="mb-4">
             技术能力
           </Badge>
-          <h2 className="mb-4 text-3xl font-bold text-deep-blue-900 md:text-4xl">
+          <h2 className="mb-4 text-3xl font-bold text-text-white md:text-4xl">
             工作经历 &amp; 技术栈
           </h2>
           <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-gold-500 to-gold-300" />
-          <p className="mx-auto mt-4 max-w-xl text-text-secondary">
+          <p className="mx-auto mt-4 max-w-xl text-text-on-dark/70">
             Java 后端出身，做过 MES、ERP、在线教育到机票交易系统，近期在业务里落地 AI 能力
           </p>
         </motion.div>
@@ -94,7 +94,7 @@ export default function TechStack() {
           {/* 小标题 */}
           <motion.div variants={itemVariants} className="mb-6 flex items-center gap-3">
             <span className="h-4 w-1 rounded-full bg-gold-500" />
-            <h3 className="text-lg font-semibold text-deep-blue-900">工作经历</h3>
+            <h3 className="text-lg font-semibold text-text-white">工作经历</h3>
           </motion.div>
 
           {/* 双列卡片 */}
@@ -103,20 +103,20 @@ export default function TechStack() {
               <motion.div
                 key={i}
                 variants={itemVariants}
-                className="rounded-xl border border-border-light bg-cool-bg-card p-5 shadow-sm transition-shadow hover:shadow-md"
+                className="rounded-xl border border-white/10 bg-white/[0.06] p-5 shadow-sm backdrop-blur-sm transition-all hover:border-gold-500/25 hover:bg-white/[0.09]"
               >
                 {/* 头部：时间段 + 角色 */}
                 <div className="mb-3 flex flex-wrap items-center gap-2">
-                  <span className="inline-block rounded-full bg-gold-500/10 px-2.5 py-0.5 font-mono text-xs text-gold-500">
+                  <span className="inline-block rounded-full bg-gold-500/10 px-2.5 py-0.5 font-mono text-xs text-gold-400">
                     {exp.period}
                   </span>
-                  <Badge variant="default" className="text-[10px] font-normal">
+                  <Badge variant="default" className="border-white/10 text-[10px] font-normal">
                     {exp.role}
                   </Badge>
                 </div>
 
                 {/* 公司名称 */}
-                <h4 className="mb-3 text-base font-semibold text-deep-blue-900">
+                <h4 className="mb-3 text-base font-semibold text-text-white">
                   {exp.company}
                 </h4>
 
@@ -125,7 +125,7 @@ export default function TechStack() {
                   {exp.highlights.map((h, j) => (
                     <li
                       key={j}
-                      className="flex items-start gap-2 text-sm text-text-secondary"
+                      className="flex items-start gap-2 text-sm text-text-on-dark/75"
                     >
                       <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-gold-400" />
                       <span>{h}</span>
@@ -147,7 +147,7 @@ export default function TechStack() {
           {/* 小标题 */}
           <motion.div variants={itemVariants} className="mb-6 flex items-center gap-3">
             <span className="h-4 w-1 rounded-full bg-gold-500" />
-            <h3 className="text-lg font-semibold text-deep-blue-900">技术栈</h3>
+            <h3 className="text-lg font-semibold text-text-white">技术栈</h3>
           </motion.div>
 
           {/* ★ 重点卡片：后端 + AI */}
@@ -158,11 +158,11 @@ export default function TechStack() {
                 <motion.div
                   key={cat}
                   variants={itemVariants}
-                  className="rounded-xl border border-gold-500/20 bg-gradient-to-br from-cool-bg-card to-gold-500/[0.03] p-5 shadow-sm transition-shadow hover:shadow-md"
+                  className="rounded-xl border border-gold-500/25 bg-gradient-to-br from-white/[0.07] to-gold-500/[0.05] p-5 shadow-sm backdrop-blur-sm transition-all hover:border-gold-500/40"
                 >
                   <div className="mb-3 flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-gold-500" />
-                    <h4 className="text-sm font-semibold text-deep-blue-900">
+                    <h4 className="text-sm font-semibold text-text-white">
                       {cat}
                     </h4>
                     <Badge
@@ -177,7 +177,7 @@ export default function TechStack() {
                       <Badge
                         key={s.name}
                         variant="skill"
-                        className="text-[11px] transition-all hover:bg-deep-blue-900 hover:text-gold-500"
+                        className="border-white/10 bg-white/[0.08] text-text-on-dark text-[11px] transition-all hover:bg-gold-500/15 hover:text-gold-400"
                       >
                         {s.name}
                       </Badge>
@@ -196,9 +196,9 @@ export default function TechStack() {
                 <motion.div
                   key={cat}
                   variants={itemVariants}
-                  className="rounded-xl border border-border-light bg-cool-bg-card p-5 shadow-sm transition-shadow hover:shadow-md"
+                  className="rounded-xl border border-white/10 bg-white/[0.06] p-5 shadow-sm backdrop-blur-sm transition-all hover:border-gold-500/25 hover:bg-white/[0.09]"
                 >
-                  <h4 className="mb-3 flex items-center gap-2 text-sm font-semibold text-deep-blue-900">
+                  <h4 className="mb-3 flex items-center gap-2 text-sm font-semibold text-text-white">
                     <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
                     {cat}
                   </h4>
@@ -207,7 +207,7 @@ export default function TechStack() {
                       <Badge
                         key={s.name}
                         variant="skill"
-                        className="text-[11px]"
+                        className="border-white/10 bg-white/[0.08] text-text-on-dark text-[11px]"
                       >
                         {s.name}
                       </Badge>

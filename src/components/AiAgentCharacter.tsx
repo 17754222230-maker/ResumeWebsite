@@ -59,151 +59,150 @@ export default function AiAgentCharacter() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.9 }}
             transition={{ duration: 0.25 }}
-            className="absolute bottom-full right-0 mb-5 origin-bottom-right whitespace-nowrap rounded-xl bg-white px-5 py-3 text-sm text-deep-blue-900 shadow-lg"
+            className="absolute bottom-full right-0 -mb-3 origin-bottom-right whitespace-nowrap rounded-xl bg-white px-5 py-3 text-sm text-deep-blue-900 shadow-lg"
           >
             有什么问题随时询问哦~
-            <div className="absolute -bottom-1 right-8 h-3 w-3 rotate-45 bg-white" />
+            <div className="absolute -bottom-1 right-24 h-3 w-3 rotate-45 bg-white" />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* SVG 卡通 Q 版阿拉丁神灯 — 金属光泽灯体 + 青蓝魔法烟雾 + 拟人大眼 */}
+      {/* SVG Q 版动漫男生头像 — 深蓝圆底衬 + 金色描边圈 + 金色耳麦 */}
       <motion.div
         animate={{ y: [0, -5, 0] }}
         transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
       >
       <svg
         width="200"
-        height="300"
-        viewBox="0 0 100 150"
+        height="192"
+        viewBox="0 24 100 96"
         className="drop-shadow-xl"
-        aria-label="AI 助手神灯"
+        aria-label="AI 助手头像"
       >
         <defs>
-          {/* 灯体金属渐变：亮金 → 金 → 暗金（明暗过渡出金属感） */}
-          <linearGradient id="lampGoldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          {/* 头像底衬：深蓝径向渐变（上亮下深，呼应夜色主题） */}
+          <radialGradient id="avatarBgGrad" cx="50%" cy="32%" r="75%">
+            <stop offset="0%" stopColor="#2E6398" />
+            <stop offset="55%" stopColor="#1D4A7A" />
+            <stop offset="100%" stopColor="#0B1D3A" />
+          </radialGradient>
+          {/* 金色描边圈：亮金 → 金 → 暗金 */}
+          <linearGradient id="avatarRingGrad" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#FDE68A" />
-            <stop offset="45%" stopColor="#FBBF24" />
+            <stop offset="50%" stopColor="#FBBF24" />
             <stop offset="100%" stopColor="#D97706" />
           </linearGradient>
-          {/* 灯盖：gold-300 → gold-500 */}
-          <linearGradient id="lampLidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#FCD34D" />
-            <stop offset="100%" stopColor="#F59E0B" />
+          {/* 发色：深蓝上浅下深 */}
+          <linearGradient id="avatarHairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#1D4A7A" />
+            <stop offset="100%" stopColor="#0F2B4C" />
           </linearGradient>
-          {/* 魔法烟雾：底部金 → 青蓝 → 透明（金水意境） */}
-          <linearGradient id="lampSmokeGrad" x1="0%" y1="100%" x2="0%" y2="0%">
-            <stop offset="0%" stopColor="rgba(245,158,11,0.85)" />
-            <stop offset="45%" stopColor="rgba(127,182,224,0.8)" />
-            <stop offset="100%" stopColor="rgba(127,182,224,0)" />
+          {/* 西装肋部：深蓝渐暗 */}
+          <linearGradient id="avatarJacketGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#1D4A7A" />
+            <stop offset="100%" stopColor="#0B1D3A" />
           </linearGradient>
-          {/* 柔和金晕：与深色首屏 / 淡蓝分区两种背景解耦 */}
-          <radialGradient id="lampGlowGrad" cx="50%" cy="50%" r="50%">
+          {/* 柔和金晕：与深色首屏 / 深蓝分区两种背景解耦 */}
+          <radialGradient id="avatarGlowGrad" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="rgba(251,191,36,0.30)" />
             <stop offset="55%" stopColor="rgba(251,191,36,0.12)" />
             <stop offset="100%" stopColor="rgba(251,191,36,0)" />
           </radialGradient>
+          {/* 圆形头像裁剪 */}
+          <clipPath id="avatarClip">
+            <circle cx="50" cy="72" r="32" />
+          </clipPath>
         </defs>
 
         {/* 光晕包裹层 */}
-        <circle cx="48" cy="72" r="46" fill="url(#lampGlowGrad)" />
+        <circle cx="50" cy="72" r="46" fill="url(#avatarGlowGrad)" />
 
-        {/* 壶嘴魔法烟雾（静态 path + y/opacity 循环；hover 时加速上冒） */}
-        <motion.path
-          d="M 12.5 49 C 9.5 44 15 40 12 34 C 9.5 29.5 14 25 12.5 20"
-          stroke="url(#lampSmokeGrad)"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          fill="none"
-          animate={{ y: [1, -9], opacity: [0, 0.9, 0] }}
-          transition={{ duration: isHovered ? 1.3 : 2.6, repeat: Infinity, ease: "easeOut" }}
-        />
-        <motion.path
-          d="M 16 48 C 14.5 44 19 40.5 17.5 35 C 16.5 31 20 27 19 23"
-          stroke="url(#lampSmokeGrad)"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          fill="none"
-          animate={{ y: [1, -8], opacity: [0, 0.75, 0] }}
-          transition={{ duration: isHovered ? 1.6 : 3.2, repeat: Infinity, ease: "easeOut", delay: 0.9 }}
-        />
-        {/* 壶口雾团（scale/opacity 呼吸） */}
+        {/* 上浮金色微粒（y/opacity 循环，几何属性全静态） */}
         <motion.circle
-          cx="13" cy="48.5" r="2" fill="#7FB6E0"
-          animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.5, 0.2] }}
-          transition={{ duration: isHovered ? 1.3 : 2.6, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformBox: "fill-box", transformOrigin: "center" }}
-        />
-        {/* 上浮金色魔法微粒（y/opacity 循环，几何属性全静态） */}
-        <motion.circle
-          cx="20" cy="42" r="1.2" fill="#FCD34D"
-          animate={{ y: [0, -10], opacity: [0, 0.9, 0] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut", delay: 0.5 }}
+          cx="79" cy="46" r="1.2" fill="#FCD34D"
+          animate={{ y: [0, -9], opacity: [0, 0.9, 0] }}
+          transition={{ duration: 2.6, repeat: Infinity, ease: "easeOut", delay: 0.4 }}
         />
         <motion.circle
-          cx="7" cy="40" r="0.9" fill="#FBBF24"
-          animate={{ y: [0, -8], opacity: [0, 0.8, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeOut", delay: 1.4 }}
+          cx="20" cy="52" r="0.9" fill="#FBBF24"
+          animate={{ y: [0, -7], opacity: [0, 0.8, 0] }}
+          transition={{ duration: 3.2, repeat: Infinity, ease: "easeOut", delay: 1.3 }}
         />
 
-        {/* 灯体整组：平时轻晃（飘带摆动的迁移载体），hover 俏皮摇摆（挥手的迁移载体），锚点在底座中心 */}
+        {/* 头像整组：平时轻晃（原灯体轻晃的迁移载体），hover 俏皮点头摇摆（原 hover 摇摆的迁移载体） */}
         <motion.g
-          animate={isHovered ? { rotate: [0, -7, 5, -7, 5, 0] } : { rotate: [0, -1.6, 0, 1.6, 0] }}
+          animate={isHovered ? { rotate: [0, -6, 4, -6, 4, 0] } : { rotate: [0, -1.6, 0, 1.6, 0] }}
           transition={isHovered ? { duration: 1.4, repeat: Infinity, ease: "easeInOut" } : { duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
           style={{ transformBox: "fill-box", transformOrigin: "50% 100%" }}
         >
-          {/* 底座：短脚 + 托盘 */}
-          <path d="M 44 92.5 Q 50 95.5 56 92.5 L 58 97 Q 50 100.5 42 97 Z" fill="url(#lampGoldGrad)" />
-          <ellipse cx="50" cy="99" rx="13" ry="3.2" fill="url(#lampGoldGrad)" stroke="#B45309" strokeWidth="0.5" opacity="0.98" />
+          {/* 圆形深蓝底衬 */}
+          <circle cx="50" cy="72" r="32" fill="url(#avatarBgGrad)" />
 
-          {/* 把手（优雅 S 弯，右侧）+ 内侧暗线提体积 */}
-          <path d="M 70 66 C 82 62 88 72 82 80 C 79 84 74 86 70 85" stroke="url(#lampGoldGrad)" strokeWidth="3.4" strokeLinecap="round" fill="none" />
-          <path d="M 71 67.5 C 80.5 64.5 85.5 72.5 80.5 79 C 78 82.2 74.5 84 71.5 83.4" stroke="#B45309" strokeWidth="0.8" strokeLinecap="round" fill="none" opacity="0.4" />
+          {/* 头像内容（圆形裁剪） */}
+          <g clipPath="url(#avatarClip)">
+            {/* 肩部西装 + 白衬领 + 金色衣扣 */}
+            <path d="M 24 106 C 29 90 39 85 44 84.5 L 46 83.5 Q 50 86 54 83.5 L 56 84.5 C 61 85 71 90 76 106 Z" fill="url(#avatarJacketGrad)" />
+            <path d="M 45.5 84 L 50 90.5 L 54.5 84 Q 50 86.8 45.5 84 Z" fill="#E8F1FA" />
+            <circle cx="50" cy="94" r="1" fill="#FBBF24" />
+            <circle cx="50" cy="99" r="1" fill="#FBBF24" opacity="0.85" />
 
-          {/* 壶嘴（左侧上翘）+ 壶口 */}
-          <path d="M 34 72 C 24 70 15 64 11.5 53 C 11 51.3 12.2 50.2 13.8 51 C 17.5 57 24 61.5 34 63.5 Z" fill="url(#lampGoldGrad)" stroke="#B45309" strokeWidth="0.5" />
-          <ellipse cx="12.8" cy="51.2" rx="1.6" ry="1.1" fill="#92400E" opacity="0.85" />
+            {/* 脖子 */}
+            <path d="M 46 79 L 46 84 Q 50 86 54 84 L 54 79 Z" fill="#F2C39B" />
 
-          {/* 胖圆灯肚（金属渐变 + 暗金描边，浅底可见性） */}
-          <ellipse cx="50" cy="77" rx="23" ry="16.5" fill="url(#lampGoldGrad)" stroke="#B45309" strokeWidth="0.6" opacity="0.98" />
-          {/* 金属高光带 + 镜面反光弧（左亮右暗） */}
-          <path d="M 34 71 Q 38 63 47 60.8" stroke="#FFF7E0" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.65" />
-          <ellipse cx="38" cy="68.5" rx="2" ry="3.5" fill="#FFFFFF" opacity="0.5" transform="rotate(-22 38 68.5)" />
-          <path d="M 66.5 69.5 Q 69.5 76 66.5 83.5" stroke="#B45309" strokeWidth="1.2" strokeLinecap="round" fill="none" opacity="0.38" />
+            {/* 耳朵 + 脸 */}
+            <ellipse cx="34.5" cy="67" rx="2.2" ry="3.2" fill="#FFDFC4" />
+            <ellipse cx="65.5" cy="67" rx="2.2" ry="3.2" fill="#FFDFC4" />
+            <ellipse cx="50" cy="67" rx="15.5" ry="14.5" fill="#FFDFC4" />
 
-          {/* 灯肚水波刻线（金水流转点缀） */}
-          <path d="M 39 87 Q 44.5 84.6 50 87 Q 55.5 89.4 61 87" stroke="#B45309" strokeWidth="1" strokeLinecap="round" fill="none" opacity="0.5" />
-          <path d="M 43 90 Q 46.5 88.4 50 90 Q 53.5 91.6 57 90" stroke="#B45309" strokeWidth="0.8" strokeLinecap="round" fill="none" opacity="0.4" />
+            {/* 干净短发（深蓝）+ 刘海 + 金色发丝高光 */}
+            <path d="M 34.5 67 C 33 48 41 44 50 44 C 59 44 67 48 65.5 67 C 63.5 59 60.5 57 56.5 60.5 C 53.5 55.5 47 55.5 44 60 C 40.5 56.5 36.5 59.5 34.5 67 Z" fill="url(#avatarHairGrad)" />
+            <path d="M 42 49.5 Q 46 47.5 50.5 48" stroke="#FBBF24" strokeWidth="1" strokeLinecap="round" fill="none" opacity="0.6" />
+            <path d="M 55 50 Q 58.5 51.5 60.5 54.5" stroke="#FCD34D" strokeWidth="0.8" strokeLinecap="round" fill="none" opacity="0.5" />
 
-          {/* 灯盖：圆顶 + 盖沿 + 小圆钮 + 深蓝宝石 */}
-          <path d="M 38.5 63.5 C 40 55.5 60 55.5 61.5 63.5 Z" fill="url(#lampLidGrad)" />
-          <ellipse cx="50" cy="63.5" rx="12" ry="2.8" fill="url(#lampGoldGrad)" stroke="#B45309" strokeWidth="0.5" />
-          <circle cx="50" cy="54.5" r="2.4" fill="url(#lampLidGrad)" stroke="#B45309" strokeWidth="0.5" />
-          <circle cx="49.2" cy="53.8" r="0.7" fill="#FFF7E0" opacity="0.85" />
-          <circle cx="50" cy="60.2" r="1.7" fill="#1D4A7A" stroke="#FBBF24" strokeWidth="0.6" />
+            {/* 眉毛 */}
+            <path d="M 40.5 62.5 Q 43.5 61 46 62.3" stroke="#123A63" strokeWidth="1" strokeLinecap="round" fill="none" />
+            <path d="M 54 62.3 Q 56.5 61 59.5 62.5" stroke="#123A63" strokeWidth="1" strokeLinecap="round" fill="none" />
 
-          {/* 拟人大眼（眨眼：静态 rx/ry + scaleY，规避属性关键帧竞态） */}
-          <motion.ellipse
-            cx="43" cy="74" rx="2.4" ry="3.4" fill="#0B2A4A"
-            initial={{ scaleY: 1 }}
-            animate={{ scaleY: [1, 1, 0.1, 1] }}
-            transition={{ duration: 3.6, repeat: Infinity, times: [0, 0.92, 0.96, 1], ease: "easeInOut" }}
-            style={{ transformBox: "fill-box", transformOrigin: "center" }}
-          />
-          <motion.ellipse
-            cx="57" cy="74" rx="2.4" ry="3.4" fill="#0B2A4A"
-            initial={{ scaleY: 1 }}
-            animate={{ scaleY: [1, 1, 0.1, 1] }}
-            transition={{ duration: 3.6, repeat: Infinity, times: [0, 0.92, 0.96, 1], ease: "easeInOut" }}
-            style={{ transformBox: "fill-box", transformOrigin: "center" }}
-          />
-          <circle cx="42.2" cy="72.6" r="1" fill="#FFFFFF" />
-          <circle cx="56.2" cy="72.6" r="1" fill="#FFFFFF" />
+            {/* 大眼睛（眨眼：静态 rx/ry + scaleY，规避属性关键帧竞态） */}
+            <motion.ellipse
+              cx="43.5" cy="66.5" rx="2.3" ry="3.1" fill="#0B2A4A"
+              initial={{ scaleY: 1 }}
+              animate={{ scaleY: [1, 1, 0.1, 1] }}
+              transition={{ duration: 3.6, repeat: Infinity, times: [0, 0.92, 0.96, 1], ease: "easeInOut" }}
+              style={{ transformBox: "fill-box", transformOrigin: "center" }}
+            />
+            <motion.ellipse
+              cx="56.5" cy="66.5" rx="2.3" ry="3.1" fill="#0B2A4A"
+              initial={{ scaleY: 1 }}
+              animate={{ scaleY: [1, 1, 0.1, 1] }}
+              transition={{ duration: 3.6, repeat: Infinity, times: [0, 0.92, 0.96, 1], ease: "easeInOut" }}
+              style={{ transformBox: "fill-box", transformOrigin: "center" }}
+            />
+            <circle cx="42.8" cy="65.3" r="0.9" fill="#FFFFFF" />
+            <circle cx="55.8" cy="65.3" r="0.9" fill="#FFFFFF" />
 
-          {/* 微笑 + 暗金腮红 */}
-          <path d="M 46.5 80 Q 50 82.6 53.5 80" stroke="#0B2A4A" strokeWidth="1.2" strokeLinecap="round" fill="none" />
-          <ellipse cx="37.5" cy="78.5" rx="2.2" ry="1.4" fill="#D97706" opacity="0.45" />
-          <ellipse cx="62.5" cy="78.5" rx="2.2" ry="1.4" fill="#D97706" opacity="0.45" />
+            {/* 亲和微笑 + 暖色腮红 */}
+            <path d="M 46.5 74 Q 50 76.8 53.5 74" stroke="#0B2A4A" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+            <ellipse cx="38.5" cy="71.5" rx="2.2" ry="1.3" fill="#F59E0B" opacity="0.35" />
+            <ellipse cx="61.5" cy="71.5" rx="2.2" ry="1.3" fill="#F59E0B" opacity="0.35" />
+
+            {/* 金色耳麦：头箭 + 耳罩 + 麦克风臂（AI 助手角色感） */}
+            <path d="M 33.5 57 C 34 42.5 66 42.5 66.5 57" stroke="#F59E0B" strokeWidth="2.4" strokeLinecap="round" fill="none" />
+            <ellipse cx="34" cy="63" rx="2.6" ry="3.6" fill="url(#avatarRingGrad)" stroke="#B45309" strokeWidth="0.5" />
+            <ellipse cx="66" cy="63" rx="2.6" ry="3.6" fill="url(#avatarRingGrad)" stroke="#B45309" strokeWidth="0.5" />
+            <path d="M 35.5 66.5 C 37.5 73.5 41 76 45.5 76.3" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+            {/* 麦克风头：呼吸律动（scale/opacity） */}
+            <motion.circle
+              cx="46.3" cy="76.3" r="1.5" fill="#FBBF24"
+              animate={{ scale: [1, 1.25, 1], opacity: [0.75, 1, 0.75] }}
+              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+              style={{ transformBox: "fill-box", transformOrigin: "center" }}
+            />
+          </g>
+
+          {/* 金色描边圈 + 外圈淡金光环 */}
+          <circle cx="50" cy="72" r="32" fill="none" stroke="url(#avatarRingGrad)" strokeWidth="2.2" />
+          <circle cx="50" cy="72" r="34.5" fill="none" stroke="#FBBF24" strokeWidth="1" opacity="0.22" />
         </motion.g>
       </svg>
       </motion.div>

@@ -1,8 +1,53 @@
 /**
  * AI 助手系统提示词
  * 约束输出范围、防御 prompt injection、规定回复风格
+ *
+ * 知识摘要在模块加载时从 knowledge.ts 动态拼装，
+ * knowledge.ts 更新后 prompt 自动同步，无需手动维护快照。
  */
-export const SYSTEM_PROMPT = `你是王仔研（Wangziyan）的个人 AI 助手，在简历网站上帮助访客了解他。
+import { profile, projects, experiences, getSkillCategories, getSkillsByCategory } from "@/lib/knowledge";
+
+/**
+ * 项目摘要（标题/角色/时间/一句话简介/亮点），细节由工具按需查询
+ */
+function buildProjectDigest(): string {
+  return projects
+    .map((p) => {
+      const lines = [
+        `### ${p.title}（slug: ${p.slug}）`,
+        `- 角色：${p.role ?? "开发工程师"}${p.period ? ` ｜ 时间：${p.period}` : ""}${p.company ? ` ｜ ${p.company}` : ""}`,
+        `- 简介：${p.description}`,
+      ];
+      if (p.highlights?.length) {
+        lines.push(`- 亮点：${p.highlights.join("；")}`);
+      }
+      return lines.join("\n");
+    })
+    .join("\n\n");
+}
+
+/**
+ * 工作经历摘要
+ */
+function buildExperienceDigest(): string {
+  return experiences
+    .map(
+      (e) =>
+        `- ${e.company} ｜ ${e.role} ｜ ${e.period}\n  ${e.description}\n  ${e.highlights.join("\n  ")}`,
+    )
+    .join("\n");
+}
+
+/**
+ * 技能摘要（按分类）
+ */
+function buildSkillDigest(): string {
+  return getSkillCategories()
+    .map((c) => `- ${c}：${getSkillsByCategory(c).map((s) => s.name).join("、")}`)
+    .join("\n");
+}
+
+export const SYSTEM_PROMPT = `你是${profile.name}（王仔研）的个人 AI 助手，在简历网站上帮助访客了解他。
 
 ## 核心规则（必须遵守）
 
@@ -16,18 +61,24 @@ export const SYSTEM_PROMPT = `你是王仔研（Wangziyan）的个人 AI 助手�
 
 5. **回复风格**：专业、友好、简洁。中文回答，适当使用emoji增加亲和力。回答控制在 200 字以内。
 
-## 输出格式示范
+6. **工具使用**：下方知识摘要用于快速回答概览类问题；当访客追问某个项目的职责细节、难点与解决方案、项目成果、完整技术栈时，调用 get_projects 工具（传入对应 slug）获取完整信息后再回答。
 
-Q: 你擅长什么技术？
-A: 我主要深耕 Java 后端技术栈 💻，包括 SpringBoot、SpringCloudAlibaba 微服务体系、Redis 缓存、RocketMQ 消息队列等。同时也在积极拓展 AI 领域，使用 Spring AI、LangChain 等框架进行 AI 应用开发。
+## 个人信息
 
-Q: 你做过什么项目？
-A: 我参与过多个项目，近期主要有：
-• 飞猪机票代理商经营项目（ToC 高并发核心域）
-• 商家运营后台 AI 提效项目（Spring AI 智能解析）
-• 中铝国贸 ERP 系统
-• 皖江在线教育云平台
-等多个企业级项目。你对哪个项目感兴趣？我可以详细介绍 😊
+- 姓名：${profile.name} ｜ 职位：${profile.title}
+- 简介：${profile.summary}
+
+## 技能概览
+
+${buildSkillDigest()}
+
+## 工作经历
+
+${buildExperienceDigest()}
+
+## 项目经历摘要
+
+${buildProjectDigest()}
 `;
 
 /**
