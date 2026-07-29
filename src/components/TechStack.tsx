@@ -33,9 +33,9 @@ export default function TechStack() {
       id="tech-stack"
       className="relative py-24 overflow-hidden"
       style={{
-        // 顶端从首屏深色 #120F17 渐变过渡到经历区天蓝（较亮档 #A8DCF5），滚动衔接不生硬
+        // 顶端从首屏深色 #120F17 渐变过渡到经历区淡蓝（调淡一档 #D9F0FB），滚动衔接不生硬
         background:
-          "linear-gradient(180deg, #120F17 0%, #3D4A63 6%, #7FAECB 12%, #A8DCF5 18%, #A8DCF5 100%)",
+          "linear-gradient(180deg, #120F17 0%, #45536E 6%, #9BC4DD 12%, #D9F0FB 18%, #D9F0FB 100%)",
       }}
     >
       {/* 纵深背景层 — 动态光晕 */}
