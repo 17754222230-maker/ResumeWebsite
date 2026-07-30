@@ -64,8 +64,16 @@ export default function AiAgentCharacter() {
     }, 8000);
 
     return () => {
-      if (autoGuideTimerRef.current) clearTimeout(autoGuideTimerRef.current);
-      if (autoGuideDismissRef.current) clearTimeout(autoGuideDismissRef.current);
+      if (autoGuideTimerRef.current) {
+        clearTimeout(autoGuideTimerRef.current);
+        autoGuideTimerRef.current = null;
+      }
+      if (autoGuideDismissRef.current) {
+        clearTimeout(autoGuideDismissRef.current);
+        autoGuideDismissRef.current = null;
+        // 气泡已弹出过但 6s 未到即卸载，补落盘防重复引导
+        localStorage.setItem("ai-agent-guided", "1");
+      }
     };
   }, []);
 
