@@ -8,8 +8,17 @@ export default function AiAgentCharacter() {
   const [chatOpen, setChatOpen] = useState(false);
   const [isHeroVisible, setIsHeroVisible] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const [showAutoGuide, setShowAutoGuide] = useState(false);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const autoGuideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const autoGuideDismissRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reduceMotion = useReducedMotion();
+
+  // #46 跨分区背景自适应：只读复用 isHeroVisible 判断当前叠压区
+  // isHeroVisible=true → 首屏近黑(#120F17)；false → 深蓝分区(#1B3A5C)
+  const isOnDarkBg = isHeroVisible;
+  const glowBoost = isOnDarkBg ? 0.82 : 1; // 首屏 0.82（配合峰值 0.55 渐变已足够亮）→ 深蓝区 1.0
+  const strokeBoost = isOnDarkBg ? 0.82 : 1; // 描边圈同理
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +35,7 @@ export default function AiAgentCharacter() {
   const handleMouseEnter = () => {
     if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
     setIsHovered(true);
+    cancelAutoGuide();
   };
 
   const handleMouseLeave = () => {
@@ -40,6 +50,35 @@ export default function AiAgentCharacter() {
     };
   }, []);
 
+  // #45.2 首访自动引导（Intercom 式）
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (localStorage.getItem("ai-agent-guided")) return;
+
+    autoGuideTimerRef.current = setTimeout(() => {
+      setShowAutoGuide(true);
+      autoGuideDismissRef.current = setTimeout(() => {
+        setShowAutoGuide(false);
+        localStorage.setItem("ai-agent-guided", "1");
+      }, 6000);
+    }, 8000);
+
+    return () => {
+      if (autoGuideTimerRef.current) clearTimeout(autoGuideTimerRef.current);
+      if (autoGuideDismissRef.current) clearTimeout(autoGuideDismissRef.current);
+    };
+  }, []);
+
+  // 用户主动交互时取消自动引导
+  const cancelAutoGuide = () => {
+    if (autoGuideTimerRef.current) { clearTimeout(autoGuideTimerRef.current); autoGuideTimerRef.current = null; }
+    if (autoGuideDismissRef.current) { clearTimeout(autoGuideDismissRef.current); autoGuideDismissRef.current = null; }
+    if (showAutoGuide) {
+      setShowAutoGuide(false);
+      localStorage.setItem("ai-agent-guided", "1");
+    }
+  };
+
   const isFullyVisible = isHovered || isHeroVisible;
 
   return (
@@ -47,23 +86,23 @@ export default function AiAgentCharacter() {
       className="fixed right-4 bottom-24 md:bottom-8 z-50 select-none opacity-[0.92] transition-opacity duration-300 hover:opacity-100"
       animate={{ x: isFullyVisible ? "0%" : "55%" }}
       transition={{ type: "spring", stiffness: 260, damping: 28 }}
-      onClick={() => setChatOpen(true)}
+      onClick={() => { setChatOpen(true); cancelAutoGuide(); }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{ cursor: "pointer" }}
     >
-      {/* 对话气泡 */}
+      {/* 对话气泡（hover 或首访自动引导触发） */}
       <AnimatePresence>
-        {isHovered && (
+        {(isHovered || showAutoGuide) && (
           <motion.div
-            initial={{ opacity: 0, y: 12, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 12, scale: 0.9 }}
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.9 }}
+            animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.9 }}
             transition={{ duration: 0.25 }}
-            className="absolute bottom-full right-0 -mb-3 origin-bottom-right whitespace-nowrap rounded-xl border border-gold-500/20 bg-deep-blue-900/90 px-4 py-2.5 text-xs text-text-on-dark shadow-md backdrop-blur-sm"
+            className="absolute bottom-full right-0 -mb-3 origin-bottom-right whitespace-nowrap rounded-xl border border-gold-500/20 bg-white/[0.08] backdrop-blur-md px-4 py-2.5 text-xs text-white/90 shadow-md"
           >
-            有什么问题随时询问哦~
-            <div className="absolute -bottom-1 right-[46px] md:right-[58px] h-3 w-3 rotate-45 bg-deep-blue-900/90" />
+            {showAutoGuide && !isHovered ? "点我可以聊聊这份简历~" : "有什么问题随时询问哦~"}
+            <div className="absolute -bottom-1 right-[46px] md:right-[58px] h-3 w-3 rotate-45 border-b border-r border-gold-500/20 bg-white/[0.10] backdrop-blur-md" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -103,10 +142,10 @@ export default function AiAgentCharacter() {
             <stop offset="0%" stopColor="#1D4A7A" />
             <stop offset="100%" stopColor="#0B1D3A" />
           </linearGradient>
-          {/* 柔和金晕：与深色首屏 / 深蓝分区两种背景解耦 */}
-          <radialGradient id="avatarGlowGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="rgba(251,191,36,0.30)" />
-            <stop offset="55%" stopColor="rgba(251,191,36,0.12)" />
+          {/* 柔和金晕（#44 峰值提亮 + 范围扩大，#46 深蓝区补偿对比度） */}
+          <radialGradient id="avatarGlowGrad" cx="50%" cy="50%" r="58%">
+            <stop offset="0%" stopColor="rgba(251,191,36,0.55)" />
+            <stop offset="50%" stopColor="rgba(251,191,36,0.18)" />
             <stop offset="100%" stopColor="rgba(251,191,36,0)" />
           </radialGradient>
           {/* 圆形头像裁剪 */}
@@ -115,8 +154,8 @@ export default function AiAgentCharacter() {
           </clipPath>
         </defs>
 
-        {/* 光晕包裹层 */}
-        <circle cx="50" cy="72" r="46" fill="url(#avatarGlowGrad)" />
+        {/* 光晕包裹层（#46 深蓝区 glowBoost 上浮补偿对比度） */}
+        <circle cx="50" cy="72" r="48" fill="url(#avatarGlowGrad)" opacity={glowBoost} style={{ transition: "opacity 0.6s ease" }} />
 
         {/* 头像整组：平时静止（降权精简），hover 俏皮点头摇摆（±4°） */}
         <motion.g
@@ -147,6 +186,8 @@ export default function AiAgentCharacter() {
             <path d="M 34.5 67 C 33 48 41 44 50 44 C 59 44 67 48 65.5 67 C 63.5 59 60.5 57 56.5 60.5 C 53.5 55.5 47 55.5 44 60 C 40.5 56.5 36.5 59.5 34.5 67 Z" fill="url(#avatarHairGrad)" />
             <path d="M 42 49.5 Q 46 47.5 50.5 48" stroke="#FBBF24" strokeWidth="1" strokeLinecap="round" fill="none" opacity="0.6" />
             <path d="M 55 50 Q 58.5 51.5 60.5 54.5" stroke="#FCD34D" strokeWidth="0.8" strokeLinecap="round" fill="none" opacity="0.5" />
+            {/* 右侧补充发丝高光（#45.3 移除耳麦后右侧发型平衡） */}
+            <path d="M 58 48.5 Q 61.5 50.5 63 53.5" stroke="#FBBF24" strokeWidth="0.9" strokeLinecap="round" fill="none" opacity="0.55" />
 
             {/* 眉毛 */}
             <path d="M 40.5 62.5 Q 43.5 61 46 62.3" stroke="#123A63" strokeWidth="1" strokeLinecap="round" fill="none" />
@@ -172,13 +213,13 @@ export default function AiAgentCharacter() {
 
             {/* 亲和微笑 + 暖色腮红 */}
             <path d="M 46.5 74 Q 50 76.8 53.5 74" stroke="#0B2A4A" strokeWidth="1.2" strokeLinecap="round" fill="none" />
-            <ellipse cx="38.5" cy="71.5" rx="2.2" ry="1.3" fill="#F59E0B" opacity="0.35" />
-            <ellipse cx="61.5" cy="71.5" rx="2.2" ry="1.3" fill="#F59E0B" opacity="0.35" />
+            <ellipse cx="38.5" cy="71.5" rx="2.2" ry="1.3" fill="#E8956D" opacity="0.48" />
+            <ellipse cx="61.5" cy="71.5" rx="2.2" ry="1.3" fill="#E8956D" opacity="0.48" />
           </g>
 
-          {/* 金色描边圈 + 外圈淡金光环 */}
-          <circle cx="50" cy="72" r="32" fill="none" stroke="url(#avatarRingGrad)" strokeWidth="2.2" />
-          <circle cx="50" cy="72" r="34.5" fill="none" stroke="#FBBF24" strokeWidth="1" opacity="0.22" />
+          {/* 金色描边圈（#44 strokeWidth 2.2→1.5 降权）+ 外圈淡金光环（#46 深蓝区 strokeBoost 补偿） */}
+          <circle cx="50" cy="72" r="32" fill="none" stroke="url(#avatarRingGrad)" strokeWidth="1.5" opacity={strokeBoost} style={{ transition: "opacity 0.6s ease" }} />
+          <circle cx="50" cy="72" r="34.5" fill="none" stroke="#FBBF24" strokeWidth="1" opacity={0.22 * strokeBoost} style={{ transition: "opacity 0.6s ease" }} />
         </motion.g>
       </svg>
       </motion.div>
