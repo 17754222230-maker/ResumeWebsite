@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import AiChatDialog from "@/components/AiChatDialog";
 
 export default function AiAgentCharacter() {
@@ -9,6 +9,7 @@ export default function AiAgentCharacter() {
   const [isHeroVisible, setIsHeroVisible] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,7 +44,7 @@ export default function AiAgentCharacter() {
 
   return (
     <motion.div
-      className="fixed right-0 top-1/2 z-50 -translate-y-1/2 select-none"
+      className="fixed right-4 bottom-24 md:bottom-8 z-50 select-none opacity-[0.92] transition-opacity duration-300 hover:opacity-100"
       animate={{ x: isFullyVisible ? "0%" : "55%" }}
       transition={{ type: "spring", stiffness: 260, damping: 28 }}
       onClick={() => setChatOpen(true)}
@@ -59,24 +60,24 @@ export default function AiAgentCharacter() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.9 }}
             transition={{ duration: 0.25 }}
-            className="absolute bottom-full right-0 -mb-3 origin-bottom-right whitespace-nowrap rounded-xl bg-white px-5 py-3 text-sm text-deep-blue-900 shadow-lg"
+            className="absolute bottom-full right-0 -mb-3 origin-bottom-right whitespace-nowrap rounded-xl border border-gold-500/20 bg-deep-blue-900/90 px-4 py-2.5 text-xs text-text-on-dark shadow-md backdrop-blur-sm"
           >
             有什么问题随时询问哦~
-            <div className="absolute -bottom-1 right-24 h-3 w-3 rotate-45 bg-white" />
+            <div className="absolute -bottom-1 right-[46px] md:right-[58px] h-3 w-3 rotate-45 bg-deep-blue-900/90" />
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* SVG Q 版动漫男生头像 — 深蓝圆底衬 + 金色描边圈 + 金色耳麦 */}
       <motion.div
-        animate={{ y: [0, -5, 0] }}
-        transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+        animate={reduceMotion ? { y: 0 } : { y: [0, -3, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       >
       <svg
-        width="200"
-        height="192"
+        width="128"
+        height="123"
         viewBox="0 24 100 96"
-        className="drop-shadow-xl"
+        className="h-auto w-[104px] drop-shadow-md md:w-[128px]"
         aria-label="AI 助手头像"
       >
         <defs>
@@ -117,22 +118,10 @@ export default function AiAgentCharacter() {
         {/* 光晕包裹层 */}
         <circle cx="50" cy="72" r="46" fill="url(#avatarGlowGrad)" />
 
-        {/* 上浮金色微粒（y/opacity 循环，几何属性全静态） */}
-        <motion.circle
-          cx="79" cy="46" r="1.2" fill="#FCD34D"
-          animate={{ y: [0, -9], opacity: [0, 0.9, 0] }}
-          transition={{ duration: 2.6, repeat: Infinity, ease: "easeOut", delay: 0.4 }}
-        />
-        <motion.circle
-          cx="20" cy="52" r="0.9" fill="#FBBF24"
-          animate={{ y: [0, -7], opacity: [0, 0.8, 0] }}
-          transition={{ duration: 3.2, repeat: Infinity, ease: "easeOut", delay: 1.3 }}
-        />
-
-        {/* 头像整组：平时轻晃（原灯体轻晃的迁移载体），hover 俏皮点头摇摆（原 hover 摇摆的迁移载体） */}
+        {/* 头像整组：平时静止（降权精简），hover 俏皮点头摇摆（±4°） */}
         <motion.g
-          animate={isHovered ? { rotate: [0, -6, 4, -6, 4, 0] } : { rotate: [0, -1.6, 0, 1.6, 0] }}
-          transition={isHovered ? { duration: 1.4, repeat: Infinity, ease: "easeInOut" } : { duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
+          animate={isHovered && !reduceMotion ? { rotate: [0, -4, 3, -4, 3, 0] } : { rotate: 0 }}
+          transition={isHovered && !reduceMotion ? { duration: 1.4, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
           style={{ transformBox: "fill-box", transformOrigin: "50% 100%" }}
         >
           {/* 圆形深蓝底衬 */}
@@ -167,14 +156,14 @@ export default function AiAgentCharacter() {
             <motion.ellipse
               cx="43.5" cy="66.5" rx="2.3" ry="3.1" fill="#0B2A4A"
               initial={{ scaleY: 1 }}
-              animate={{ scaleY: [1, 1, 0.1, 1] }}
+              animate={reduceMotion ? { scaleY: 1 } : { scaleY: [1, 1, 0.1, 1] }}
               transition={{ duration: 3.6, repeat: Infinity, times: [0, 0.92, 0.96, 1], ease: "easeInOut" }}
               style={{ transformBox: "fill-box", transformOrigin: "center" }}
             />
             <motion.ellipse
               cx="56.5" cy="66.5" rx="2.3" ry="3.1" fill="#0B2A4A"
               initial={{ scaleY: 1 }}
-              animate={{ scaleY: [1, 1, 0.1, 1] }}
+              animate={reduceMotion ? { scaleY: 1 } : { scaleY: [1, 1, 0.1, 1] }}
               transition={{ duration: 3.6, repeat: Infinity, times: [0, 0.92, 0.96, 1], ease: "easeInOut" }}
               style={{ transformBox: "fill-box", transformOrigin: "center" }}
             />
@@ -191,13 +180,8 @@ export default function AiAgentCharacter() {
             <ellipse cx="34" cy="63" rx="2.6" ry="3.6" fill="url(#avatarRingGrad)" stroke="#B45309" strokeWidth="0.5" />
             <ellipse cx="66" cy="63" rx="2.6" ry="3.6" fill="url(#avatarRingGrad)" stroke="#B45309" strokeWidth="0.5" />
             <path d="M 35.5 66.5 C 37.5 73.5 41 76 45.5 76.3" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-            {/* 麦克风头：呼吸律动（scale/opacity） */}
-            <motion.circle
-              cx="46.3" cy="76.3" r="1.5" fill="#FBBF24"
-              animate={{ scale: [1, 1.25, 1], opacity: [0.75, 1, 0.75] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-              style={{ transformBox: "fill-box", transformOrigin: "center" }}
-            />
+            {/* 麦克风头（静态，降权精简） */}
+            <circle cx="46.3" cy="76.3" r="1.5" fill="#FBBF24" opacity="0.9" />
           </g>
 
           {/* 金色描边圈 + 外圈淡金光环 */}

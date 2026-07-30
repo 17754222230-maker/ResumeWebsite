@@ -38,12 +38,12 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
+        transition={{ duration: 0.6, delay: index * 0.1 }}
         className="h-full"
       >
-        <Card className="flex h-full flex-col overflow-hidden border-white/10 bg-white/[0.06] backdrop-blur-sm transition-all duration-300 hover:border-gold-500/30 hover:bg-white/[0.09] hover:shadow-lg hover:-translate-y-1 cursor-pointer">
-        {/* 卡片顶部装饰条 */}
-        <div className="h-1.5 w-full bg-gradient-to-r from-gold-500/0 via-gold-500 to-gold-500/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <Card className="flex h-full flex-col overflow-hidden border-white/10 bg-white/[0.07] backdrop-blur-md transition-all duration-300 hover:border-gold-500/40 hover:bg-white/[0.10] hover:shadow-xl hover:shadow-deep-blue-900/40 hover:-translate-y-1 cursor-pointer">
+        {/* 卡片顶部装饰条（常驻 30% 透明度作视觉锚点，hover 提至 100%） */}
+        <div className="h-1.5 w-full bg-gradient-to-r from-gold-500/0 via-gold-500 to-gold-500/0 opacity-30 transition-opacity duration-300 group-hover:opacity-100" />
 
         <CardHeader>
           <div className="flex items-start justify-between gap-4">

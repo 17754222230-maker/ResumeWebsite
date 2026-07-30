@@ -106,7 +106,7 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
               {project.challenges.map((c, i) => (
                 <div
                   key={i}
-                  className="rounded-xl border border-white/10 bg-white/[0.06] p-5 shadow-sm backdrop-blur-sm"
+                  className="rounded-xl border border-white/10 bg-white/[0.07] p-5 shadow-sm backdrop-blur-md transition-all hover:border-gold-500/40 hover:bg-white/[0.10] hover:shadow-xl hover:shadow-deep-blue-900/40"
                 >
                   <div className="mb-3">
                     <h4 className="mb-1 flex items-center gap-2 text-sm font-semibold text-text-white">
@@ -139,7 +139,7 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
               {project.achievements.map((a, i) => (
                 <div
                   key={i}
-                  className="rounded-xl border border-gold-500/25 bg-gradient-to-br from-white/[0.07] to-gold-500/[0.05] p-4 text-center shadow-sm backdrop-blur-sm"
+                  className="rounded-xl border border-gold-500/40 bg-gradient-to-br from-white/[0.07] to-gold-500/[0.08] p-4 text-center shadow-sm backdrop-blur-md transition-all hover:border-gold-500/60 hover:shadow-xl hover:shadow-deep-blue-900/40"
                 >
                   <p className="text-sm font-medium text-text-on-dark">
                     {a}

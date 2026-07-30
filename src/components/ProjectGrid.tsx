@@ -22,13 +22,13 @@ export default function ProjectGrid() {
         {/* 深蓝光晕 — 缓慢漂移 */}
         <motion.div
           animate={{ x: [0, -20, 0], y: [0, 15, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
           className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-deep-blue-500/15 blur-[100px]"
         />
         {/* 金色光晕 — 反向漂移 */}
         <motion.div
           animate={{ x: [0, 25, 0], y: [0, -20, 0] }}
-          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
           className="absolute -right-40 -bottom-40 h-80 w-80 rounded-full bg-gold-500/10 blur-[100px]"
         />
       </div>
@@ -46,14 +46,14 @@ export default function ProjectGrid() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
           <Badge variant="gold" className="mb-4">
             项目
           </Badge>
-          <h2 className="mb-4 text-3xl font-bold text-text-white md:text-4xl">
+          <h2 className="mb-4 text-3xl font-bold tracking-wide text-text-white md:text-4xl">
             项目经历
           </h2>
           <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-gold-500 to-gold-300" />

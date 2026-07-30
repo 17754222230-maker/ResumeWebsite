@@ -10,6 +10,7 @@ const navLinks = [
   { label: "首页", href: "#hero" },
   { label: "技术栈", href: "#tech-stack" },
   { label: "项目", href: "#projects" },
+  { label: "博客", href: "#blogs" },
   { label: "联系", href: "#footer" },
 ];
 

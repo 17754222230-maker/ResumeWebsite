@@ -39,8 +39,8 @@
   --color-border-medium: rgba(11, 29, 58, 0.15);
   --color-shadow: rgba(11, 29, 58, 0.06);
 
-  /* 系统字体回退 */
-  --font-sans: "Inter", "SF Pro Display", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  /* 系统字体回退（--font-inter 由 layout.tsx 的 next/font 注入，缺失时回退 Inter 本地/系统字体） */
+  --font-sans: var(--font-inter, "Inter"), "SF Pro Display", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "SF Mono", "Fira Code", "Consolas", "Courier New", monospace;
 }
 
@@ -62,19 +62,26 @@ body {
   color: var(--color-deep-blue-900);
 }
 
-/* 滚动条美化 */
+/* 滚动条美化 — 深色轨道呼应全站夜色基调 */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-cool-bg);
+  background: var(--color-deep-blue-900);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--color-deep-blue-600);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-deep-blue-700);
+  background: var(--color-gold-500);
+}
+
+/* 键盘可达性：链接/按钮聚焦时的金色 ring（仅 focus-visible，不影响鼠标点击） */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-gold-500);
+  outline-offset: 2px;
 }
 
 /* 水波纹装饰效果 — 通过伪元素实现 */
@@ -107,4 +114,20 @@ body {
     var(--color-gold-500) 100%
   );
   background-size: 200% 200%;
+}
+
+/* 无障碍：系统开启减弱动态时，保留入场过程但终止 infinite 循环与平滑滚动 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-iteration-count: 1 !important;
+  }
+  /* 例外：加载指示器（如 AiChatDialog 的 Loader2）需持续旋转，避免被冻结误认为加载结束 */
+  .animate-spin {
+    animation-iteration-count: infinite !important;
+  }
+  html {
+    scroll-behavior: auto !important;
+  }
 }

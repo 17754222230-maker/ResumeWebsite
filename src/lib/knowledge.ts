@@ -510,3 +510,54 @@ export function searchProjects(query: string): Project[] {
       p.tags.some((t) => t.toLowerCase().includes(q)),
   );
 }
+
+// ==================== 博客文章 ====================
+
+export interface BlogArticle {
+  id: string;
+  slug: string;
+  title: string;
+  summary: string;
+  tags: string[];
+  category?: string;
+  publishDate: string;   // ISO 格式
+  readingTime: number;   // 分钟
+  likeCount?: number;
+  source: "juejin" | "other";
+  sourceUrl: string;
+  featured?: boolean;
+}
+
+export const blogs: BlogArticle[] = [
+  {
+    id: "7634007458996158502",
+    slug: "ddd-hexagonal-architecture-guide",
+    title: "DDD 六边形架构入门：8000 字带你彻底搞懂聚合根、领域服务、防腐层",
+    summary:
+      "从 CRUD 到 DDD 的认知突围笔记：通过对比传统 Controller-Service-DAO 模式在大型项目中的五大痛点，系统讲解通用语言、限界上下文、聚合根、领域服务、仓储五个核心概念，并以真实机票订单场景建立直觉认知，帮助 Java 开发者建立 DDD 思维框架。",
+    tags: ["DDD", "Java", "软件架构", "领域驱动设计"],
+    category: "技术架构",
+    publishDate: "2026-04-29",
+    readingTime: 15,
+    likeCount: 484,
+    source: "juejin",
+    sourceUrl: "https://juejin.cn/post/7634007458996158502",
+    featured: true,
+  },
+];
+
+/**
+ * 获取精选博客文章（按发布日期倒序）
+ */
+export function getFeaturedBlogs(): BlogArticle[] {
+  return blogs
+    .filter((b) => b.featured)
+    .sort((a, b) => b.publishDate.localeCompare(a.publishDate));
+}
+
+/**
+ * 获取全部博客文章（按发布日期倒序）
+ */
+export function getBlogs(): BlogArticle[] {
+  return [...blogs].sort((a, b) => b.publishDate.localeCompare(a.publishDate));
+}

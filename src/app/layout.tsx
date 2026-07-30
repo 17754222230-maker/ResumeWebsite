@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
+
+// next/font 自托管 Inter：消除外部字体请求与 CLS，以 CSS 变量接入 globals.css 的 --font-sans 回退链
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: "Wangziyan | 全栈开发工程师",
@@ -31,7 +39,7 @@ export default function RootLayout({
   return (
     <html
       lang="zh-CN"
-      className="scroll-smooth"
+      className={`scroll-smooth ${inter.variable}`}
     >
       <body className="min-h-screen flex flex-col bg-cool-bg text-text-primary font-sans antialiased">
         {children}

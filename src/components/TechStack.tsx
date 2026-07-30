@@ -33,9 +33,10 @@ export default function TechStack() {
       id="tech-stack"
       className="relative py-24 overflow-hidden"
       style={{
-        // 同一夜色世界：首屏 #120F17 缓升到深藏蓝主体 #16283F，尾端接项目区 #182E4A
+        // 同一夜色世界：首屏 #120F17 缓升到深藏蓝主体 #16283F，尾端接项目区 #182E4A；
+        // 前段爬升区间拉长（0→32%），与首屏底部淡出过渡带配合消除交界分屏感
         background:
-          "linear-gradient(180deg, #120F17 0%, #131A26 7%, #152337 14%, #16283F 22%, #16283F 86%, #182E4A 100%)",
+          "linear-gradient(180deg, #120F17 0%, #131A26 12%, #152337 22%, #16283F 32%, #16283F 86%, #182E4A 100%)",
       }}
     >
       {/* 纵深背景层 — 动态光晕 */}
@@ -43,7 +44,7 @@ export default function TechStack() {
         {/* 金色光晕 — 缓慢漂移 */}
         <motion.div
           animate={{ x: [0, 25, 0], y: [0, -15, 0] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
           className="absolute -right-40 -top-40 h-80 w-80 rounded-full bg-gold-500/10 blur-[100px]"
         />
         {/* 深蓝光晕 — 反向漂移 */}
@@ -67,14 +68,14 @@ export default function TechStack() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6 }}
           className="mb-14 text-center"
         >
           <Badge variant="gold" className="mb-4">
             技术能力
           </Badge>
-          <h2 className="mb-4 text-3xl font-bold text-text-white md:text-4xl">
+          <h2 className="mb-4 text-3xl font-bold tracking-wide text-text-white md:text-4xl">
             工作经历 &amp; 技术栈
           </h2>
           <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-gold-500 to-gold-300" />
@@ -103,7 +104,7 @@ export default function TechStack() {
               <motion.div
                 key={i}
                 variants={itemVariants}
-                className="rounded-xl border border-white/10 bg-white/[0.06] p-5 shadow-sm backdrop-blur-sm transition-all hover:border-gold-500/25 hover:bg-white/[0.09]"
+                className="rounded-xl border border-white/10 bg-white/[0.07] p-5 shadow-sm backdrop-blur-md transition-all hover:border-gold-500/40 hover:bg-white/[0.10] hover:shadow-xl hover:shadow-deep-blue-900/40"
               >
                 {/* 头部：时间段 + 角色 */}
                 <div className="mb-3 flex flex-wrap items-center gap-2">
@@ -158,7 +159,7 @@ export default function TechStack() {
                 <motion.div
                   key={cat}
                   variants={itemVariants}
-                  className="rounded-xl border border-gold-500/25 bg-gradient-to-br from-white/[0.07] to-gold-500/[0.05] p-5 shadow-sm backdrop-blur-sm transition-all hover:border-gold-500/40"
+                  className="rounded-xl border border-gold-500/40 bg-gradient-to-br from-white/[0.07] to-gold-500/[0.08] p-5 shadow-sm backdrop-blur-md transition-all hover:border-gold-500/60 hover:shadow-xl hover:shadow-deep-blue-900/40"
                 >
                   <div className="mb-3 flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-gold-500" />
@@ -196,7 +197,7 @@ export default function TechStack() {
                 <motion.div
                   key={cat}
                   variants={itemVariants}
-                  className="rounded-xl border border-white/10 bg-white/[0.06] p-5 shadow-sm backdrop-blur-sm transition-all hover:border-gold-500/25 hover:bg-white/[0.09]"
+                  className="rounded-xl border border-white/10 bg-white/[0.07] p-5 shadow-sm backdrop-blur-md transition-all hover:border-gold-500/40 hover:bg-white/[0.10] hover:shadow-xl hover:shadow-deep-blue-900/40"
                 >
                   <h4 className="mb-3 flex items-center gap-2 text-sm font-semibold text-text-white">
                     <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />

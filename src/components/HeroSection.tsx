@@ -5,25 +5,33 @@ import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { profile } from "@/lib/knowledge";
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  /** W 金色锁定态：隐藏圆形光晕，呈现纯粹星空 */
+  starLocked?: boolean;
+}
+
+export default function HeroSection({ starLocked = false }: HeroSectionProps) {
   return (
     <section
       id="hero"
       className="relative flex min-h-screen items-center justify-center overflow-hidden"
     >
       {/* 深色背景已上移至首页全屏固定背景层（HomeClient，#120F17），Galaxy 星空透明叠加其上 */}
-      {/* 深邃背景层 — 动态光晕，营造往屏幕里延伸的纵深感 */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* 深邃背景层 — 动态光晕（金色锁定态下整层淡出，避免圆形光晕破坏纯粹星空） */}
+      <div
+        className="absolute inset-0 overflow-hidden"
+        style={{ opacity: starLocked ? 0 : 1, transition: "opacity 1s ease" }}
+      >
         {/* 金色光晕 — 缓慢漂移（金泄秀，代表才华） */}
         <motion.div
           animate={{ x: [0, 40, 0], y: [0, -25, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-[20%] -left-10 h-[450px] w-[450px] rounded-full bg-gold-500/10 blur-[120px]"
         />
         {/* 青色光晕 — 反向漂移（水润局，代表流动） */}
         <motion.div
           animate={{ x: [0, -30, 0], y: [0, 30, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
           className="absolute bottom-[20%] -right-10 h-[400px] w-[400px] rounded-full bg-accent-teal/10 blur-[120px]"
         />
         {/* 中心纵深感光晕 — 缓慢脉动 */}
@@ -44,6 +52,15 @@ export default function HeroSection() {
         }}
       />
 
+      {/* 底部淡出过渡带：星辰在进入经历区前自然隐没（透明 → #120F17，与 TechStack 起点同色） */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[28vh]"
+        style={{
+          background:
+            "linear-gradient(180deg, transparent 0%, rgba(18,15,23,0.55) 55%, #120F17 100%)",
+        }}
+      />
+
       <div className="container relative z-10 mx-auto flex flex-col items-center px-6 text-center">
         {/* 头像 */}
         <motion.div
@@ -52,7 +69,7 @@ export default function HeroSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="relative mb-8"
         >
-          <div className="flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-gold-500 to-gold-300 p-[3px] shadow-xl shadow-gold-500/20">
+          <div className="flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-gold-500 to-gold-300 p-[3px] shadow-xl shadow-gold-500/30">
             <div className="flex h-full w-full items-center justify-center rounded-full bg-[#1B1622] text-3xl font-bold text-gold-500">
               {profile.name.charAt(0).toUpperCase()}
             </div>
@@ -64,7 +81,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-3 text-4xl font-bold tracking-tight text-text-white md:text-6xl"
+          className="mb-3 text-4xl font-bold tracking-tight text-text-white md:text-6xl lg:text-7xl"
         >
           {profile.name}
           <span className="ml-2 text-gold-500">.</span>
@@ -84,7 +101,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mb-10 max-w-xl text-base leading-relaxed text-text-on-dark/70 md:text-lg"
+          className="mb-12 max-w-xl text-base leading-relaxed text-text-on-dark/70 md:text-lg"
         >
           "{profile.slogan}"
         </motion.p>
@@ -99,18 +116,18 @@ export default function HeroSection() {
           <Button variant="gold" size="lg" asChild>
             <a href="#projects">查看项目</a>
           </Button>
-          <Button variant="outline" size="lg" asChild className="border-gold-500/30 text-text-white hover:bg-gold-500/10 hover:text-gold-400">
+          <Button variant="outline" size="lg" asChild className="border-gold-500/30 text-text-white transition-colors hover:border-gold-500/70 hover:bg-gold-500/10 hover:text-gold-400">
             <a href="#footer">联系我</a>
           </Button>
         </motion.div>
       </div>
 
-      {/* 向下滚动指示 — 右下角 */}
+      {/* 向下滚动指示 — 底部居中（避开右下角数字人） */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
-        className="absolute bottom-8 right-8"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
         <motion.a
           href="#tech-stack"

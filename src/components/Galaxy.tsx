@@ -236,6 +236,7 @@ export default function Galaxy({
   const targetTwinkle = useRef(twinkleIntensity);
   const targetStarSpeed = useRef(starSpeed);
   const currentStarSpeed = useRef(starSpeed);
+  const targetAutoCenter = useRef(autoCenterRepulsion);
 
   // 数组 props 序列化为稳定 key，避免每次渲染新数组导致 WebGL 反复重建
   const focalKey = focal.join(",");
@@ -337,12 +338,13 @@ export default function Galaxy({
         (program.uniforms.uMouse.value as Float32Array)[1] = smoothMousePos.current.y;
         program.uniforms.uMouseActiveFactor.value = smoothMouseActive.current;
 
-        // density/glow/twinkle/starSpeed 平滑逼近目标值（W 金/白切换的质感过渡）
+        // density/glow/twinkle/starSpeed/autoCenterRepulsion 平滑逼近目标值（W 金/白切换的质感过渡）
         const paramLerp = 0.06;
         const u = program.uniforms;
         u.uDensity.value += (targetDensity.current - (u.uDensity.value as number)) * paramLerp;
         u.uGlowIntensity.value += (targetGlow.current - (u.uGlowIntensity.value as number)) * paramLerp;
         u.uTwinkleIntensity.value += (targetTwinkle.current - (u.uTwinkleIntensity.value as number)) * paramLerp;
+        u.uAutoCenterRepulsion.value += (targetAutoCenter.current - (u.uAutoCenterRepulsion.value as number)) * paramLerp;
         currentStarSpeed.current += (targetStarSpeed.current - currentStarSpeed.current) * paramLerp;
       }
 
@@ -389,7 +391,6 @@ export default function Galaxy({
     speed,
     rotationSpeed,
     repulsionStrength,
-    autoCenterRepulsion,
     transparent,
   ]);
 
@@ -406,15 +407,16 @@ export default function Galaxy({
     }
   }, [mouseInteraction, mouseRepulsion, saturation]);
 
-  // density / glowIntensity / twinkleIntensity / starSpeed 热更新：
-  // 均为纯 fragment uniform（density 仅做 UV 缩放，不参与几何生成），
+  // density / glowIntensity / twinkleIntensity / starSpeed / autoCenterRepulsion 热更新：
+  // 均为纯 fragment uniform（density 仅做 UV 缩放，autoCenterRepulsion 仅做 UV 位移，均不参与几何生成），
   // 只写目标 ref，update 循环里 lerp 平滑过渡，不重建 WebGL 上下文
   useEffect(() => {
     targetDensity.current = density;
     targetGlow.current = glowIntensity;
     targetTwinkle.current = twinkleIntensity;
     targetStarSpeed.current = starSpeed;
-  }, [density, glowIntensity, twinkleIntensity, starSpeed]);
+    targetAutoCenter.current = autoCenterRepulsion;
+  }, [density, glowIntensity, twinkleIntensity, starSpeed, autoCenterRepulsion]);
 
   // prefers-reduced-motion：不渲染 WebGL 星空
   if (shouldReduceMotion) return null;
