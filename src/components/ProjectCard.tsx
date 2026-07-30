@@ -47,7 +47,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
         <CardHeader>
           <div className="flex items-start justify-between gap-4">
-            <CardTitle className="text-lg text-text-white md:text-xl">
+            <CardTitle className="text-lg text-text-white transition-colors duration-300 group-hover:text-gold-400 md:text-xl">
               {project.title}
             </CardTitle>
             {project.role && (

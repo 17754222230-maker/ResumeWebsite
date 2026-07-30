@@ -55,6 +55,14 @@ export default function BlogSection() {
           className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gold-500/10 blur-[100px]"
         />
       </div>
+      {/* 顶部渐变遮罩带 — 将光晕硬切揉进起始背景色，消除与上方项目区的分界线 */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-[14vh]"
+        style={{
+          background:
+            "linear-gradient(180deg, #0B1D3A 0%, transparent 100%)",
+        }}
+      />
 
       <div className="container relative mx-auto max-w-6xl px-6">
         {/* ===== 标题区 ===== */}

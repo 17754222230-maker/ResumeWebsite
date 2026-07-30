@@ -40,6 +40,14 @@ export default function ProjectGrid() {
             "radial-gradient(ellipse 100% 60% at 50% 60%, rgba(251,191,36,0.05) 0%, transparent 70%)",
         }}
       />
+      {/* 底部渐变遮罩带 — 将光晕硬切揉进尾端背景色，消除与下方博客区的分界线 */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[18vh]"
+        style={{
+          background:
+            "linear-gradient(180deg, transparent 0%, #0B1D3A 100%)",
+        }}
+      />
 
       <div className="container relative mx-auto max-w-6xl px-6">
         {/* 标题区 */}

@@ -544,6 +544,22 @@ export const blogs: BlogArticle[] = [
     sourceUrl: "https://juejin.cn/post/7634007458996158502",
     featured: true,
   },
+  {
+    id: "7667863299438641152",
+    slug: "sdd-specification-driven-development-practice",
+    title: "把「写代码」变成可追溯的工程：SDD 开发方法论实践",
+    summary:
+      "SDD（规格驱动开发）的核心理念是「把不确定性前移，让规格成为唯一事实源」。通过编号化需求（REQ/SC/EDGE）、前移澄清、规格驱动设计与编码、强制验证、完整追溯等九个阶段，解决传统开发中需求返工、架构腐化、质量依赖人品等顽疾；最小落地集只需需求编号化、验证证据化、完成门禁化三件事，在 AI 参与编码的时代尤为关键。",
+    tags: ["工程化", "规格驱动", "开发方法论", "质量保证"],
+    category: "开发方法论",
+    publishDate: "2026-07-30",
+    // 掘金标注 1 分钟明显失真（8000字级内容），按正文体量估 5 分钟
+    readingTime: 5,
+    likeCount: 2,
+    source: "juejin",
+    sourceUrl: "https://juejin.cn/post/7667863299438641152",
+    featured: false,
+  },
 ];
 
 /**

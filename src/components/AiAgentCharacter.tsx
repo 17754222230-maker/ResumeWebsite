@@ -68,7 +68,7 @@ export default function AiAgentCharacter() {
         )}
       </AnimatePresence>
 
-      {/* SVG Q 版动漫男生头像 — 深蓝圆底衬 + 金色描边圈 + 金色耳麦 */}
+      {/* SVG Q 版动漫男生头像 — 深蓝圆底衬 + 金色描边圈 */}
       <motion.div
         animate={reduceMotion ? { y: 0 } : { y: [0, -3, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -174,14 +174,6 @@ export default function AiAgentCharacter() {
             <path d="M 46.5 74 Q 50 76.8 53.5 74" stroke="#0B2A4A" strokeWidth="1.2" strokeLinecap="round" fill="none" />
             <ellipse cx="38.5" cy="71.5" rx="2.2" ry="1.3" fill="#F59E0B" opacity="0.35" />
             <ellipse cx="61.5" cy="71.5" rx="2.2" ry="1.3" fill="#F59E0B" opacity="0.35" />
-
-            {/* 金色耳麦：头箭 + 耳罩 + 麦克风臂（AI 助手角色感） */}
-            <path d="M 33.5 57 C 34 42.5 66 42.5 66.5 57" stroke="#F59E0B" strokeWidth="2.4" strokeLinecap="round" fill="none" />
-            <ellipse cx="34" cy="63" rx="2.6" ry="3.6" fill="url(#avatarRingGrad)" stroke="#B45309" strokeWidth="0.5" />
-            <ellipse cx="66" cy="63" rx="2.6" ry="3.6" fill="url(#avatarRingGrad)" stroke="#B45309" strokeWidth="0.5" />
-            <path d="M 35.5 66.5 C 37.5 73.5 41 76 45.5 76.3" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-            {/* 麦克风头（静态，降权精简） */}
-            <circle cx="46.3" cy="76.3" r="1.5" fill="#FBBF24" opacity="0.9" />
           </g>
 
           {/* 金色描边圈 + 外圈淡金光环 */}
