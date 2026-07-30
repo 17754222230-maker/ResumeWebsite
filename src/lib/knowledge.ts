@@ -107,6 +107,7 @@ export const skills: Skill[] = [
 
   // 前端技术
   { name: "Vue.js", category: "前端技术" },
+  { name: "Next.js", category: "前端技术" },
   { name: "HTML / CSS", category: "前端技术" },
   { name: "TypeScript", category: "前端技术" },
   { name: "C# / .NET", category: "前端技术" },
