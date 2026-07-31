@@ -87,6 +87,8 @@ export const skills: Skill[] = [
 
   // ★★★ AI 与智能化（前沿）
   { name: "AI Coding 赋能", category: "AI 与智能化" },
+  { name: "SDD 规格驱动开发", category: "AI 与智能化" },
+  { name: "Harness 工程", category: "AI 与智能化" },
   { name: "Spring AI", category: "AI 与智能化" },
   { name: "LangChain", category: "AI 与智能化" },
   { name: "LangGraph", category: "AI 与智能化" },
@@ -559,6 +561,22 @@ export const blogs: BlogArticle[] = [
     likeCount: 2,
     source: "juejin",
     sourceUrl: "https://juejin.cn/post/7667863299438641152",
+    featured: false,
+  },
+  {
+    id: "7668331078027149327",
+    slug: "rag-driven-architecture-reflection",
+    title: "从 Prompt 工程到知识库驱动：一次自动化率跌至 6% 后的架构反思",
+    summary:
+      "航司政策自动化解析率跌至 6% 的根本原因不在模型，而在知识管理缺失。以真实 DDD 分层项目为样本，复盘静态 Prompt 工程架构的四大结构性缺陷，论证向知识库（RAG）驱动转型的必要性，以及「确定性代码层 + 推理知识层 + 人工兜底层」的三层分工。",
+    tags: ["AI架构设计", "知识库驱动", "DDD实践", "Prompt工程"],
+    category: "AI 架构",
+    publishDate: "2026-07-31",
+    // 掘金标注 1 分钟明显失真，按正文体量估 7 分钟
+    readingTime: 7,
+    likeCount: 3,
+    source: "juejin",
+    sourceUrl: "https://juejin.cn/post/7668331078027149327",
     featured: false,
   },
 ];
