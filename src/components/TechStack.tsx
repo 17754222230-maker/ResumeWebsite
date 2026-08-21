@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
+import { glassCard } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { experiences, getSkillCategories, skills as allSkills } from "@/lib/knowledge";
 
 const containerVariants = {
@@ -33,36 +35,12 @@ export default function TechStack() {
       id="tech-stack"
       className="relative py-24 overflow-hidden"
       style={{
-        // 同一夜色世界：首屏 #120F17 缓升到深藏蓝主体 #16283F，尾端接项目区 #182E4A；
-        // 前段爬升区间拉长（0→32%），与首屏底部淡出过渡带配合消除交界分屏感
+        // 半透明夜色蒙版：雪山图从背后透出，起点与 Hero 底部过渡带终点同色（rgba(10,22,38,0.55)），
+        // 主体略加深保证卡片可读，尾端收敛到 rgba(12,26,44,0.68) 与项目区起点同色衔接，无生硬分界线
         background:
-          "linear-gradient(180deg, #120F17 0%, #131A26 12%, #152337 22%, #16283F 32%, #16283F 86%, #182E4A 100%)",
+          "linear-gradient(180deg, rgba(10,22,38,0.55) 0%, rgba(11,24,40,0.62) 30%, rgba(11,24,40,0.62) 70%, rgba(12,26,44,0.68) 100%)",
       }}
     >
-      {/* 纵深背景层 — 动态光晕 */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* 金色光晕 — 缓慢漂移 */}
-        <motion.div
-          animate={{ x: [0, 25, 0], y: [0, -15, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -right-40 -top-40 h-80 w-80 rounded-full bg-gold-500/10 blur-[100px]"
-        />
-        {/* 深蓝光晕 — 反向漂移 */}
-        <motion.div
-          animate={{ x: [0, -20, 0], y: [0, 20, 0] }}
-          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-deep-blue-500/15 blur-[100px]"
-        />
-      </div>
-      {/* 微渐变背景 — 往中心聚拢的纵深感 */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 100% 60% at 50% 30%, rgba(212,175,55,0.05) 0%, transparent 70%)",
-        }}
-      />
-
       <div className="container relative mx-auto max-w-6xl px-6">
         {/* ===== 标题区 ===== */}
         <motion.div
@@ -70,17 +48,18 @@ export default function TechStack() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6 }}
-          className="mb-14 text-center"
+          className="mb-14"
         >
-          <Badge variant="gold" className="mb-4">
-            技术能力
-          </Badge>
-          <h2 className="mb-4 text-3xl font-bold tracking-wide text-text-white md:text-4xl">
+          <div className="mb-3 flex items-baseline gap-3">
+            <span className="font-mono text-xs tracking-[0.25em] text-gold-400">01</span>
+            <span className="font-mono text-[10px] tracking-[0.25em] text-text-on-dark/50">EXPERIENCE</span>
+          </div>
+          <h2 className="mb-4 text-3xl font-bold tracking-tight text-text-white md:text-4xl">
             工作经历 &amp; 技术栈
           </h2>
-          <div className="mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-gold-500 to-gold-300" />
-          <p className="mx-auto mt-4 max-w-xl text-text-on-dark/70">
-            Java 后端出身，做过 MES、ERP、在线教育到机票交易系统，近期在业务里落地 AI 能力
+          <p className="max-w-xl text-text-on-dark/80">
+            用 AI 原生思维做工程：Java、Python、C++、TypeScript 多语言实践，
+            横跨 MES、ERP、在线教育、机票交易多领域，让 AI Coding 成为日常生产力
           </p>
         </motion.div>
 
@@ -93,45 +72,59 @@ export default function TechStack() {
           className="mb-16"
         >
           {/* 小标题 */}
-          <motion.div variants={itemVariants} className="mb-6 flex items-center gap-3">
-            <span className="h-4 w-1 rounded-full bg-gold-500" />
-            <h3 className="text-lg font-semibold text-text-white">工作经历</h3>
+          <motion.div variants={itemVariants} className="mb-6 flex items-center gap-4">
+            <h3 className="text-lg font-semibold tracking-tight text-text-white">工作经历</h3>
+            <span className="h-px flex-1 bg-white/10" />
           </motion.div>
 
-          {/* 双列卡片 */}
-          <div className="grid gap-4 md:grid-cols-2">
+          {/* 时间轴：左侧竖线贯穿，金色描边节点标记各段经历（芯部半透明让夜色透出） */}
+          <div className="relative space-y-8 before:absolute before:bottom-2 before:left-[5px] before:top-2 before:w-px before:bg-white/10">
             {experiences.map((exp, i) => (
               <motion.div
                 key={i}
                 variants={itemVariants}
-                className="rounded-xl border border-white/10 bg-white/[0.07] p-5 shadow-sm backdrop-blur-md transition-all hover:border-gold-500/40 hover:bg-white/[0.10] hover:shadow-xl hover:shadow-deep-blue-900/40"
+                className="relative pl-8"
               >
-                {/* 头部：时间段 + 角色 */}
-                <div className="mb-3 flex flex-wrap items-center gap-2">
-                  <span className="inline-block rounded-full bg-gold-500/10 px-2.5 py-0.5 font-mono text-xs text-gold-400">
+                {/* 时间轴节点 */}
+                <span className="absolute left-0 top-[7px] h-[11px] w-[11px] rounded-full border-2 border-gold-400 bg-deep-blue-900/70" />
+
+                {/* 头部：mono 时间段做金色锚点，角色降为弱文本（徽章归零） */}
+                <div className="mb-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <span className="font-mono text-xs tracking-wider text-gold-400">
                     {exp.period}
                   </span>
-                  <Badge variant="default" className="border-white/10 text-[10px] font-normal">
-                    {exp.role}
-                  </Badge>
+                  <span className="text-xs text-text-on-dark/50">{exp.role}</span>
                 </div>
 
-                {/* 公司名称 */}
-                <h4 className="mb-3 text-base font-semibold text-text-white">
+                {/* 公司名称（区块内唯一视觉焦点）+ 岗位业务定位 */}
+                <h4 className="mb-1 text-lg font-semibold tracking-tight text-text-white">
                   {exp.company}
                 </h4>
+                {exp.subtitle && (
+                  <p className="mb-3 text-xs leading-relaxed text-text-on-dark/60">
+                    {exp.subtitle}
+                  </p>
+                )}
 
-                {/* 亮点列表 */}
+                {/* 亮点列表：开头【项目名】加粗为白色视觉锚点，其余文本保持弱化 */}
                 <ul className="space-y-1.5">
-                  {exp.highlights.map((h, j) => (
-                    <li
-                      key={j}
-                      className="flex items-start gap-2 text-sm text-text-on-dark/75"
-                    >
-                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-gold-400" />
-                      <span>{h}</span>
-                    </li>
-                  ))}
+                  {exp.highlights.map((h, j) => {
+                    const prefix = h.match(/^(【[^】]+】)/)?.[0];
+                    return (
+                      <li
+                        key={j}
+                        className="flex items-start gap-2 text-sm text-text-on-dark/80"
+                      >
+                        <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-gold-500/50" />
+                        <span>
+                          {prefix && (
+                            <strong className="font-semibold text-text-white">{prefix}</strong>
+                          )}
+                          {prefix ? h.slice(prefix.length) : h}
+                        </span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </motion.div>
             ))}
@@ -146,9 +139,9 @@ export default function TechStack() {
           viewport={{ once: true, margin: "-60px" }}
         >
           {/* 小标题 */}
-          <motion.div variants={itemVariants} className="mb-6 flex items-center gap-3">
-            <span className="h-4 w-1 rounded-full bg-gold-500" />
-            <h3 className="text-lg font-semibold text-text-white">技术栈</h3>
+          <motion.div variants={itemVariants} className="mb-6 flex items-center gap-4">
+            <h3 className="text-lg font-semibold tracking-tight text-text-white">技术栈</h3>
+            <span className="h-px flex-1 bg-white/10" />
           </motion.div>
 
           {/* ★ 重点卡片：后端 + AI */}
@@ -159,29 +152,33 @@ export default function TechStack() {
                 <motion.div
                   key={cat}
                   variants={itemVariants}
-                  className="rounded-xl border border-gold-500/40 bg-gradient-to-br from-white/[0.07] to-gold-500/[0.08] p-5 shadow-sm backdrop-blur-md transition-all hover:border-gold-500/60 hover:shadow-xl hover:shadow-deep-blue-900/40"
+                  className={cn(
+                    glassCard,
+                    "border-l-2 border-l-gold-400/70 p-5 hover:border-l-gold-400",
+                  )}
                 >
                   <div className="mb-3 flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-gold-500" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
                     <h4 className="text-sm font-semibold text-text-white">
                       {cat}
                     </h4>
-                    <Badge
-                      variant="gold"
-                      className="ml-auto text-[10px] font-normal"
-                    >
-                      {cat === "后端技术" ? "核心" : "前沿"}
-                    </Badge>
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
+                  {/* 核心技能：标签 + 一句技术理解（深度叙事，区别于其他类别的纯标签墙） */}
+                  <div className="space-y-2.5">
                     {skills.map((s) => (
-                      <Badge
-                        key={s.name}
-                        variant="skill"
-                        className="border-white/10 bg-white/[0.08] text-text-on-dark text-[11px] transition-all hover:bg-gold-500/15 hover:text-gold-400"
-                      >
-                        {s.name}
-                      </Badge>
+                      <div key={s.name} className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                        <Badge
+                          variant="skill"
+                          className="border-white/10 bg-white/[0.08] text-text-on-dark text-[11px] transition-all hover:bg-gold-500/15 hover:text-gold-400"
+                        >
+                          {s.name}
+                        </Badge>
+                        {s.subtext && (
+                          <span className="flex-1 text-xs leading-relaxed text-text-on-dark/60">
+                            {s.subtext}
+                          </span>
+                        )}
+                      </div>
                     ))}
                   </div>
                 </motion.div>
@@ -197,7 +194,7 @@ export default function TechStack() {
                 <motion.div
                   key={cat}
                   variants={itemVariants}
-                  className="rounded-xl border border-white/10 bg-white/[0.07] p-5 shadow-sm backdrop-blur-md transition-all hover:border-gold-500/40 hover:bg-white/[0.10] hover:shadow-xl hover:shadow-deep-blue-900/40"
+                  className={cn(glassCard, "p-5")}
                 >
                   <h4 className="mb-3 flex items-center gap-2 text-sm font-semibold text-text-white">
                     <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
@@ -208,7 +205,7 @@ export default function TechStack() {
                       <Badge
                         key={s.name}
                         variant="skill"
-                        className="border-white/10 bg-white/[0.08] text-text-on-dark text-[11px]"
+                        className="border-white/10 bg-white/[0.08] text-text-on-dark text-[11px] transition-all hover:bg-gold-500/15 hover:text-gold-400"
                       >
                         {s.name}
                       </Badge>

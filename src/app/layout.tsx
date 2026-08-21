@@ -42,6 +42,8 @@ export default function RootLayout({
       className={`scroll-smooth ${inter.variable}`}
     >
       <body className="min-h-screen flex flex-col bg-cool-bg text-text-primary font-sans antialiased">
+        {/* 首屏背景图预加载（WebP 版雪山图，避免首屏 LCP 延迟） */}
+        <link rel="preload" href="/images/mountain-golden.webp" as="image" />
         {children}
         <Footer />
       </body>

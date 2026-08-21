@@ -3,20 +3,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Code2, Mail, ArrowUp, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { profile } from "@/lib/knowledge";
-
-const footerLinks = [
-  {
-    label: "简历",
-    href: "/resume/王仔研的简历_17754222230_全.pdf",
-    icon: Code2,
-  },
-  {
-    label: "Email",
-    href: `mailto:${profile.contact.email}`,
-    icon: Mail,
-  },
-];
 
 export default function Footer() {
   const [copied, setCopied] = useState(false);
@@ -54,45 +42,52 @@ export default function Footer() {
               {profile.name}
               <span className="text-gold-500">.</span>
             </h3>
-            <p className="whitespace-nowrap text-sm leading-relaxed text-text-on-dark/60">
+            <p className="whitespace-nowrap text-sm leading-relaxed text-text-on-dark/70">
               {profile.title} · 用代码构建数字世界的艺术与逻辑
             </p>
           </motion.div>
 
-          {/* 社交链接 */}
+          {/* 联系操作按钮：深蓝底 + 亮黄图标点缀，hover 提亮/浮起/阴影增强 */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="flex items-center gap-4"
+            className="flex flex-wrap items-center justify-center gap-3"
           >
-            {footerLinks.map((link) =>
-              link.label === "Email" ? (
-                <button
-                  key={link.label}
-                  onClick={handleCopyEmail}
-                  className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-text-on-dark/20 text-text-on-dark/60 transition-all duration-300 hover:border-gold-500/50 hover:bg-gold-500/10 hover:text-gold-500"
-                  aria-label={link.label}
-                  title={copied ? "已复制" : "复制邮箱"}
-                >
-                  {copied ? <Check size={18} className="text-green-400" /> : <link.icon size={18} />}
-                </button>
+            {/* 下载简历：统一走 ui/Button（获得 focus ring 与 active 按压态） */}
+            <Button
+              variant="outline"
+              asChild
+              className="group h-auto gap-2 rounded-lg border-white/10 bg-white/[0.07] px-4 py-2.5 text-sm font-medium text-text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-gold-400/60 hover:bg-white/[0.10] hover:shadow-lg hover:shadow-deep-blue-900/50 active:scale-[0.98]"
+            >
+              <a
+                href="/resume/王仔研的简历_17754222230_全.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                download="王仔研的简历.pdf"
+                aria-label="下载简历"
+              >
+                <Code2 size={16} className="text-gold-400 transition-transform duration-300 group-hover:scale-110" />
+                下载简历
+              </a>
+            </Button>
+
+            {/* 获取邮箱（点击复制，成功态显示已复制） */}
+            <Button
+              variant="outline"
+              onClick={handleCopyEmail}
+              className="group h-auto gap-2 rounded-lg border-white/10 bg-white/[0.07] px-4 py-2.5 text-sm font-medium text-text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-gold-400/60 hover:bg-white/[0.10] hover:shadow-lg hover:shadow-deep-blue-900/50 active:scale-[0.98]"
+              aria-label="获取邮箱"
+              title={copied ? "已复制" : "点击复制邮箱"}
+            >
+              {copied ? (
+                <Check size={16} className="text-green-400" />
               ) : (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  download="王仔研的简历.pdf"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-text-on-dark/20 text-text-on-dark/60 transition-all duration-300 hover:border-gold-500/50 hover:bg-gold-500/10 hover:text-gold-500"
-                  aria-label={link.label}
-                  title="下载简历"
-                >
-                  <link.icon size={18} />
-                </a>
-              ),
-            )}
+                <Mail size={16} className="text-gold-400 transition-transform duration-300 group-hover:scale-110" />
+              )}
+              {copied ? "已复制" : "获取邮箱"}
+            </Button>
           </motion.div>
         </div>
 
@@ -104,7 +99,7 @@ export default function Footer() {
           transition={{ delay: 0.2 }}
           className="mt-12 flex flex-col items-center gap-4 border-t border-text-on-dark/10 pt-8 text-center md:flex-row md:justify-between"
         >
-          <p className="text-xs text-text-on-dark/40">
+          <p className="text-xs text-text-on-dark/60">
             &copy; {new Date().getFullYear()} {profile.name}. All rights
             reserved.
           </p>
@@ -112,7 +107,7 @@ export default function Footer() {
           {/* 回到顶部 */}
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 text-xs text-text-on-dark/40 transition-colors hover:text-gold-500"
+            className="flex items-center gap-1.5 text-xs text-text-on-dark/60 transition-colors hover:text-gold-500"
           >
             <ArrowUp size={14} />
             <span>回到顶部</span>

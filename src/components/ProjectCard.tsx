@@ -11,7 +11,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  glassCard,
 } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 export interface ProjectCardData {
   slug: string;
@@ -41,10 +43,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         transition={{ duration: 0.6, delay: index * 0.1 }}
         className="h-full"
       >
-        <Card className="flex h-full flex-col overflow-hidden border-white/10 bg-white/[0.07] backdrop-blur-md transition-all duration-300 hover:border-gold-500/40 hover:bg-white/[0.10] hover:shadow-xl hover:shadow-deep-blue-900/40 hover:-translate-y-1 cursor-pointer">
-        {/* 卡片顶部装饰条（常驻 30% 透明度作视觉锚点，hover 提至 100%） */}
-        <div className="h-1.5 w-full bg-gradient-to-r from-gold-500/0 via-gold-500 to-gold-500/0 opacity-30 transition-opacity duration-300 group-hover:opacity-100" />
-
+        <Card className={cn(glassCard, "flex h-full flex-col overflow-hidden hover:-translate-y-1 cursor-pointer")}>
         <CardHeader>
           <div className="flex items-start justify-between gap-4">
             <CardTitle className="text-lg text-text-white transition-colors duration-300 group-hover:text-gold-400 md:text-xl">
@@ -56,7 +55,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               </Badge>
             )}
           </div>
-          <CardDescription className="mt-2 leading-relaxed text-text-on-dark/70">
+          <CardDescription className="mt-2 leading-relaxed text-text-on-dark/80">
             {project.description}
           </CardDescription>
         </CardHeader>
@@ -77,7 +76,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               {project.highlights.map((h, i) => (
                 <li
                   key={i}
-                  className="flex items-start gap-2 text-sm text-text-on-dark/75"
+                  className="flex items-start gap-2 text-sm text-text-on-dark/80"
                 >
                   <ChevronRight
                     size={14}
@@ -96,7 +95,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               href={project.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm text-text-on-dark/70 transition-colors hover:text-gold-400"
+              className="flex items-center gap-1.5 text-sm text-text-on-dark/80 transition-colors hover:text-gold-400"
             >
               <Code2 size={16} />
               <span>源码</span>
@@ -107,7 +106,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               href={project.links.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm text-text-on-dark/70 transition-colors hover:text-gold-400"
+              className="flex items-center gap-1.5 text-sm text-text-on-dark/80 transition-colors hover:text-gold-400"
             >
               <ExternalLink size={16} />
               <span>演示</span>

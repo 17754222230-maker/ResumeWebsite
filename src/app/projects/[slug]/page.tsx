@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, Lightbulb, Target, Code2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { glassCard } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { projects, getProjectBySlug } from "@/lib/knowledge";
 import type { Project } from "@/lib/knowledge";
 import AiAgentCharacter from "@/components/AiAgentCharacter";
@@ -29,9 +31,9 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
     <div
       className="min-h-screen"
       style={{
-        // 与首页同一夜色链路：深蓝基调 + 轻微纵向渐变
+        // 与首页同一雪山夜色链路：整体升一档（800/700/600），背景较首页略浅便于阅读长文
         background:
-          "linear-gradient(180deg, #0B1D3A 0%, #16283F 32%, #1B3A5C 72%, #0B1D3A 100%)",
+          "linear-gradient(180deg, #0F2138 0%, #163450 32%, #234A70 72%, #0F2138 100%)",
       }}
     >
       {/* 顶栏 */}
@@ -58,7 +60,7 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
           <div className="mb-4 flex flex-wrap items-center gap-3">
             <Badge variant="gold">{project.role}</Badge>
             {project.period && (
-              <span className="font-mono text-xs text-text-on-dark/60">
+              <span className="font-mono text-xs text-text-on-dark/70">
                 {project.period}
               </span>
             )}
@@ -67,9 +69,9 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
             {project.title}
           </h1>
           {project.company && (
-            <p className="mb-4 text-sm text-gold-400">{project.company}</p>
+            <p className="mb-4 text-sm text-text-on-dark/70">{project.company}</p>
           )}
-          <p className="max-w-2xl text-base leading-relaxed text-text-on-dark/75">
+          <p className="max-w-2xl text-base leading-relaxed text-text-on-dark/80">
             {project.description}
           </p>
 
@@ -83,15 +85,15 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
           </div>
         </section>
 
-        <div className="mb-12 h-px bg-gradient-to-r from-gold-500/40 via-white/10 to-transparent" />
+        <div className="mb-12 h-px bg-gradient-to-r from-white/15 via-white/10 to-transparent" />
 
         {/* ===== 项目职责 ===== */}
         {project.responsibilities && project.responsibilities.length > 0 && (
           <Section icon={Target} title="主要职责">
             <ul className="space-y-3">
               {project.responsibilities.map((r, i) => (
-                <li key={i} className="flex items-start gap-3 text-text-on-dark/75">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500" />
+                <li key={i} className="flex items-start gap-3 text-text-on-dark/80">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500/60" />
                   <span>{r}</span>
                 </li>
               ))}
@@ -106,23 +108,23 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
               {project.challenges.map((c, i) => (
                 <div
                   key={i}
-                  className="rounded-xl border border-white/10 bg-white/[0.07] p-5 shadow-sm backdrop-blur-md transition-all hover:border-gold-500/40 hover:bg-white/[0.10] hover:shadow-xl hover:shadow-deep-blue-900/40"
+                  className={cn(glassCard, "p-5")}
                 >
                   <div className="mb-3">
                     <h4 className="mb-1 flex items-center gap-2 text-sm font-semibold text-text-white">
-                      <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-gold-500/60" />
                       难点 {i + 1}
                     </h4>
-                    <p className="text-sm leading-relaxed text-text-on-dark/75">
+                    <p className="text-sm leading-relaxed text-text-on-dark/80">
                       {c.challenge}
                     </p>
                   </div>
-                  <div className="rounded-lg bg-gold-500/10 p-3">
+                  <div className="rounded-lg bg-gold-500/[0.06] p-3">
                     <h4 className="mb-1 flex items-center gap-1.5 text-sm font-medium text-gold-400">
                       <CheckCircle2 size={14} />
                       解决方案
                     </h4>
-                    <p className="text-sm leading-relaxed text-text-on-dark/75">
+                    <p className="text-sm leading-relaxed text-text-on-dark/80">
                       {c.solution}
                     </p>
                   </div>
@@ -139,7 +141,7 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
               {project.achievements.map((a, i) => (
                 <div
                   key={i}
-                  className="rounded-xl border border-gold-500/40 bg-gradient-to-br from-white/[0.07] to-gold-500/[0.08] p-4 text-center shadow-sm backdrop-blur-md transition-all hover:border-gold-500/60 hover:shadow-xl hover:shadow-deep-blue-900/40"
+                  className={cn(glassCard, "p-4")}
                 >
                   <p className="text-sm font-medium text-text-on-dark">
                     {a}
@@ -171,7 +173,7 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
         <div className="mt-16 flex items-center justify-between border-t border-white/10 pt-8">
           <Link
             href="/#projects"
-            className="flex items-center gap-2 text-sm text-text-on-dark/70 transition-colors hover:text-gold-400"
+            className="flex items-center gap-2 text-sm text-text-on-dark/80 transition-colors hover:text-gold-400"
           >
             <ArrowLeft size={14} />
             <span>返回项目列表</span>
@@ -181,7 +183,7 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
               href={project.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm text-text-on-dark/70 transition-colors hover:text-gold-400"
+              className="flex items-center gap-1.5 text-sm text-text-on-dark/80 transition-colors hover:text-gold-400"
             >
               <Code2 size={14} />
               <span>查看源码</span>
@@ -210,11 +212,9 @@ function Section({
 }) {
   return (
     <section className="mb-12">
-      <div className="mb-5 flex items-center gap-2">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold-500/10">
-          <Icon size={16} className="text-gold-400" />
-        </div>
-        <h2 className="text-lg font-semibold text-text-white">{title}</h2>
+      <div className="mb-5 flex items-center gap-2.5">
+        <Icon size={18} className="text-gold-400" />
+        <h2 className="text-lg font-semibold tracking-tight text-text-white">{title}</h2>
       </div>
       {children}
     </section>

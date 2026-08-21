@@ -13,9 +13,9 @@ const buttonVariants = cva(
         gold:
           "bg-gold-500 text-deep-blue-900 hover:bg-gold-400 shadow-md hover:shadow-lg active:scale-[0.98]",
         outline:
-          "border border-deep-blue-900/20 text-deep-blue-900 hover:bg-deep-blue-900/5 hover:border-gold-500/50",
+          "border border-white/20 text-text-on-dark hover:bg-white/5 hover:border-gold-500/50",
         ghost:
-          "text-deep-blue-700 hover:bg-deep-blue-900/5 hover:text-gold-500",
+          "text-text-on-dark hover:bg-white/5 hover:text-gold-400",
         link: "text-gold-500 underline-offset-4 hover:underline",
       },
       size: {

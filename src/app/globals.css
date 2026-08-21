@@ -1,45 +1,55 @@
 @import "tailwindcss";
 
-/* ===== 八字喜用色 — 金水配色系统 ===== */
-/* 日主己土极旺，取金泄秀、水润局，喜金水，忌火土 */
+/* ===== 日照金山配色系统 v2 ===== */
+/* 金色（主峰暖金高光）+ 水蓝（夜空蓝·雪峰暗部）+ 深蓝（天空底色）
+   意境：深蓝夜幕 + 金色流转 */
 
 @theme inline {
-  /* 主色（水）：深蓝 — 代表财富与流动 */
-  --color-deep-blue-900: #0B1D3A;
-  --color-deep-blue-800: #102A43;
-  --color-deep-blue-700: #1A3B5C;
-  --color-deep-blue-600: #25507A;
-  --color-deep-blue-500: #326996;
+  /* 主色：深蓝 — 夜空底色，对应图片顶部深蓝天空 */
+  --color-deep-blue-900: #0A1626;
+  --color-deep-blue-800: #0F2138;
+  --color-deep-blue-700: #163450;
+  --color-deep-blue-600: #234A70;
+  --color-deep-blue-500: #31628F;
 
-  /* 辅色（金）：金色 — 代表才华泄秀 */
-  --color-gold-500: #D4AF37;
-  --color-gold-400: #C5A860;
-  --color-gold-300: #D4C080;
-  --color-gold-200: #E3D6A0;
-  --color-gold-100: #F2EBC0;
+  /* 辅色：亮黄金 — 对应主峰被阳光照亮的高光色（亮黄 → 金橙）。
+     与全站 CTA 按钮渐变 linear-gradient(135deg,#ffe259,#ffa751) 同源：
+     gold-400=#FFE259（渐变起始亮黄）、gold-500=#FFA751（渐变末端金橙），全站金色体系统一 */
+  --color-gold-500: #FFA751;
+  --color-gold-400: #FFE259;
+  --color-gold-300: #FFE98A;
+  --color-gold-200: #FFF0B8;
+  --color-gold-100: #FFF6D9;
 
-  /* 背景色 */
-  --color-cool-bg: #F0F4F8;
-  --color-cool-bg-alt: #E8EDF2;
-  --color-cool-bg-card: #FFFFFF;
+  /* 点缀色：水蓝 — 对应天空中部浅蓝与雪峰暗部偏蓝灰调 */
+  --color-water-blue-500: #4A8BBF;
+  --color-water-blue-400: #3B78A8;
+  --color-water-blue-300: #71A9D4;
+  --color-water-blue-200: #A3CBEA;
+  --color-water-blue-100: #D2E8F6;
 
-  /* 文字色 */
-  --color-text-primary: #1A202C;
-  --color-text-secondary: #4A5568;
+  /* 保留旧 accent-teal 别名，指向水蓝色系（兼容现有引用） */
+  --color-accent-teal: var(--color-water-blue-200);
+  --color-accent-teal-dark: var(--color-water-blue-400);
+  --color-accent-teal-light: var(--color-water-blue-100);
+
+  /* 背景色 — 深色主题，对应夜空蓝灰 */
+  --color-cool-bg: #0F1A2E;
+  --color-cool-bg-alt: #162336;
+  --color-cool-bg-card: #1B2B42;
+
+  /* 文字色 — 深底浅字 */
+  --color-text-primary: #E8EDF4;
+  --color-text-secondary: #94A3B8;
   --color-text-on-dark: #E2E8F0;
   --color-text-white: #FFFFFF;
 
-  /* 点缀色（水木） */
-  --color-accent-teal: #A0D2DB;
-  --color-accent-teal-dark: #7EB8C9;
-  --color-accent-teal-light: #C5E5F0;
-
   /* 语义色 */
-  --color-border-light: rgba(11, 29, 58, 0.08);
-  --color-border-medium: rgba(11, 29, 58, 0.15);
-  --color-shadow: rgba(11, 29, 58, 0.06);
+  --color-border-light: rgba(74, 139, 191, 0.08);
+  --color-border-medium: rgba(74, 139, 191, 0.15);
+  --color-shadow: rgba(10, 22, 38, 0.15);
 
-  /* 系统字体回退（--font-inter 由 layout.tsx 的 next/font 注入，缺失时回退 Inter 本地/系统字体） */
+  /* 系统字体回退 */
   --font-sans: var(--font-inter, "Inter"), "SF Pro Display", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "SF Mono", "Fira Code", "Consolas", "Courier New", monospace;
 }
@@ -77,43 +87,13 @@ body {
   background: var(--color-gold-500);
 }
 
-/* 键盘可达性：链接/按钮聚焦时的金色 ring（仅 focus-visible，不影响鼠标点击） */
+/* 键盘可达性：链接/按钮聚焦时的金色 ring（仅 focus-visible，不影响鼠标点击）。
+   注意：[role="button"] 选择器会被 Tailwind v4 编译丢弃，可交互 div 需用
+   focus-visible:ring-* 工具类（见 AiAgentCharacter 数字人头像） */
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--color-gold-500);
   outline-offset: 2px;
-}
-
-/* 水波纹装饰效果 — 通过伪元素实现 */
-.water-ripple {
-  position: relative;
-  overflow: hidden;
-}
-.water-ripple::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(
-    ellipse at var(--ripple-x, 50%) var(--ripple-y, 50%),
-    rgba(212, 175, 55, 0.03) 0%,
-    transparent 60%
-  );
-  pointer-events: none;
-}
-
-/* 金属光泽 渐变 */
-.gold-shimmer {
-  background: linear-gradient(
-    135deg,
-    var(--color-gold-500) 0%,
-    var(--color-gold-300) 40%,
-    var(--color-gold-100) 60%,
-    var(--color-gold-500) 100%
-  );
-  background-size: 200% 200%;
 }
 
 /* 无障碍：系统开启减弱动态时，保留入场过程但终止 infinite 循环与平滑滚动 */

@@ -1,63 +1,31 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { profile } from "@/lib/knowledge";
 
-interface HeroSectionProps {
-  /** W 金色锁定态：隐藏圆形光晕，呈现纯粹星空 */
-  starLocked?: boolean;
-}
+export default function HeroSection() {
+  // 向下滚动指示：仅在视口内且未开启减弱动态时运行 infinite 动画（P2 性能）
+  const arrowRef = useRef<HTMLDivElement>(null);
+  const arrowInView = useInView(arrowRef, { margin: "-15% 0px -15% 0px" });
+  const reduceMotion = useReducedMotion();
 
-export default function HeroSection({ starLocked = false }: HeroSectionProps) {
   return (
     <section
       id="hero"
       className="relative flex min-h-screen items-center justify-center overflow-hidden"
     >
-      {/* 深色背景已上移至首页全屏固定背景层（HomeClient，#120F17），Galaxy 星空透明叠加其上 */}
-      {/* 深邃背景层 — 动态光晕（金色锁定态下整层淡出，避免圆形光晕破坏纯粹星空） */}
-      <div
-        className="absolute inset-0 overflow-hidden"
-        style={{ opacity: starLocked ? 0 : 1, transition: "opacity 1s ease" }}
-      >
-        {/* 金色光晕 — 缓慢漂移（金泄秀，代表才华） */}
-        <motion.div
-          animate={{ x: [0, 40, 0], y: [0, -25, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[20%] -left-10 h-[450px] w-[450px] rounded-full bg-gold-500/10 blur-[120px]"
-        />
-        {/* 青色光晕 — 反向漂移（水润局，代表流动） */}
-        <motion.div
-          animate={{ x: [0, -30, 0], y: [0, 30, 0] }}
-          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[20%] -right-10 h-[400px] w-[400px] rounded-full bg-accent-teal/10 blur-[120px]"
-        />
-        {/* 中心纵深感光晕 — 缓慢脉动 */}
-        <motion.div
-          animate={{ scale: [1, 1.08, 1], opacity: [0.08, 0.15, 0.08] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-deep-blue-600/20 blur-[150px]"
-        />
-      </div>
+      {/* 背景为全屏固定雪山图（HomeClient），本区无任何装饰动画层，图片直接透出 */}
 
-      {/* 网格纹理（深色背景下用浅色网点） */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 1px 1px, #F0F4F8 1px, transparent 0)",
-          backgroundSize: "40px 40px",
-        }}
-      />
-
-      {/* 底部淡出过渡带：星辰在进入经历区前自然隐没（透明 → #120F17，与 TechStack 起点同色） */}
+      {/* 底部淡出过渡带：雪山图在进入经历区前自然隐入夜色（透明 → rgba(10,22,38,0.55)，
+          与 TechStack 起点同色，消除分区交界生硬分界线） */}
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 h-[28vh]"
         style={{
           background:
-            "linear-gradient(180deg, transparent 0%, rgba(18,15,23,0.55) 55%, #120F17 100%)",
+            "linear-gradient(180deg, transparent 0%, rgba(10,22,38,0.36) 55%, rgba(10,22,38,0.55) 100%)",
         }}
       />
 
@@ -69,10 +37,31 @@ export default function HeroSection({ starLocked = false }: HeroSectionProps) {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="relative mb-8"
         >
-          <div className="flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-gold-500 to-gold-300 p-[3px] shadow-xl shadow-gold-500/30">
-            <div className="flex h-full w-full items-center justify-center rounded-full bg-[#1B1622] text-3xl font-bold text-gold-500">
+          {/* W 头像圈：赤金环与 W 字母分层——环层用 CSS mask 切出 3px 赤金圆环（环内透明
+              露出雪山），W 字母独立层叠加其上（mask 只作用于环层，不裁切字母） */}
+          <div className="relative flex h-32 w-32 items-center justify-center">
+            {/* 亮黄色环层（与 Hero 三按钮同色系 linear-gradient(135deg,#ffe259,#ffa751)） */}
+            <div
+              className="absolute inset-0 rounded-full shadow-xl shadow-[#ffa751]/30"
+              style={{
+                background: "linear-gradient(135deg, #ffe259, #ffa751)",
+                WebkitMask:
+                  "radial-gradient(circle farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3.5px))",
+                mask:
+                  "radial-gradient(circle farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3.5px))",
+              }}
+            />
+            {/* W 字母层（不受 mask 影响） */}
+            <span
+              className="relative z-10 text-3xl font-bold"
+              style={{
+                color: "#ffe259",
+                textShadow:
+                  "0 1px 3px rgba(10,22,38,0.65), 0 2px 14px rgba(10,22,38,0.85)",
+              }}
+            >
               {profile.name.charAt(0).toUpperCase()}
-            </div>
+            </span>
           </div>
         </motion.div>
 
@@ -84,7 +73,7 @@ export default function HeroSection({ starLocked = false }: HeroSectionProps) {
           className="mb-3 text-4xl font-bold tracking-tight text-text-white md:text-6xl lg:text-7xl"
         >
           {profile.name}
-          <span className="ml-2 text-gold-500">.</span>
+          <span className="ml-2 text-gold-400">.</span>
         </motion.h1>
 
         <motion.p
@@ -92,6 +81,7 @@ export default function HeroSection({ starLocked = false }: HeroSectionProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
           className="mb-4 text-lg text-gold-400 md:text-xl"
+          style={{ textShadow: "0 1px 3px rgba(10,22,38,0.9), 0 2px 12px rgba(10,22,38,0.85)" }}
         >
           {profile.title}
         </motion.p>
@@ -101,7 +91,7 @@ export default function HeroSection({ starLocked = false }: HeroSectionProps) {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mb-12 max-w-xl text-base leading-relaxed text-text-on-dark/70 md:text-lg"
+          className="mb-12 max-w-xl text-base leading-relaxed text-text-on-dark/80 md:text-lg"
         >
           "{profile.slogan}"
         </motion.p>
@@ -113,17 +103,24 @@ export default function HeroSection({ starLocked = false }: HeroSectionProps) {
           transition={{ duration: 0.6, delay: 0.65 }}
           className="flex flex-wrap items-center justify-center gap-4"
         >
-          <Button variant="gold" size="lg" asChild>
+          {/* 查看项目：用户指定渐变 linear-gradient(135deg,#ffe259,#ffa751) */}
+          <Button variant="gold" size="lg" asChild className="bg-[linear-gradient(135deg,#ffe259,#ffa751)] text-deep-blue-900 shadow-lg shadow-[#ffa751]/40 hover:bg-[linear-gradient(135deg,#ffe98a,#ffb464)]">
             <a href="#projects">查看项目</a>
           </Button>
-          <Button variant="outline" size="lg" asChild className="border-gold-500/30 text-text-white transition-colors hover:border-gold-500/70 hover:bg-gold-500/10 hover:text-gold-400">
+          {/* 查看文章：同上渐变 */}
+          <Button variant="gold" size="lg" asChild className="bg-[linear-gradient(135deg,#ffe259,#ffa751)] text-deep-blue-900 shadow-lg shadow-[#ffa751]/40 hover:bg-[linear-gradient(135deg,#ffe98a,#ffb464)]">
+            <a href="#blogs">查看文章</a>
+          </Button>
+          {/* 联系我：同上渐变（原 outline 风格改为渐变实心，三按钮视觉统一） */}
+          <Button variant="gold" size="lg" asChild className="bg-[linear-gradient(135deg,#ffe259,#ffa751)] text-deep-blue-900 shadow-lg shadow-[#ffa751]/40 hover:bg-[linear-gradient(135deg,#ffe98a,#ffb464)]">
             <a href="#footer">联系我</a>
           </Button>
         </motion.div>
       </div>
 
-      {/* 向下滚动指示 — 底部居中（避开右下角数字人） */}
+      {/* 向下滚动指示 — 底部居中（避开右下角数字人）；滚出视口即暂停动画 */}
       <motion.div
+        ref={arrowRef}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
@@ -131,9 +128,9 @@ export default function HeroSection({ starLocked = false }: HeroSectionProps) {
       >
         <motion.a
           href="#tech-stack"
-          animate={{ y: [0, 8, 0] }}
+          animate={arrowInView && !reduceMotion ? { y: [0, 8, 0] } : { y: 0 }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center gap-2 text-text-on-dark/50 transition-colors hover:text-gold-500"
+          className="flex flex-col items-center gap-2 text-text-on-dark/70 transition-colors hover:text-gold-500"
         >
           <span className="text-xs">向下滚动</span>
           <ArrowDown size={18} />

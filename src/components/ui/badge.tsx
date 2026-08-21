@@ -10,8 +10,8 @@ const badgeVariants = cva(
         default:
           "border-transparent bg-deep-blue-900 text-gold-500 hover:bg-deep-blue-800",
         skill:
-          "border-deep-blue-900/10 bg-cool-bg-alt text-deep-blue-700 hover:bg-deep-blue-900/10",
-        gold: "border-transparent bg-gold-500/10 text-gold-500 hover:bg-gold-500/20",
+          "border-white/10 bg-white/[0.08] text-text-on-dark hover:bg-white/[0.12]",
+        gold: "border-transparent bg-gold-500/10 text-gold-400 hover:bg-gold-500/20",
         outline: "text-text-secondary border-border-medium",
       },
     },

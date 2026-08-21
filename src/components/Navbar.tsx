@@ -26,8 +26,17 @@ export default function Navbar({ logoGold = false, onLogoClick }: NavbarProps = 
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
+    // rAF 节流：scroll 高频触发时每帧最多更新一次 state（布尔 bail-out 进一步免重渲染）
+    let ticking = false;
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 50);
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -53,13 +62,13 @@ export default function Navbar({ logoGold = false, onLogoClick }: NavbarProps = 
             <span
               className={cn(
                 "transition-colors duration-300",
-                logoGold ? "text-gold-500" : "text-white",
+                logoGold ? "text-gold-400" : "text-white",
               )}
               style={logoGold ? undefined : { textShadow: "0 1px 3px rgba(11, 42, 74, 0.55)" }}
             >
               W
             </span>
-            <span className="text-gold-500">.</span>
+            <span className="text-gold-400">.</span>
           </button>
         ) : (
           <Link
@@ -67,7 +76,7 @@ export default function Navbar({ logoGold = false, onLogoClick }: NavbarProps = 
             className="relative text-xl font-bold tracking-tight"
           >
             <span className="text-text-white">W</span>
-            <span className="text-gold-500">.</span>
+            <span className="text-gold-400">.</span>
           </Link>
         )}
 
@@ -90,6 +99,7 @@ export default function Navbar({ logoGold = false, onLogoClick }: NavbarProps = 
           className="text-text-white md:hidden"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="切换菜单"
+          aria-expanded={isOpen}
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
