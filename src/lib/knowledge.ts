@@ -80,8 +80,8 @@ export const skills: Skill[] = [
   // ★★★ 后端技术（核心）
   { name: "Java", category: "后端技术", subtext: "并发容器、线程池与 JVM 内存模型是日常工具，线上问题习惯从线程栈和 GC 日志入手" },
   { name: "SpringBoot", category: "后端技术", subtext: "不止会用：读过自动装配源码，习惯用条件装配与 Starter 机制收敛二方依赖" },
-  { name: "SpringCloudAlibaba", category: "后端技术", subtext: "微服务治理的关键不在引组件，而在限流熔断阈值与业务容量压测对齐" },
-  { name: "JVM 调优", category: "后端技术", subtext: "从 GC 日志与内存快照判断吞吐/停顿取舍，不盲目换收集器" },
+  { name: "SpringCloud", category: "后端技术", subtext: "微服务治理的关键不在引组件，而在限流熔断阈值与业务容量压测对齐" },
+  { name: "JVM 调优", category: "后端技术", subtext: "曾是人工翻 GC 日志与内存快照做参数调优，如今把排查思路沉淀为 skill 接入 AI 机器人：实时监控 JVM 指标，结合人工经验与 AI 推理预判 OOM 等隐患，防患于未然" },
   { name: "并发编程", category: "后端技术", subtext: "机票链路常规操作：CompletionService 并发验座验价，线程池隔离关键与非关键路径" },
   { name: "微服务架构", category: "后端技术", subtext: "按限界上下文划服务边界，防腐层隔离外部系统，集成代码不污染领域模型" },
   { name: "Python", category: "后端技术", subtext: "AI 应用的胶水层：爬虫清洗管线、推理服务与工程脚本都用它落地" },
@@ -130,14 +130,15 @@ export const projects: Project[] = [
     slug: "fliggy-flight-booking",
     title: "飞猪机票自营采购预订系统",
     description:
-      "飞猪机票交易域的核心预订引擎，B2C/B2B/B2B2C 全业务域预订占编的统一通道，覆盖验座、验价、询价、预订、取消、支付校验、辅营预订等 13 条核心业务流。在‘100% 保障出票’的承诺下，收益换货决策引擎从多个供给候选里实时选收益最优的供给，失败重选次优、兜底预订、静默换货层层保障。我负责预订主链路与收益换货决策引擎的开发。",
-    tags: ["Java", "DDD 六边形架构", "TBBPM", "HSF", "Tair", "高并发"],
+      "飞猪机票交易域的核心预订引擎，B2C/B2B/B2B2C 全业务域预订占编的统一通道，覆盖验座、验价、询价、预订、取消、支付校验、辅营预订等 13 条核心业务流。在‘100% 保障出票’的承诺下，收益换货决策引擎从多个供给候选里实时选收益最优的供给，失败重选次优、兜底预订、静默换货层层保障。项目以 100% VibeCoding 流程开发：devix 机器人接入我们参与研发的 superpower-harness 流程治理框架，把开发纪律从提示词挪进 AI 进程外的 hook，需求→设计→编码→评审整个开发 loop 留痕上报、可审计。我负责预订主链路与收益换货决策引擎的开发。",
+    tags: ["Java", "DDD 六边形架构", "TBBPM", "HSF", "Tair", "100% VibeCoding", "superpower-harness"],
     role: "核心开发工程师（Java 后端）",
     highlights: [
       "全业务域预订占编统一通道：13 条核心业务流、HSF 对接 25+ 外部系统，支撑国内/国际双轨全量自营预订流量",
       "收益换货决策引擎：模板方法+责任链的 30 档可配置策略链，41 个归因码让每次换/不换决策都可追溯可审计",
       "TBBPM 编排 17 个 Scenario / 19 条流程，国内单商品粒度、国际全单粒度的差异化失败处理与变价返价",
       "蚂蚁 VCC 支付接入：多支付方式按返佣排序 + 失败自动灾备切换，预估年化收益提升 650 万",
+      "100% VibeCoding 流程交付：devix 机器人接入参与研发的 superpower-harness 流程治理框架，规则不写在提示词里、写进 AI 每次动作都要过的进程外 hook，开发纪律对 AI 不可绕过",
     ],
     period: "2026.04 - 至今",
     company: "飞猪（阿里巴巴旗下）",
@@ -148,6 +149,11 @@ export const projects: Project[] = [
       "保高并发下的一致性：Tair 分布式锁按 traceId 维度防重复预订，CompletionService+线程池做多商品并发验座/验价/预订，MySQL+Tair+DataHub+EventBus 多写靠领域事件驱动 MetaQ 异步落账",
       "维护外部集成防腐层：Adaptor+Proxy 双层防腐包 15 个外部系统代理，BookInfoRepositoryRouter 按‘故障单/派单自开/国内国际’三维路由 7 个仓储实现，flybp 走反向 SPI（对方定接口、我们 @HSFProvider 实现），收益计算并发拆分并卡 1 秒硬超时",
       "接入蚂蚁 VCC 支付：支付方式配置域按国内国际+office 维度匹配，收益计算里多支付方式按返佣排序，履约协议传支付方式列表并支持失败自动灾备切换",
+      "参与研发 superpower-harness 流程治理框架：宿主 CLI（Claude Code/Qoder）在 AI 写文件、跑命令、派子任务前先跑进程外 hook，脚本说不行动作就不执行；6 个 hook 拦截违规——写代码阶段主对话禁改源码只能派子任务、状态文件禁 AI 手改、没走门禁不能执行",
+      "『延迟推进+证据门槛』与需求工程标准化：阶段不在 AI 说‘做完了’时推进，而在它想做下一步时回头查旁路日志证据（如是否真加载过 TDD skill），凭证由 hook 进程外记录、模型无权限伪造；proposal→spec→design→tasks 四份编号文档串成 US-N→FR-N→组件→T001 追溯链、断链写不进磁盘，落地 EARS 句式、Gherkin 验收场景、RFC 2119 优先级",
+      "独立审核与代码归置：每轮派全新子任务扫描、两个立场对立的子任务辩论（一个只读需求文档、一个只读设计和代码）3 次锁定转人工，避开自己查自己查不出盲点；约 3000 行归置规范坍缩成约 8 条本质规则 JSON，写前注入约束卡、写后静态规则机械检查+语义规则派子任务判，换架构只改 JSON",
+      "工程素质与 devix 接入：自举开发（30+ 份设计文档即其自身产物）、36 个测试文件零 npm 依赖、bash 约 15ms 快筛前置 + Node 约 250ms 兜底；devix 机器人接入完成需求开发 loop 上报，三份报告（一致性分析/代码评审/测试验证）连同 hook 决策日志归档，/harness-audit 按时间戳合并四路日志审计流程本身",
+      "JVM 调优经验落地 AI 化：把人工排查思路写成 skill 接入 devix 机器人，AI 实时巡检线上分组（10 台）的堆水位、GC、direct buffer 等指标，曾定位『内存基线最高的两台 direct buffer 反而最低』的反直觉异常，拆解出 metaspace 类加载累积与 Netty 池未收缩的根因，输出补 MaxDirectMemorySize 上限等 P0-P2 分级参数方案——OOM 隐患从人工事后排查变成 AI 主动预判",
     ],
     challenges: [
       {
@@ -162,27 +168,33 @@ export const projects: Project[] = [
         challenge: "预订链路跨 25+ 外部系统，重复提交、多商品并发、多存储多写，任何一环不一致都可能重复占座或漏单",
         solution: "Tair 分布式锁按 traceId 防重入口，接口幂等兜底；多写不追强一致，主库落单为准，收益差异走领域事件发 MetaQ 异步落账；收益计算这种非关键路径卡 1 秒硬超时，超时就降级，不拖死预订主流程",
       },
+      {
+        challenge: "把开发流程全交给 AI 后出了真问题：一个 19 任务、57 轮子任务的项目里，AI 全程没加载被要求的执行流程、19 个任务首轮实现全不合格、一次代码没提交、做完也不触发评审——流程规则全写在提示词里，和模型在同一个地方，遵不遵守由模型自己决定",
+        solution: "superpower-harness 把『靠 AI 自觉』的事交给程序：规则从提示词挪进 AI 进程外的 hook，每个动作先过检查，AI 读不到也改不了；写代码只能派上下文全新的子任务、没走门禁就执行不了；事后审计的不是代码而是流程本身——四路日志按时间戳合并做语义分析，最初那次 57 轮的问题就是这样复盘出来的",
+      },
     ],
     achievements: [
       "支撑国内/国际双轨全量自营预订流量，失败重选、兜底预订、静默换货多层保障支撑‘100% 保障出票’承诺",
       "换货决策 41 个归因码全覆盖，每一单换/不换都能回答为什么",
       "蚂蚁 VCC 支付接入预估年化收益提升 650 万",
       "全链路 tracerId + TripMonitor RT/成功率埋点 + DataHub 5 个 topic 决策日志异步上报，支撑收益运营离线分析",
+      "项目以 100% VibeCoding 流程交付：devix + superpower-harness 治理下开发纪律对 AI 不可绕过，需求→设计→编码→评审全 loop 留痕上报",
     ],
-    fullTechStack: ["Java 8", "Spring Boot / Pandora Boot", "HSF", "TBBPM", "MySQL + TDDL", "MyBatis", "Tair", "MetaQ/RocketMQ", "Diamond", "Sentinel", "EagleEye", "DataHub", "EventBus", "MapStruct"],
+    fullTechStack: ["Java 8", "Spring Boot / Pandora Boot", "HSF", "TBBPM", "MySQL + TDDL", "MyBatis", "Tair", "MetaQ/RocketMQ", "Diamond", "Sentinel", "EagleEye", "DataHub", "EventBus", "MapStruct", "superpower-harness", "devix 机器人", "Claude Code / Qoder CLI", "node:test"],
   },
   {
     slug: "fliggy-merchant-ai",
     title: "飞猪机票代理人经营工作站（航班管理工作站）",
     description:
-      "飞猪机票代理人经营域的核心业务中台，管航司政策的完整生命周期：政策文件经 AI 解析、结构化转换、规则校验、引擎验价、人工确认后投放生效，同时提供 SOP 流程编排、运营工单、市场可视化和监控告警。我负责政策、政策校验、SOP 等子域的后端开发。",
-    tags: ["Java", "JDK 17", "Spring AI Alibaba", "DDD 六边形架构", "Flowable", "大模型"],
+      "飞猪机票代理人经营域的核心业务中台，管航司政策的完整生命周期：政策文件经 AI 解析、结构化转换、规则校验、引擎验价、人工确认后投放生效，同时提供 SOP 流程编排、运营工单、市场可视化和监控告警。核心子模块『机票运营 AI Agent 平台』基于 Next.js 15 + Vercel AI SDK 构建并部署于阿里 Aone FaaS 无服务器环境：运营上传航司政策原文（Word/Excel/PDF），Agent 自主编写并执行 Python 脚本完成解析、字段映射与飞猪结构化 Excel 产出，替代纯人工加工。我负责政策、政策校验、SOP 等子域与政策解析 Agent 的研发。",
+    tags: ["Java", "JDK 17", "DDD 六边形架构", "Spring AI Alibaba", "Next.js 15", "Vercel AI SDK", "MCP", "RAG"],
     role: "核心研发工程师（Java 后端）",
     highlights: [
-      "DDD 六边形架构：7 个 Maven 模块严格向内依赖、Domain 层零框架依赖，13 个业务子域、约 30 万行代码",
+      "机票运营 AI Agent 平台：基于 Next.js 15 + Vercel AI SDK 构建并部署阿里 Aone FaaS，Agent 自主编写并执行 Python 脚本，实现航司政策原文（Word/Excel/PDF）到飞猪结构化 Excel 的全自动转换，覆盖 20+ 家航司",
+      "MCP 协议接入企业知识库的双通道 RAG：任务启动按航司全文预取『通用+专属规则』注入 System Prompt，运行时向量检索按需追问——解析规则由知识库实时维护、Agent 自动获取，更新无需发版即生效",
+      "异步工作流秒级受理、事件流实时推送前端仪表盘；航司级模型动态路由与灰度白名单配置热更新，知识库故障自动降级内置 Prompt 兜底；仅暴露只读检索工具，隔离 MCP 写删操作杜绝误删风险",
       "基于 Spring AI Alibaba 搭建航司政策文件解析链路，守住‘投放生效前必须人工确认’的红线",
       "Flowable 编排 SOP：上传→AI 解析→预校验→引擎验价→抽检→投放，节点失败强制熔断",
-      "统一 traceId 打通主线程/异步/MQ 回调，定位往返验价生效率 0% 的根因并修复",
     ],
     period: "2026.04 - 至今",
     company: "飞猪（阿里巴巴旗下）",
@@ -193,11 +205,23 @@ export const projects: Project[] = [
       "做验价链路的可观测性：用 EagleEye 把主线程、异步线程和 MQ 回调的 traceId 统一起来，再加 bizTraceId 把一次政策投放的全链路日志串成一条线",
       "开发数据看板：ODPS/Hologres 查询、Excel 异步导出、OSS 预签名下载全链路，处理过 DWD 层数据断档的治理和补数",
       "维护工程质量门禁：30 个维度的编码规则集、Checkstyle 对 DDD 分层做硬卡点，Domain 层单测跟代码同步写",
+      "基于 Next.js 15 + Vercel AI SDK 开发机票运营 AI Agent 平台（部署阿里 Aone FaaS）：streamText + 30 步硬上限编排 Agent，持有 Python 执行 / Bash 执行 / 结果提交 / 知识检索四工具，submitFinalResult 结果经多重 JSON 反序列化修复与 AI 小模型兜底纠错",
+      "设计 MCP 协议双通道 RAG：A 通道任务启动按航司精确预取『通用规则+航司专属规则（含动态发现的子文档）』全文注入 System Prompt，B 通道运行时只读向量检索按需追问；MCP 客户端懒加载单例 + 8s 超时 + 失败自动重置，航司→pageId 映射 10min TTL 缓存",
+      "实现异步工作流与配置驱动：POST /api/workflows/start 秒级返回 taskId 后台执行全流程（模板刷新→工作区创建→OSS 下载→知识注入→Agent 执行→OSS 上传），MongoDB 持久化任务状态与事件流；Diamond 配置中心实现航司灰度白名单与模型动态路由（精确匹配→通配→兜底三级降级），热更新订阅",
+      "动态 Prompt 三段式拼装与知识库安全封装：MongoDB 基础 Prompt（global+airline 两层 scope）→ kbase 实时规则注入段（权威来源，冲突时优先）→ 运行环境段；仅向 Agent 暴露单一只读检索工具，隔离 MCP 原生写/删操作；thinking/tool_call/tool_result/complete 事件流全量落库，Dashboard 实时展示推理过程",
     ],
     challenges: [
       {
         challenge: "大模型解析政策没法保证百分百准，而政策一旦投错直接影响验价和出票，出错代价远高于省下的人工",
         solution: "链路上做 LLM 超时控制、降级重试和人工兜底，解析结果要先过规则校验和引擎验价，最后守一条红线：投放生效前必须人工确认。AI 负责把天级的人工录入压到分钟级，人只做最后一道确认",
+      },
+      {
+        challenge: "解析规则复杂且多变：大客户编码（PAT:A#C/A*）、EI 项、班期前缀、含儿童判断等十余类规则 × 20+ 家航司各异，原本靠运营从知识库人工搬运进数据库 Prompt 表，同步滞后且易不一致",
+        solution: "MCP 协议直连企业知识库，设计双通道 RAG：任务启动按航司全文预取注入（权威低延迟），运行时向量检索按需追问（灵活覆盖新增问题）；检索参数调优 topK 5→3、chunk 上限 1000→2000 字符，规则由知识库实时维护、Agent 自动获取，更新无需发版即生效",
+      },
+      {
+        challenge: "Agent 持有 MCP 客户端全量工具（约 25 个，大半为写/删操作），存在误删知识库的资损风险；知识库服务本身也可能故障",
+        solution: "仅向 Agent 暴露单一只读检索工具，隔离 MCP 原生写删操作；MCP 客户端懒加载单例 + 8s 超时 + 失败自动重置，知识库任意环节故障自动降级内置 Prompt 兜底，任务不中断",
       },
       {
         challenge: "SOP 流程里有节点靠 MQ 回调推进，回调处理完业务逻辑后节点状态没收尾，流程卡死，政策停在半路",
@@ -210,11 +234,13 @@ export const projects: Project[] = [
     ],
     achievements: [
       "航司政策从文档到可投放的处理时效从人工天级缩短到分钟级，人工只做投放前确认",
+      "航司政策解析覆盖 20+ 家航司（CA/HU/GS/SC/LT/DZ 等），知识库 23+ 篇规则文档全量可注入",
+      "解析规则获取从『人工搬运』变为『实时拉取』，消除同步滞后；规则更新无需发版即生效（配置热更新 + 映射 TTL 缓存）",
       "SOP 节点卡死问题修复并沉淀为团队规范：异步回调必须主动结束节点状态",
       "验价链路全链路 traceId 落地，线上问题排查从小时级降到分钟级",
       "约 30 万行代码、2800+ Java 类的工程在 DDD 分层门禁约束下保持分层不腐化",
     ],
-    fullTechStack: ["JDK 17", "Spring Boot 3.2", "Spring AI Alibaba (DashScope)", "Flowable 6.8", "HSF", "MetaQ/RocketMQ", "TDDL", "Tair", "Diamond", "SchedulerX", "EagleEye", "MySQL", "ODPS/Hologres", "OSS", "EasyExcel"],
+    fullTechStack: ["JDK 17", "Spring Boot 3.2", "Spring AI Alibaba (DashScope)", "Flowable 6.8", "Next.js 15", "Vercel AI SDK", "MCP (@modelcontextprotocol/sdk)", "MongoDB", "Python 3.10", "HSF", "MetaQ/RocketMQ", "TDDL", "Tair", "Diamond", "SchedulerX", "EagleEye", "MySQL", "ODPS/Hologres", "OSS", "EasyExcel"],
   },
   // ===== 个人项目 =====
   {
@@ -452,15 +478,15 @@ export const experiences: Experience[] = [
     subtitle:
       "机票交易域核心研发：一条线守预订链路的『100% 出票』，一条线用 AI 重构政策经营效率",
     description:
-      "飞猪机票交易域两条核心业务线的后端研发。自营采购预订系统是 B2C/B2B/B2B2C 全业务域预订占编的统一通道：『100% 保障出票』承诺下，13 条核心业务流经 DDD 六边形架构编排，收益换货决策引擎在多个供给候选中实时权衡收益与风险，失败重选、兜底预订、静默换货层层保障，41 个归因码让决策全程可审计。代理人经营工作站管理航司政策全生命周期：AI 解析、规则校验、引擎验价、人工确认后投放生效，Spring AI 提效与 Flowable SOP 熔断兜底分层协作，把政策处理时效从人工天级压到分钟级。",
+      "飞猪机票交易域两条核心业务线的后端研发。自营采购预订系统是 B2C/B2B/B2B2C 全业务域预订占编的统一通道：『100% 保障出票』承诺下，13 条核心业务流经 DDD 六边形架构编排，收益换货决策引擎在多个供给候选中实时权衡收益与风险，失败重选、兜底预订、静默换货层层保障，41 个归因码让决策全程可审计。代理人经营工作站管理航司政策全生命周期：核心子模块『机票运营 AI Agent 平台』基于 Next.js 15 + Vercel AI SDK 部署阿里 Aone FaaS，MCP 协议接入企业知识库的双通道 RAG（启动全文注入+运行时向量检索）驱动政策解析，Agent 自主编写执行 Python 脚本产出飞猪结构化 Excel，覆盖 20+ 家航司，规则由知识库实时维护、更新无需发版；主链路上 Spring AI 提效与 Flowable SOP 熔断兜底分层协作，把政策处理时效从人工天级压到分钟级。",
     highlights: [
       "【机票自营采购预订系统】『100% 保障出票』的难点不在下单而在兜底：作为全业务域预订占编统一通道，DDD 六边形架构编排 13 条核心业务流，防腐层隔离 25+ 外部供给系统，领域模型不随供给端变化腐化",
       "收益换货决策引擎：供给失败或变价时实时重选收益最优供给。30 档可配置策略链用模板方法锁死骨架、子类只填空；41 个归因码强制落库，每次换与不换都有据可查",
       "跨 25+ 系统的分布式链路守住一致性：Tair 分布式锁按 traceId 防重复预订，多存储多写以领域事件异步落账替代强一致，非关键路径卡 1 秒硬超时——可以降级，不能拖死预订主流程",
-      "接入自研 devix 机器人，通过 supperpower-harness 全流程研发链路，全面拥抱 AI，实现 100% AI Coding",
+      "接入自研 devix 机器人，以参与研发的 superpower-harness 流程治理框架驱动 100% VibeCoding 开发：规则写进 AI 进程外的 hook 而非提示词，整个需求开发 loop 留痕上报",
       "【机票代理人经营工作站】航司政策格式各异、投放错误直接冲击验价与出票：以 DDD 六边形架构承载 13 个业务子域约 30 万行代码，Domain 层零框架依赖、Checkstyle 硬门禁，规模增长下分层不腐化",
       "Spring AI 把政策解析从人工天级压到分钟级，但 AI 不做终审：LLM 只管结构化解析，规则校验与引擎验价兜底，守住『投放生效前必须人工确认』红线——效率交给机器，风险留给人",
-      "负责开发政策解析 Agent，通过知识库 RAG 增强解析能力，实现 AI 全面解析各种复杂航司政策，打通解析→验价→抽检→投放 SOP 全流程",
+      "负责开发机票运营 AI Agent 平台：MCP 接入企业知识库、双通道 RAG 驱动航司政策解析，Agent 自主产出飞猪结构化结果，覆盖 20+ 家航司、打通解析→验价→抽检→投放 SOP 全流程",
     ],
   },
   {
