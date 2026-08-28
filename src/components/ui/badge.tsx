@@ -12,6 +12,8 @@ const badgeVariants = cva(
         skill:
           "border-white/10 bg-white/[0.08] text-text-on-dark hover:bg-white/[0.12]",
         gold: "border-transparent bg-gold-500/10 text-gold-400 hover:bg-gold-500/20",
+        sky: "border-transparent bg-sky-400/10 text-sky-300 hover:bg-sky-400/20",
+        neutral: "border-transparent bg-white/10 text-text-on-dark/90 hover:bg-white/15",
         outline: "text-text-secondary border-border-medium",
       },
     },

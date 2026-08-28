@@ -65,9 +65,25 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
               </span>
             )}
           </div>
-          <h1 className="mb-4 text-3xl font-bold text-text-white md:text-4xl">
-            {project.title}
-          </h1>
+          <div className="mb-4 flex items-center gap-4">
+            {project.logo && (
+              <div
+                className={cn(
+                  "flex shrink-0 items-center justify-center overflow-hidden",
+                  project.logoWide ? "h-14 w-32" : "h-14 w-14"
+                )}
+              >
+                <img
+                  src={project.logo}
+                  alt={`${project.title} logo`}
+                  className="h-full w-full object-contain"
+                />
+              </div>
+            )}
+            <h1 className="text-3xl font-bold text-text-white md:text-4xl">
+              {project.title}
+            </h1>
+          </div>
           {project.company && (
             <p className="mb-4 text-sm text-text-on-dark/70">{project.company}</p>
           )}

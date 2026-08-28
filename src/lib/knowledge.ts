@@ -32,6 +32,12 @@ export interface Project {
   description: string;
   tags: string[];
   thumbnail?: string;
+  /** 项目 logo 图标（public/logos/ 下的 SVG 或 PNG） */
+  logo?: string;
+  /** logo 为横向宽幅（如带字横幅），渲染时用宽容器 */
+  logoWide?: boolean;
+  /** 项目归属分类：fliggy 飞猪工作项目 / techpark 科技园工作项目 / personal 个人独立项目 */
+  category?: "fliggy" | "techpark" | "personal";
   role?: string;
   highlights?: string[];
   links?: {
@@ -129,6 +135,8 @@ export const projects: Project[] = [
   {
     slug: "fliggy-flight-booking",
     title: "飞猪机票自营采购预订系统",
+    logo: "/logos/feizhu.svg",
+    category: "fliggy",
     description:
       "飞猪机票交易域的核心预订引擎，B2C/B2B/B2B2C 全业务域预订占编的统一通道，覆盖验座、验价、询价、预订、取消、支付校验、辅营预订等 13 条核心业务流。在‘100% 保障出票’的承诺下，收益换货决策引擎从多个供给候选里实时选收益最优的供给，失败重选次优、兜底预订、静默换货层层保障。项目以 100% VibeCoding 流程开发：devix 机器人接入我们参与研发的 superpower-harness 流程治理框架，把开发纪律从提示词挪进 AI 进程外的 hook，需求→设计→编码→评审整个开发 loop 留痕上报、可审计。我负责预订主链路与收益换货决策引擎的开发。",
     tags: ["Java", "DDD 六边形架构", "TBBPM", "HSF", "Tair", "100% VibeCoding", "superpower-harness"],
@@ -185,6 +193,8 @@ export const projects: Project[] = [
   {
     slug: "fliggy-merchant-ai",
     title: "飞猪机票代理人经营工作站（航班管理工作站）",
+    logo: "/logos/feizhu.svg",
+    category: "fliggy",
     description:
       "飞猪机票代理人经营域的核心业务中台，管航司政策的完整生命周期：政策文件经 AI 解析、结构化转换、规则校验、引擎验价、人工确认后投放生效，同时提供 SOP 流程编排、运营工单、市场可视化和监控告警。核心子模块『机票运营 AI Agent 平台』基于 Next.js 15 + Vercel AI SDK 构建并部署于阿里 Aone FaaS 无服务器环境：运营上传航司政策原文（Word/Excel/PDF），Agent 自主编写并执行 Python 脚本完成解析、字段映射与飞猪结构化 Excel 产出，替代纯人工加工。我负责政策、政策校验、SOP 等子域与政策解析 Agent 的研发。",
     tags: ["Java", "JDK 17", "DDD 六边形架构", "Spring AI Alibaba", "Next.js 15", "Vercel AI SDK", "MCP", "RAG"],
@@ -246,6 +256,9 @@ export const projects: Project[] = [
   {
     slug: "bp-agent",
     title: "英魂之刃赛事 BP 智能决策系统（BP Agent）",
+    logo: "/logos/yhzr.png",
+    logoWide: true,
+    category: "personal",
     description:
       "面向职业/半职业战队的电竞赛事 BP 实时决策与模拟训练系统。针对 BO5 全局单边 BP 赛制下后期决策空间指数级收缩、教练认知负荷过高的问题，设计并实现规则-模型-LLM 三层混合决策架构，在 30 秒操作时限内提供可解释、可信赖的针对性 BP 建议。",
     tags: ["Python", "FastAPI", "LightGBM", "LangChain", "RAG", "大模型"],
@@ -292,10 +305,12 @@ export const projects: Project[] = [
   {
     slug: "chalco-erp",
     title: "中铝国贸 1.0 系统（ERP）",
+    logo: "/logos/chalco.svg",
+    category: "techpark",
     description:
       "中铝国际贸易集团的 ERP 系统，覆盖合同、生产、物流、财务等业务流程。我主要做财务和客商两个模块的开发，也参与了数据库国产化迁移和日常运维。",
     tags: ["SpringBoot", "SpringCloud", "MySQL", "GaussDB", "Redis", "RocketMQ"],
-    role: "Java 开发工程师",
+    role: "软件开发工程师",
     highlights: [
       "财务结算链路用 RocketMQ 异步解耦，核心 SQL 从 3s 优化到 200ms",
       "客商模块被 30+ 业务方高频调用，加 Redis 多级缓存后响应从 800ms 降到 100ms",
@@ -335,10 +350,12 @@ export const projects: Project[] = [
   {
     slug: "online-education-platform",
     title: "皖江在线教育云平台",
+    logo: "/logos/education.svg",
+    category: "techpark",
     description:
       "面向皖江区域高校与职业培训机构的在线学习平台，覆盖课程浏览、报名购课、订单支付与学习进度管理，注册用户 5 万+，日活约 2000。负责交易链路与课程查询侧的后端设计与开发，重点解决热门课程开抢防超卖、支付状态一致性、慢 SQL 与缓存稳定性等问题。",
     tags: ["SpringBoot", "MySQL", "Redis", "RocketMQ", "支付链路", "缓存优化"],
-    role: "Java 开发工程师",
+    role: "软件开发工程师",
     highlights: [
       "热门课程限时开抢：Redis 预扣名额 + Lua 原子校验 + MQ 削峰，峰值 150 QPS 零超卖",
       "订单状态机 + 支付回调幂等 + 延迟消息自动关单，对账差异单从每周 10+ 降至基本清零",
@@ -380,10 +397,12 @@ export const projects: Project[] = [
   {
     slug: "sangang-smart-operations",
     title: "福建三钢闽光智能运营系统",
+    logo: "/logos/sangang.png",
+    category: "techpark",
     description:
       "三钢闽光厂内 ERP，覆盖销售、采购、库存与财务结算，与计量、质检系统联动打通购销存到财务的单据链路。负责客商主数据与销售到应收结算链路的开发，重点解决一户多码治理、钢材过磅重量结算与磅差处理、信用放货管控、月结卡点治理等问题。",
     tags: ["SpringBoot", "MySQL", "客商主数据", "应收结算", "信用管控", "月结"],
-    role: "Java 开发工程师",
+    role: "软件开发工程师",
     highlights: [
       "客商主数据治理：统一社会信用代码唯一键 + 一户多角色，合并存量重复档案 300+ 户",
       "销售到应收一体化：对接计量过磅数据结算，磅差允差内自动摊销、超差走调整单，发票按结算单勾稽",
@@ -425,6 +444,8 @@ export const projects: Project[] = [
   {
     slug: "masteel-mes",
     title: "马钢股份制造管理系统（MES）",
+    logo: "/logos/masteel.svg",
+    category: "techpark",
     description:
       "马钢型材、热轧产线的 L3 级制造执行系统，向上承接 L4 订单计划、向下对接 L2 过程控制，覆盖作业计划、物料跟踪、存货与生产报表。负责型材计划分解、热轧卷号跟踪与存货对账等模块，日均处理 20 万+ 条数采报文，在 7×24 连续生产约束下保障计划闭环与账实一致。",
     tags: ["C#", "Oracle", "MES/L3", "物料跟踪", "L2 数采", "中间表集成"],
@@ -491,7 +512,7 @@ export const experiences: Experience[] = [
   },
   {
     company: "安徽工业大学科技园有限公司",
-    role: "Java 开发工程师",
+    role: "软件开发工程师",
     period: "2022.07 - 2026.01",
     subtitle:
       "从 7×24 产线 MES 到在线交易平台：项目制交付四年，养成先领域建模、再写代码的工程习惯",

@@ -52,12 +52,12 @@ export default function TechStack() {
         >
           <div className="mb-3 flex items-baseline gap-3">
             <span className="font-mono text-xs tracking-[0.25em] text-gold-400">01</span>
-            <span className="font-mono text-[10px] tracking-[0.25em] text-text-on-dark/50">EXPERIENCE</span>
+            <span className="font-mono text-[10px] tracking-[0.25em] text-text-on-dark/70">EXPERIENCE</span>
           </div>
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-text-white md:text-4xl">
             工作经历 &amp; 技术栈
           </h2>
-          <p className="max-w-xl text-text-on-dark/80">
+          <p className="max-w-xl leading-relaxed text-text-on-dark/90">
             用 AI 原生思维做工程：Java、Python、C++、TypeScript 多语言实践，
             横跨 MES、ERP、在线教育、机票交易多领域，让 AI Coding 成为日常生产力
           </p>
@@ -73,7 +73,7 @@ export default function TechStack() {
         >
           {/* 小标题 */}
           <motion.div variants={itemVariants} className="mb-6 flex items-center gap-4">
-            <h3 className="text-lg font-semibold tracking-tight text-text-white">工作经历</h3>
+            <h3 className="text-xl font-semibold tracking-tight text-text-white">工作经历</h3>
             <span className="h-px flex-1 bg-white/10" />
           </motion.div>
 
@@ -93,15 +93,15 @@ export default function TechStack() {
                   <span className="font-mono text-xs tracking-wider text-gold-400">
                     {exp.period}
                   </span>
-                  <span className="text-xs text-text-on-dark/50">{exp.role}</span>
+                  <span className="text-xs text-text-on-dark/70">{exp.role}</span>
                 </div>
 
                 {/* 公司名称（区块内唯一视觉焦点）+ 岗位业务定位 */}
-                <h4 className="mb-1 text-lg font-semibold tracking-tight text-text-white">
+                <h4 className="mb-1 text-xl font-semibold tracking-tight text-text-white">
                   {exp.company}
                 </h4>
                 {exp.subtitle && (
-                  <p className="mb-3 text-xs leading-relaxed text-text-on-dark/60">
+                  <p className="mb-3 text-[13px] leading-relaxed text-text-on-dark/75">
                     {exp.subtitle}
                   </p>
                 )}
@@ -113,7 +113,7 @@ export default function TechStack() {
                     return (
                       <li
                         key={j}
-                        className="flex items-start gap-2 text-sm text-text-on-dark/80"
+                        className="flex items-start gap-2 text-sm text-text-on-dark/90"
                       >
                         <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-gold-500/50" />
                         <span>
@@ -140,7 +140,7 @@ export default function TechStack() {
         >
           {/* 小标题 */}
           <motion.div variants={itemVariants} className="mb-6 flex items-center gap-4">
-            <h3 className="text-lg font-semibold tracking-tight text-text-white">技术栈</h3>
+            <h3 className="text-xl font-semibold tracking-tight text-text-white">技术栈</h3>
             <span className="h-px flex-1 bg-white/10" />
           </motion.div>
 
@@ -159,7 +159,7 @@ export default function TechStack() {
                 >
                   <div className="mb-3 flex items-center gap-2">
                     <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
-                    <h4 className="text-sm font-semibold text-text-white">
+                    <h4 className="text-base font-semibold text-text-white">
                       {cat}
                     </h4>
                   </div>
@@ -169,12 +169,12 @@ export default function TechStack() {
                       <div key={s.name} className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
                         <Badge
                           variant="skill"
-                          className="border-white/10 bg-white/[0.08] text-text-on-dark text-[11px] transition-all hover:bg-gold-500/15 hover:text-gold-400"
+                          className="border-white/10 bg-white/[0.08] text-text-on-dark text-xs transition-all hover:bg-gold-500/15 hover:text-gold-400"
                         >
                           {s.name}
                         </Badge>
                         {s.subtext && (
-                          <span className="flex-1 text-xs leading-relaxed text-text-on-dark/60">
+                          <span className="flex-1 text-[13px] leading-relaxed text-text-on-dark/75">
                             {s.subtext}
                           </span>
                         )}
@@ -205,7 +205,7 @@ export default function TechStack() {
                       <Badge
                         key={s.name}
                         variant="skill"
-                        className="border-white/10 bg-white/[0.08] text-text-on-dark text-[11px] transition-all hover:bg-gold-500/15 hover:text-gold-400"
+                        className="border-white/10 bg-white/[0.08] text-text-on-dark text-xs transition-all hover:bg-gold-500/15 hover:text-gold-400"
                       >
                         {s.name}
                       </Badge>

@@ -20,6 +20,12 @@ export interface ProjectCardData {
   title: string;
   description: string;
   tags: string[];
+  /** 项目 logo 图标（public/logos/ 下的 SVG 或 PNG） */
+  logo?: string;
+  /** logo 为横向宽幅（如带字横幅），渲染时用宽容器 */
+  logoWide?: boolean;
+  /** 项目归属分类：fliggy 飞猪工作项目 / techpark 科技园工作项目 / personal 个人独立项目 */
+  category?: "fliggy" | "techpark" | "personal";
   role?: string;
   highlights?: string[];
   links?: {
@@ -28,12 +34,33 @@ export interface ProjectCardData {
   };
 }
 
+/**
+ * 类别视觉信号（方案 A：微色边框 + 徽章色阶）——
+ * 金=飞猪核心项目（主题主色）、蓝=科技园项目（夜幕冷色面）、白=个人独立项目（中性无企业色）
+ * 阴影深度随层级递减：fliggy /50 > techpark /35 > personal /25
+ */
+const categoryStyles = {
+  fliggy: {
+    card: "border-gold-500/30 hover:border-gold-500/60 hover:shadow-deep-blue-900/50",
+    badge: "gold",
+  },
+  techpark: {
+    card: "border-sky-400/25 hover:border-sky-400/50 hover:shadow-deep-blue-900/35",
+    badge: "sky",
+  },
+  personal: {
+    card: "border-white/25 hover:border-white/45 hover:shadow-deep-blue-900/25",
+    badge: "neutral",
+  },
+} as const;
+
 interface ProjectCardProps {
   project: ProjectCardData;
   index: number;
 }
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
+  const category = categoryStyles[project.category ?? "personal"];
   return (
     <Link href={`/projects/${project.slug}`} className="block group">
       <motion.div
@@ -43,14 +70,31 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         transition={{ duration: 0.6, delay: index * 0.1 }}
         className="h-full"
       >
-        <Card className={cn(glassCard, "flex h-full flex-col overflow-hidden hover:-translate-y-1 cursor-pointer")}>
+        <Card className={cn(glassCard, category.card, "flex h-full flex-col overflow-hidden hover:-translate-y-1 cursor-pointer")}>
         <CardHeader>
           <div className="flex items-start justify-between gap-4">
-            <CardTitle className="text-lg text-text-white transition-colors duration-300 group-hover:text-gold-400 md:text-xl">
-              {project.title}
-            </CardTitle>
+            <div className="flex min-w-0 items-center gap-3">
+              {project.logo && (
+                <div
+                  className={cn(
+                    "flex shrink-0 items-center justify-center overflow-hidden",
+                    project.logoWide ? "h-10 w-24" : "h-10 w-10"
+                  )}
+                >
+                  <img
+                    src={project.logo}
+                    alt={`${project.title} logo`}
+                    loading="lazy"
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+              )}
+              <CardTitle className="text-lg text-text-white transition-colors duration-300 group-hover:text-gold-400 md:text-xl">
+                {project.title}
+              </CardTitle>
+            </div>
             {project.role && (
-              <Badge variant="gold" className="shrink-0 text-[10px]">
+              <Badge variant={category.badge} className="shrink-0 text-[10px]">
                 {project.role}
               </Badge>
             )}
