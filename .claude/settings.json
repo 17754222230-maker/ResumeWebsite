@@ -3,7 +3,6 @@
     "allow": [
       "Bash(node -e ' *)",
       "Bash(mkdir -p \"d:/Users/Desktop/ResumeWebsite/src/app/projects/[slug]\")",
-      "Bash(echo 'DEEPSEEK_API_KEY=sk-2da47cec7cd943ce92ebe41e32f02118')",
       "Bash(mkdir -p \"d:/Users/Desktop/ResumeWebsite/src/app/api/chat\")",
       "Bash(mkdir -p \"d:/Users/Desktop/ResumeWebsite/src/lib/ai\")",
       "Bash(node -e \"try { require\\('zod'\\); console.log\\('zod available'\\); } catch\\(e\\) { console.log\\('zod missing'\\); }\")",
