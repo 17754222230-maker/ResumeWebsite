@@ -25,7 +25,10 @@
       "Bash(PORT=3004 npx next dev -p 3004)",
       "Bash(curl -s -X POST http://localhost:3004/api/chat -H 'Content-Type: application/json' -d '{\"messages\":[{\"role\":\"user\",\"content\":\"你擅长什么\"}],\"sessionId\":\"t1\"}')",
       "Bash(curl -s -o /dev/null -w \"\" http://localhost:3004)",
-      "Bash(curl -s -X POST http://localhost:3004/api/chat -H 'Content-Type: application/json' -d '{\"messages\":[{\"role\":\"user\",\"content\":\"你擅长什么\"}],\"sessionId\":\"t2\"}')"
+      "Bash(curl -s -X POST http://localhost:3004/api/chat -H 'Content-Type: application/json' -d '{\"messages\":[{\"role\":\"user\",\"content\":\"你擅长什么\"}],\"sessionId\":\"t2\"}')",
+      "Bash(npm run *)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code} | %{size_download} bytes | %{time_total}s\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s http://localhost:3000/)"
     ],
     "additionalDirectories": [
       "d:\\Users\\Desktop\\ResumeWebsite\\src\\app\\projects",
