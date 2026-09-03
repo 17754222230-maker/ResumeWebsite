@@ -1,0 +1,14 @@
+<svg viewBox="2 7 60 43" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" role="img" aria-label="王仔研 · 金水相生 W 标">
+  <!-- ============================================================
+       「金水相生 · W」单色版 —— 继承 currentColor（水印、单色印刷、刻章、favicon 兜底）
+       无涟漪、无渐变，仅保留骨架：刚柔对比靠形（尖峰 vs 圆谷）而非颜色表达
+       内联使用时用父级 color 控制；作为 <img> 引用时描边取默认黑色
+       ============================================================ -->
+  <path
+    d="M 8 15 L 16.5 37 Q 20 45 23.5 37 L 32 19 L 40.5 37 Q 44 45 47.5 37 L 56 15"
+    stroke-width="7"
+    stroke-linecap="round"
+    stroke-linejoin="miter"
+  />
+  <circle cx="57" cy="41.7" r="2.8" fill="currentColor" stroke="none" />
+</svg>

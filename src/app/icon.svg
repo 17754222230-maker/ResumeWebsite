@@ -1,0 +1,36 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="王仔研个人网站">
+  <!-- ============================================================
+       Favicon / App Icon —— 「金水相生」徽章版
+       自带深蓝夜幕底，因此在浅色与深色标签栏中均清晰可辨；
+       小尺寸下去掉涟漪与句点，仅保留主笔画，8px 描边保证 16×16 可读
+       Next.js App Router 约定：src/app/icon.svg 自动注入 <link rel="icon">
+       ============================================================ -->
+  <defs>
+    <linearGradient id="iconBg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="64" y2="64">
+      <stop offset="0" stop-color="#163450" />
+      <stop offset="0.55" stop-color="#0F2138" />
+      <stop offset="1" stop-color="#0A1626" />
+    </linearGradient>
+    <linearGradient id="iconStroke" gradientUnits="userSpaceOnUse" x1="32" y1="16" x2="32" y2="47">
+      <stop offset="0" stop-color="#FFE259" />
+      <stop offset="0.3" stop-color="#FFA751" />
+      <stop offset="0.55" stop-color="#EFE7DC" />
+      <stop offset="0.78" stop-color="#8FBCDE" />
+      <stop offset="1" stop-color="#71A9D4" />
+    </linearGradient>
+  </defs>
+
+  <!-- 夜幕底 + 极细金边 -->
+  <rect width="64" height="64" rx="15" fill="url(#iconBg)" />
+  <rect x="1" y="1" width="62" height="62" rx="14.5" fill="none" stroke="#FFA751" stroke-opacity="0.22" stroke-width="1.5" />
+
+  <!-- 主笔画：金峰锐角（miter，尖端为最高点即主峰）+ 水波圆谷（二次曲线） -->
+  <path
+    d="M 10 20 L 16 39 Q 20 46.5 24 39 L 32 23 L 40 39 Q 44 46.5 48 39 L 54 20"
+    fill="none"
+    stroke="url(#iconStroke)"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="miter"
+  />
+</svg>

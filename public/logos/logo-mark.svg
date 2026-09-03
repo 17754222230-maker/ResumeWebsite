@@ -1,0 +1,49 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="王仔研 · 金水相生 W 标">
+  <!-- ============================================================
+       「金水相生 · W」主标 —— 深色底版本（全站默认，用于深蓝夜幕背景）
+       一笔成形：上段金峰（miter 锐角，尖端为主峰）→ 交界冰银（金生水的相变点）
+       → 下段水波（圆润波谷）→ 底部涟漪（水的余韵）+ 金色句点（品牌「W.」延续）
+       浅色/白底场景请用 logo-mark-light.svg；单色场景用 logo-mono.svg
+       注：此处不使用 prefers-color-scheme 自动切换 —— 该媒体查询跟随操作系统而非页面，
+           本站恒为深色主题，自动切换会导致 macOS 浅色模式用户看到深蓝版压在深蓝底上
+       ============================================================ -->
+  <defs>
+    <!-- 竖向渐变：金（上）→ 暖香槟 → 冰银（金水交界）→ 水蓝（下） -->
+    <linearGradient id="jsStroke" gradientUnits="userSpaceOnUse" x1="32" y1="10" x2="32" y2="46">
+      <stop offset="0" stop-color="#FFE259" />
+      <stop offset="0.26" stop-color="#FFA751" />
+      <stop offset="0.46" stop-color="#F2D9BE" />
+      <stop offset="0.58" stop-color="#DCE6EE" />
+      <stop offset="0.76" stop-color="#9EC6E6" />
+      <stop offset="1" stop-color="#71A9D4" />
+    </linearGradient>
+    <!-- 横向渐变：涟漪两端溶入背景，避免硬切 -->
+    <linearGradient id="jsRipple" gradientUnits="userSpaceOnUse" x1="14" y1="51" x2="50" y2="51">
+      <stop offset="0" stop-color="#71A9D4" stop-opacity="0" />
+      <stop offset="0.5" stop-color="#71A9D4" stop-opacity="0.85" />
+      <stop offset="1" stop-color="#71A9D4" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <!-- 主笔画：W —— 同时是「峰」与「波」。中峰 miter 锐角保留金的刚，波谷二次曲线保留水的柔 -->
+  <path
+    d="M 8 15 L 16.5 37 Q 20 45 23.5 37 L 32 19 L 40.5 37 Q 44 45 47.5 37 L 56 15"
+    fill="none"
+    stroke="url(#jsStroke)"
+    stroke-width="7"
+    stroke-linecap="round"
+    stroke-linejoin="miter"
+  />
+
+  <!-- 水的余韵：单条涟漪，暗示 W 下方的水面与倒影 -->
+  <path
+    d="M 14 51 q 6 -3.5 12 0 t 12 0"
+    fill="none"
+    stroke="url(#jsRipple)"
+    stroke-width="2.5"
+    stroke-linecap="round"
+  />
+
+  <!-- 品牌句点：延续原「W.」的金色点，底边与 W 基线（y=44.5）对齐 -->
+  <circle cx="57" cy="41.7" r="2.8" fill="#FFE259" />
+</svg>
