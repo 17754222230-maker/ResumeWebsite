@@ -65,7 +65,9 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
               </span>
             )}
           </div>
-          <div className="mb-4 flex items-center gap-4">
+          {/* 窄屏（<sm）logo 与标题纵向堆叠：标题独占整行宽度避免被 logo 挤压逐字换行；
+              宽屏恢复 logo 居左、大标题同行的横排编辑式头部 */}
+          <div className="mb-4 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
             {project.logo && (
               <div
                 className={cn(
@@ -80,7 +82,7 @@ async function ProjectDetail({ slugPromise }: { slugPromise: Promise<{ slug: str
                 />
               </div>
             )}
-            <h1 className="text-3xl font-bold text-text-white md:text-4xl">
+            <h1 className="text-2xl font-bold text-text-white sm:text-3xl md:text-4xl">
               {project.title}
             </h1>
           </div>

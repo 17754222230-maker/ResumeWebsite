@@ -25,6 +25,16 @@ const itemVariants = {
 
 const featuredCategories = ["后端技术", "AI 与智能化"];
 
+// 分类英文尾注：复用区块标题的 mono 弱化语言（如 01 EXPERIENCE），卡片标题右侧低调点缀
+const categoryEnNames: Record<string, string> = {
+  "后端技术": "BACKEND",
+  "AI 与智能化": "AI",
+  "数据库": "DATABASE",
+  "消息与中间件": "MIDDLEWARE",
+  "前端技术": "FRONTEND",
+  "系统与工具": "TOOLING",
+};
+
 export default function TechStack() {
   const categories = getSkillCategories();
   const featuredCats = categories.filter((c) => featuredCategories.includes(c));
@@ -154,7 +164,12 @@ export default function TechStack() {
                   variants={itemVariants}
                   className={cn(
                     glassCard,
-                    "border-l-2 border-l-gold-400/70 p-5 hover:border-l-gold-400",
+                    // 重点卡专属语言：左金线（全站「重点卡=左金线」体系）。用伪元素渐变光带替代纯色
+                    // border-l：顶部亮金→底部隐入夜色，hover 整条提亮；边框整体提亮一档与普通卡分层；
+                    // 顶部发丝高光线与普通卡同族呼应，两种「光」叠加不突兀
+                    "relative overflow-hidden border-white/[0.14] p-5",
+                    "before:absolute before:left-0 before:top-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-gold-400 before:via-gold-500/40 before:to-transparent hover:before:via-gold-500/75",
+                    "after:pointer-events-none after:absolute after:inset-x-6 after:top-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-white/20 after:to-transparent hover:after:via-white/35",
                   )}
                 >
                   <div className="mb-3 flex items-center gap-2">
@@ -162,19 +177,27 @@ export default function TechStack() {
                     <h4 className="text-base font-semibold text-text-white">
                       {cat}
                     </h4>
+                    <span className="ml-auto font-mono text-[10px] font-normal tracking-[0.2em] text-text-on-dark/40">
+                      {categoryEnNames[cat]}
+                    </span>
                   </div>
-                  {/* 核心技能：标签 + 一句技术理解（深度叙事，区别于其他类别的纯标签墙） */}
+                  {/* 核心技能：统一宽度标签列 + 一句技术理解（深度叙事，区别于其他类别的纯标签墙）。
+                      标签列 sm+ 固定 8.5rem 居中，长短标签视觉归一、描述起点严格对齐；
+                      窄屏降级为标签与描述上下堆叠，避免小容器内挤压换行 */}
                   <div className="space-y-2.5">
                     {skills.map((s) => (
-                      <div key={s.name} className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                      <div
+                        key={s.name}
+                        className="grid grid-cols-1 gap-x-3 gap-y-1 sm:grid-cols-[8.5rem_1fr] sm:items-baseline"
+                      >
                         <Badge
                           variant="skill"
-                          className="border-white/10 bg-white/[0.08] text-text-on-dark text-xs transition-all hover:bg-gold-500/15 hover:text-gold-400"
+                          className="justify-self-start whitespace-nowrap text-text-on-dark transition-all hover:bg-gold-500/15 hover:text-gold-400 sm:w-full sm:justify-center"
                         >
                           {s.name}
                         </Badge>
                         {s.subtext && (
-                          <span className="flex-1 text-[13px] leading-relaxed text-text-on-dark/75">
+                          <span className="text-[13px] leading-relaxed text-text-on-dark/75">
                             {s.subtext}
                           </span>
                         )}
@@ -186,7 +209,7 @@ export default function TechStack() {
             })}
           </div>
 
-          {/* 其他技能卡片 */}
+          {/* 其他技能卡片：与重点卡同族的顶部发丝高光线（弱一档），hover 微提亮 */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {otherCats.map((cat) => {
               const skills = allSkills.filter((s) => s.category === cat);
@@ -194,11 +217,17 @@ export default function TechStack() {
                 <motion.div
                   key={cat}
                   variants={itemVariants}
-                  className={cn(glassCard, "p-5")}
+                  className={cn(
+                    glassCard,
+                    "relative p-5 after:pointer-events-none after:absolute after:inset-x-6 after:top-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-white/20 after:to-transparent hover:after:via-white/35",
+                  )}
                 >
                   <h4 className="mb-3 flex items-center gap-2 text-sm font-semibold text-text-white">
                     <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
                     {cat}
+                    <span className="ml-auto font-mono text-[10px] font-normal tracking-[0.2em] text-text-on-dark/40">
+                      {categoryEnNames[cat]}
+                    </span>
                   </h4>
                   <div className="flex flex-wrap gap-1.5">
                     {skills.map((s) => (

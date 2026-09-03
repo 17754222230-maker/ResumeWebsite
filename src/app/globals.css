@@ -66,6 +66,21 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
+/* 雪山背景层（HomeClient 全屏固定背景）：桌面宽屏显示全景构图（主峰居右）。
+   手机/平板竖屏下 cover 会按高度放大图片、只剩中间水平窄条，金色主峰（原图水平约 72%
+   处）恰好被裁掉，只剩中央灰色山体；改为 80% 让金山重心回到画面中心，保住“日照金山”视觉锚点 */
+.mountain-bg {
+  background-image: url("/images/mountain-golden.webp");
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+}
+@media (max-width: 1023px) {
+  .mountain-bg {
+    background-position: 80% 30%;
+  }
+}
+
 /* 选中文本色 */
 ::selection {
   background-color: var(--color-gold-500);

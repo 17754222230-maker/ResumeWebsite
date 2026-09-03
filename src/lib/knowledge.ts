@@ -84,30 +84,29 @@ export const profile: Profile = {
 // 有 subtext 的技能在首页重点卡以「标签 + 短句」形式展示，其余类别维持标签墙
 export const skills: Skill[] = [
   // ★★★ 后端技术（核心）
-  { name: "Java", category: "后端技术", subtext: "并发容器、线程池与 JVM 内存模型是日常工具，线上问题习惯从线程栈和 GC 日志入手" },
-  { name: "SpringBoot", category: "后端技术", subtext: "不止会用：读过自动装配源码，习惯用条件装配与 Starter 机制收敛二方依赖" },
+  { name: "Java", category: "后端技术", subtext: "多年 Java 开发经验，具备 JVM 调优和线上问题排查经验" },
+  { name: "SpringBoot", category: "后端技术", subtext: "熟悉 SpringBoot 自动配置原理及启动流程，能基于 Starter 快速集成第三方组件" },
   { name: "SpringCloud", category: "后端技术", subtext: "微服务治理的关键不在引组件，而在限流熔断阈值与业务容量压测对齐" },
-  { name: "JVM 调优", category: "后端技术", subtext: "曾是人工翻 GC 日志与内存快照做参数调优，如今把排查思路沉淀为 skill 接入 AI 机器人：实时监控 JVM 指标，结合人工经验与 AI 推理预判 OOM 等隐患，防患于未然" },
-  { name: "并发编程", category: "后端技术", subtext: "机票链路常规操作：CompletionService 并发验座验价，线程池隔离关键与非关键路径" },
+  { name: "JVM 调优", category: "后端技术", subtext: "翻 GC 日志的人工调优经验沉淀为 AI skill：机器人实时巡检 JVM 指标，提前预判 OOM 隐患" },
   { name: "微服务架构", category: "后端技术", subtext: "按限界上下文划服务边界，防腐层隔离外部系统，集成代码不污染领域模型" },
   { name: "Python", category: "后端技术", subtext: "AI 应用的胶水层：爬虫清洗管线、推理服务与工程脚本都用它落地" },
   { name: "C++", category: "后端技术", subtext: "MES 遗留模块维护的底子：读得懂指针与内存布局，排查过产线偶发崩溃" },
 
   // ★★★ AI 与智能化（前沿）
-  { name: "AI Coding 赋能", category: "AI 与智能化", subtext: "把大模型当结对程序员：需求结构化、规格先行，生成代码必须过 review 门禁" },
+  { name: "AI Coding", category: "AI 与智能化", subtext: "深度使用 AI 开发工具，把提效落进每天的开发节奏里" },
   { name: "SDD 规格驱动开发", category: "AI 与智能化", subtext: "把不确定性前移进规格，让 AI 生成的代码可追溯、可验证、可回归" },
   { name: "Harness 工程", category: "AI 与智能化", subtext: "搭过外层编码代理：生命周期控制、计划门禁与修复闭环的完整实践" },
   { name: "Spring AI", category: "AI 与智能化", subtext: "生产级 LLM 集成的工程化约束：Prompt 版本化、超时降级、结构化输出" },
   { name: "LangChain", category: "AI 与智能化", subtext: "理解 Chain/Agent 的抽象边界，知道哪些场景该绕开框架直接调模型" },
   { name: "LangGraph", category: "AI 与智能化", subtext: "用状态图编排多步推理：节点级重试与降级，比一杆到底的 Chain 可控" },
-  { name: "大模型应用", category: "AI 与智能化", subtext: "核心判断在分层：哪里该用模型推理，哪里必须用确定性代码" },
+  { name: "Agent开发", category: "AI 与智能化", subtext: "从工具编排、状态管理到超时降级，把 Agent 做成可靠的生产系统" },
 
   // 数据库
   { name: "MySQL", category: "数据库" },
   { name: "Redis", category: "数据库" },
   { name: "华为 GaussDB", category: "数据库" },
   { name: "ElasticSearch", category: "数据库" },
-  { name: "Oracle / DB2", category: "数据库" },
+  { name: "DB2", category: "数据库" },
 
   // 消息与中间件
   { name: "RocketMQ", category: "消息与中间件" },
@@ -262,7 +261,7 @@ export const projects: Project[] = [
     description:
       "面向职业/半职业战队的电竞赛事 BP 实时决策与模拟训练系统。针对 BO5 全局单边 BP 赛制下后期决策空间指数级收缩、教练认知负荷过高的问题，设计并实现规则-模型-LLM 三层混合决策架构，在 30 秒操作时限内提供可解释、可信赖的针对性 BP 建议。",
     tags: ["Python", "FastAPI", "LightGBM", "LangChain", "RAG", "大模型"],
-    role: "独立开发者（全栈 + AI）",
+    role: "全栈开发",
     highlights: [
       "规则-模型-LLM 三层混合决策架构：80% 常规决策由前两层处理，仅复杂博弈触发 LLM",
       "硬超时降级 + 多模型档位切换，P99 延迟 <25s，决策链路零超时",
@@ -300,6 +299,52 @@ export const projects: Project[] = [
       "对手画像注入 Token 预算控制在 300 以内",
     ],
     fullTechStack: ["Python", "FastAPI", "LightGBM", "LangChain", "通义千问", "PostgreSQL", "Redis", "Next.js", "WebSocket"],
+  },
+  {
+    slug: "resume-website",
+    title: "个人简历与智能知识站",
+    logo: "/logos/resume-w.svg",
+    category: "personal",
+    description:
+      "正在浏览的这个网站本身：Next.js 16 全栈开发的个人简历与智能知识站，深蓝夜幕 + 日照金山视觉体系，内置接入 DeepSeek 的 AI 数字人『大白』，把简历沉淀为可对话的结构化知识库。",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "LangChain", "DeepSeek", "AI Agent"],
+    role: "全栈开发",
+    highlights: [
+      "全栈开发与 UI 设计一肩挑：Next.js 16 App Router + TypeScript + Tailwind CSS v4，framer-motion 编排入场与交互动画",
+      "AI 数字人『大白』：LangChain.js + DeepSeek 流式对话，DynamicStructuredTool 工具集按需读取简历数据，sessionId 隔离的 10 轮会话记忆",
+      "单一数据源架构：knowledge.ts 同时驱动页面渲染与 AI 工具层，简历内容一处更新、双端同步",
+      "响应式与视觉体系打磨：深蓝夜幕 + 金色流转主题、玻璃拟态卡片、分区蒙版无缝衔接，移动端与桌面端独立调优",
+    ],
+    period: "2026.07 - 至今",
+    company: "个人项目",
+    responsibilities: [
+      "独立完成产品定位、UI 设计与全栈开发：确立『深蓝夜幕 + 日照金山』主题体系与金色密度控制原则，玻璃拟态卡片、编辑式分区标题统一全站视觉语言",
+      "基于 Next.js 16 App Router 组织信息架构：首页 Hero / 工作经历与技术栈 / 项目 / 博客模块化组件，项目详情动态路由 + generateStaticParams 静态生成，入场动画视口触发并支持 prefers-reduced-motion 降级",
+      "构建 AI 对话服务：/api/chat 流式接口基于 LangChain ChatOpenAI 接入 DeepSeek，System Prompt 动态拼装简历知识，输入校验与 prompt injection 关键词防护",
+      "设计 Agent 工具层：DynamicStructuredTool 封装个人信息 / 技能 / 项目 / 经历查询工具，LLM 按需调用读取结构化数据；内存会话记忆按 sessionId 隔离、保留 10 轮",
+      "打磨前端对话体验：Vercel AI SDK useChat 流式渲染，白熊数字人形象以 SVG + clipPath 实现，首访自动引导开场",
+    ],
+    challenges: [
+      {
+        challenge: "简历内容要同时服务两类读者——人看的页面与 AI 读的知识库，维护两份数据必然漂移",
+        solution: "knowledge.ts 单一数据源：页面渲染、AI System Prompt 与工具层全部从同一份结构化数据取值，内容更新零同步成本",
+      },
+      {
+        challenge: "深色雪山背景上大面积文字的可读性，以及多个分区蒙版交界处的生硬分界线",
+        solution: "分区半透明夜色蒙版按色值首尾衔接（上一区终点与下一区起点同色），文字对比度按 WCAG AA 校准，金色装饰控制在一屏 4-5 个触点",
+      },
+      {
+        challenge: "AI 助手既要主动引导访客对话，又不能破坏页面的视觉极简",
+        solution: "白熊形象去掉气泡框与耳麦，默认只保留形象本体悬于右下角；问候语按系统时间动态生成，仅在对话窗口打开时出现",
+      },
+    ],
+    achievements: [
+      "网站即作品集：设计与工程双端完整交付，桌面与移动端独立调优",
+      "AI 问答覆盖简历全部内容：工具调用按需取数 + 会话记忆，访客可直接向『大白』提问",
+      "单数据源驱动页面与 AI 双端，内容维护零同步成本",
+      "部署于 Vercel，推送即发布，Turbopack 本地构建秒级热更新",
+    ],
+    fullTechStack: ["Next.js 16 (App Router)", "React 19", "TypeScript", "Tailwind CSS v4", "framer-motion", "Vercel AI SDK", "LangChain.js", "DeepSeek API", "Vercel"],
   },
   // ===== 现有项目 =====
   {

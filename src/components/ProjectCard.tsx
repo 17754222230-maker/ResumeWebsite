@@ -72,7 +72,10 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       >
         <Card className={cn(glassCard, category.card, "flex h-full flex-col overflow-hidden hover:-translate-y-1 cursor-pointer")}>
         <CardHeader>
-          <div className="flex items-start justify-between gap-4">
+          {/* 窄屏（<lg）纵向堆叠：标题独占整行宽度，角色徽章下移为独立元信息行，
+              避免徽章挤占标题导致逐字换行、卡片被拉高且徽章下方大片空区突兀；
+              宽屏（lg+，两列网格卡宽定足）恢复徽章右上角与标题同行 */}
+          <div className="flex flex-col gap-2.5 lg:flex-row lg:items-start lg:justify-between lg:gap-4">
             <div className="flex min-w-0 items-center gap-3">
               {project.logo && (
                 <div
@@ -89,12 +92,12 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                   />
                 </div>
               )}
-              <CardTitle className="text-lg text-text-white transition-colors duration-300 group-hover:text-gold-400 md:text-xl">
+              <CardTitle className="text-base text-text-white transition-colors duration-300 group-hover:text-gold-400 sm:text-lg lg:text-xl">
                 {project.title}
               </CardTitle>
             </div>
             {project.role && (
-              <Badge variant={category.badge} className="shrink-0 text-[10px]">
+              <Badge variant={category.badge} className="shrink-0 self-start text-[10px] lg:self-auto">
                 {project.role}
               </Badge>
             )}

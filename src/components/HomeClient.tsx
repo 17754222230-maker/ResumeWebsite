@@ -16,17 +16,10 @@ export default function HomeClient() {
   return (
     <>
       {/* 全屏固定背景：雪山静态图（cover 填充、重心偏主峰）+ 可读性蒙版
-          （顶部天空自深，蒙版较轻；中部金色山脊较亮，蒙版加重；向下渐深融入分区夜色） */}
+          （顶部天空自深，蒙版较轻；中部金色山脊较亮，蒙版加重；向下渐深融入分区夜色）
+          图片层样式在 globals.css 的 .mountain-bg：窄屏下自动将取景焦点从画面中心平移到右侧金色主峰 */}
       <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "url(/images/mountain-golden.webp)",
-            backgroundSize: "cover",
-            backgroundPosition: "center 30%",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
+        <div className="mountain-bg absolute inset-0" />
         <div
           className="absolute inset-0"
           style={{
