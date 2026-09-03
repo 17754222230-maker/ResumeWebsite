@@ -1,16 +1,9 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
+import { motion } from "framer-motion";
 import { profile } from "@/lib/knowledge";
 
 export default function HeroSection() {
-  // 向下滚动指示：仅在视口内且未开启减弱动态时运行 infinite 动画（P2 性能）
-  const arrowRef = useRef<HTMLDivElement>(null);
-  const arrowInView = useInView(arrowRef, { margin: "-15% 0px -15% 0px" });
-  const reduceMotion = useReducedMotion();
-
   return (
     <section
       id="hero"
@@ -57,7 +50,7 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-12 max-w-xl text-base leading-relaxed text-text-on-dark/80 md:text-lg"
         >
-          "{profile.slogan}"
+          “{profile.slogan}”
         </motion.p>
 
         {/* CTA 按钮 */}
@@ -103,25 +96,6 @@ export default function HeroSection() {
           </a>
         </motion.div>
       </div>
-
-      {/* 向下滚动指示 — 底部居中（避开右下角数字人）；滚出视口即暂停动画 */}
-      <motion.div
-        ref={arrowRef}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <motion.a
-          href="#tech-stack"
-          animate={arrowInView && !reduceMotion ? { y: [0, 8, 0] } : { y: 0 }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center gap-2 text-text-on-dark/70 transition-colors hover:text-gold-500"
-        >
-          <span className="text-xs">向下滚动</span>
-          <ArrowDown size={18} />
-        </motion.a>
-      </motion.div>
     </section>
   );
 }
