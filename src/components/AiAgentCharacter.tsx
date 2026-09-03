@@ -88,25 +88,23 @@ export default function AiAgentCharacter() {
         )}
       </AnimatePresence>
 
-      {/* 白熊头像（完整形象：耳朵露出更可爱）— 透明背景透出夜色 */}
+      {/* 白熊数字人（坐姿全身形象）— 透明背景透出夜色 */}
       <motion.div
         animate={reduceMotion ? { y: 0 } : { y: [0, -3, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       >
-      <svg
-        viewBox="0 0 100 79.84"
-        className="h-auto w-[96px] drop-shadow-md md:w-[120px]"
-        aria-label="大白 AI 助手头像"
-      >
-        {/* 头像整组：平时静止，hover 俏皮点头摇摆（±4°） */}
-        <motion.g
+        {/* 全身：平时静止，hover 俏皮摇摆（±4°，以足底为轴） */}
+        <motion.img
+          src="/images/white-bear-sit.png"
+          alt="大白 AI 助手"
+          width={365}
+          height={395}
+          draggable={false}
+          className="h-auto w-[92px] drop-shadow-md md:w-[112px]"
           animate={isHovered && !reduceMotion ? { rotate: [0, -4, 3, -4, 3, 0] } : { rotate: 0 }}
           transition={isHovered && !reduceMotion ? { duration: 1.4, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
-          style={{ transformBox: "fill-box", transformOrigin: "50% 100%" }}
-        >
-          <image href="/images/white-bear-full.webp" x="0" y="0" width="100" height="79.84" />
-        </motion.g>
-      </svg>
+          style={{ transformOrigin: "50% 100%" }}
+        />
       </motion.div>
     </motion.div>
 
