@@ -136,6 +136,17 @@ export default function AiChatDialog({ open, onClose }: AiChatDialogProps) {
     return () => window.removeEventListener("keydown", handler);
   }, [open, onClose]);
 
+  // 移动端全屏铺满时锁定背景滚动，避免背后页面跟着滑动
+  useEffect(() => {
+    if (!open) return;
+    if (!window.matchMedia("(max-width: 767px)").matches) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
@@ -241,14 +252,13 @@ export default function AiChatDialog({ open, onClose }: AiChatDialogProps) {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
           transition={{ duration: 0.2 }}
-          className="fixed right-4 top-1/2 z-50 flex w-[calc(100vw-2rem)] max-w-[480px] -translate-y-1/2 flex-col rounded-2xl border border-white/10 bg-white/[0.07] shadow-2xl shadow-deep-blue-900/60 backdrop-blur-md"
-          style={{ height: "min(620px, calc(100vh - 6rem))" }}
+          className="fixed inset-0 z-50 flex h-[100dvh] w-full flex-col bg-white/[0.07] shadow-2xl shadow-deep-blue-900/60 backdrop-blur-md md:left-auto md:right-4 md:top-1/2 md:h-[min(620px,calc(100vh_-_6rem))] md:w-[calc(100vw-2rem)] md:max-w-[480px] md:-translate-y-1/2 md:rounded-2xl md:border md:border-white/10"
           role="dialog"
           aria-modal="true"
           aria-label="大白 AI 助手对话窗口"
         >
           {/* ===== 头部 ===== */}
-          <div className="flex items-center justify-between rounded-t-2xl border-b border-white/10 bg-white/[0.04] px-5 py-3.5">
+          <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.04] px-5 py-3.5 md:rounded-t-2xl">
             <div className="flex items-center gap-2.5">
               {/* 头像：白底圆形容器内缩图片（object-contain + 内边距），
                   保证原图四角完整落入圆内，大白双耳不被圆形裁切 */}
