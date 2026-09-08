@@ -2,12 +2,14 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Loader2, Copy, Check } from "lucide-react";
+import { X, Send, Loader2, Copy, Check, CircleAlert } from "lucide-react";
 
 interface ChatMsg {
   id: string;
   role: "user" | "assistant";
   content: string;
+  /** 服务异常/网络异常消息：使用独立的警示气泡样式，不提供复制按钮 */
+  isError?: boolean;
 }
 
 interface AiChatDialogProps {
@@ -26,6 +28,46 @@ function getTimeGreeting(): string {
   if (h >= 14 && h < 18) return "下午好 🌇";
   if (h >= 18 && h < 21) return "晚上好 🌆";
   return "夜深了，注意休息 🌙";
+}
+
+/**
+ * 行内 Markdown 渲染：模型输出中的 **加粗** 与 `行内代码` 按排版意图展示，
+ * 其余内容原样保留（换行由气泡的 whitespace-pre-wrap 处理）。
+ * 未闭合的标记保持字面显示，流式输出中也不会闪错。
+ */
+function renderInlineMarkdown(text: string): React.ReactNode[] {
+  const nodes: React.ReactNode[] = [];
+  const pattern = /(\*\*[^*]+\*\*|`[^`]+`)/g;
+  let lastIndex = 0;
+  let key = 0;
+  let match: RegExpExecArray | null;
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      nodes.push(text.slice(lastIndex, match.index));
+    }
+    const token = match[0];
+    if (token.startsWith("**")) {
+      nodes.push(
+        <strong key={key++} className="font-semibold text-text-white">
+          {token.slice(2, -2)}
+        </strong>,
+      );
+    } else {
+      nodes.push(
+        <code
+          key={key++}
+          className="rounded bg-white/10 px-1 py-0.5 font-mono text-[0.85em] text-gold-300"
+        >
+          {token.slice(1, -1)}
+        </code>,
+      );
+    }
+    lastIndex = match.index + token.length;
+  }
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+  return nodes;
 }
 
 
@@ -126,10 +168,12 @@ export default function AiChatDialog({ open, onClose }: AiChatDialogProps) {
         });
 
         if (!res.ok) {
-          const err = await res.json().catch(() => ({ error: "请求失败" }));
+          const err = await res.json().catch(() => ({ error: "服务暂不可用，请稍后重试" }));
           setMessages((prev) =>
             prev.map((m) =>
-              m.id === assistantId ? { ...m, content: `😅 ${err.error || "服务暂不可用，请稍后重试"}` } : m,
+              m.id === assistantId
+                ? { ...m, content: err.error || "服务暂不可用，请稍后重试", isError: true }
+                : m,
             ),
           );
           setIsLoading(false);
@@ -175,7 +219,7 @@ export default function AiChatDialog({ open, onClose }: AiChatDialogProps) {
           setMessages((prev) =>
             prev.map((m) =>
               m.id === assistantId
-                ? { ...m, content: "抱歉，网络出了点问题，请重试 🙏" }
+                ? { ...m, content: "网络出了点问题，请稍后重试", isError: true }
                 : m,
             ),
           );
@@ -206,8 +250,10 @@ export default function AiChatDialog({ open, onClose }: AiChatDialogProps) {
           {/* ===== 头部 ===== */}
           <div className="flex items-center justify-between rounded-t-2xl border-b border-white/10 bg-white/[0.04] px-5 py-3.5">
             <div className="flex items-center gap-2.5">
-              <div className="h-8 w-8 shrink-0 overflow-hidden rounded-full">
-                <img src="/images/white-bear.webp" alt="大白" className="h-full w-full object-cover" />
+              {/* 头像：白底圆形容器内缩图片（object-contain + 内边距），
+                  保证原图四角完整落入圆内，大白双耳不被圆形裁切 */}
+              <div className="h-9 w-9 shrink-0 overflow-hidden rounded-full bg-white p-1.5">
+                <img src="/images/white-bear.webp" alt="大白" className="h-full w-full object-contain" />
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-text-white">我是大白</h3>
@@ -233,14 +279,22 @@ export default function AiChatDialog({ open, onClose }: AiChatDialogProps) {
               >
                 <div
                   className={`group relative max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap select-text ${
-                    msg.role === "user"
-                      ? "bg-gold-500 text-white font-medium rounded-tr-md"
-                      : "bg-white/[0.05] text-text-primary rounded-tl-md"
+                    msg.isError
+                      ? "rounded-tl-md border border-gold-500/40 bg-gold-500/[0.08] text-gold-100"
+                      : msg.role === "user"
+                        ? "bg-gold-500 text-white font-medium rounded-tr-md"
+                        : "bg-white/[0.05] text-text-primary rounded-tl-md"
                   }`}
                 >
-                  {msg.content}
-                  {/* 复制按钮（仅助手消息） */}
-                  {msg.role === "assistant" && msg.content && (
+                  {msg.isError && (
+                    <CircleAlert
+                      size={14}
+                      className="mr-1.5 inline-block -translate-y-px text-gold-400"
+                    />
+                  )}
+                  {renderInlineMarkdown(msg.content)}
+                  {/* 复制按钮（仅助手正常消息） */}
+                  {msg.role === "assistant" && msg.content && !msg.isError && (
                     <button
                       onClick={() => handleCopy(msg.id, msg.content)}
                       className="absolute -right-8 top-2 flex h-6 w-6 items-center justify-center rounded-md opacity-0 transition-opacity hover:bg-white/10 group-hover:opacity-100"

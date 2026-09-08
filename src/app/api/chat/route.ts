@@ -185,13 +185,28 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (error: any) {
+    // 原始错误仅记录到服务端日志，前端只展示友好文案（避免泄漏密钥掩码与排障链接）
     console.error("Chat API error:", error);
+    const status =
+      typeof error?.status === "number" ? error.status : error?.name === "TimeoutError" ? 408 : 500;
+    const friendlyMessage = (() => {
+      switch (status) {
+        case 401:
+          return "AI 服务密钥已失效，请联系站长更新";
+        case 402:
+          return "AI 服务额度不足，请联系站长";
+        case 408:
+          return "AI 服务响应超时，请稍后重试";
+        case 429:
+          return "提问有点频繁，请稍后再试";
+        default:
+          return "AI 服务暂时不可用，请稍后重试";
+      }
+    })();
     return new Response(
-      JSON.stringify({
-        error: error?.message || "服务器内部错误，请稍后重试",
-      }),
+      JSON.stringify({ error: friendlyMessage }),
       {
-        status: 500,
+        status: status >= 400 && status < 600 ? status : 500,
         headers: { "Content-Type": "application/json" },
       },
     );
