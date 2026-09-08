@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-import { glassCard } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { experiences, getSkillCategories, skills as allSkills } from "@/lib/knowledge";
 
@@ -34,6 +33,14 @@ const categoryEnNames: Record<string, string> = {
   "前端技术": "FRONTEND",
   "系统与工具": "TOOLING",
 };
+
+// 本区块专属阅读玻璃底：比全站 glassCard 提亮一档（white/10%），
+// 弱化背后雪山纹理对长文本的干扰，回应「工作经历 & 技术栈费眼」反馈
+const readingGlass =
+  "rounded-xl border border-white/10 bg-white/[0.10] shadow-sm backdrop-blur-md";
+// 与 glassCard 同族的 hover 反馈（金边 + 阴影提亮），仅用于技术栈分类卡
+const readingGlassHover =
+  "transition-all hover:border-gold-500/40 hover:bg-white/[0.12] hover:shadow-xl hover:shadow-deep-blue-900/40";
 
 export default function TechStack() {
   const categories = getSkillCategories();
@@ -87,55 +94,58 @@ export default function TechStack() {
             <span className="h-px flex-1 bg-white/10" />
           </motion.div>
 
-          {/* 时间轴：左侧竖线贯穿，金色描边节点标记各段经历（芯部半透明让夜色透出） */}
-          <div className="relative space-y-8 before:absolute before:bottom-2 before:left-[5px] before:top-2 before:w-px before:bg-white/10">
+          {/* 时间轴：左侧竖线贯穿，金色描边节点标记各段经历；每段经历包在玻璃卡内，
+              内容不再直压雪山图（卡片与下方技术栈卡同族玻璃底） */}
+          <div className="relative space-y-8 before:absolute before:bottom-2 before:left-[5px] before:top-6 before:w-px before:bg-white/10">
             {experiences.map((exp, i) => (
               <motion.div
                 key={i}
                 variants={itemVariants}
                 className="relative pl-8"
               >
-                {/* 时间轴节点 */}
-                <span className="absolute left-0 top-[7px] h-[11px] w-[11px] rounded-full border-2 border-gold-400 bg-deep-blue-900/70" />
+                {/* 时间轴节点（卡片外，锚在时间轴上，与卡内首行文字基线对齐） */}
+                <span className="absolute left-0 top-6 h-[11px] w-[11px] rounded-full border-2 border-gold-400 bg-deep-blue-900/70" />
 
-                {/* 头部：mono 时间段做金色锚点，角色降为弱文本（徽章归零） */}
-                <div className="mb-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <span className="font-mono text-xs tracking-wider text-gold-400">
-                    {exp.period}
-                  </span>
-                  <span className="text-xs text-text-on-dark/70">{exp.role}</span>
+                <div className={cn(readingGlass, "p-5")}>
+                  {/* 头部：mono 时间段做金色锚点，角色降为弱文本（徽章归零） */}
+                  <div className="mb-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span className="font-mono text-xs tracking-wider text-gold-400">
+                      {exp.period}
+                    </span>
+                    <span className="text-xs text-text-on-dark/70">{exp.role}</span>
+                  </div>
+
+                  {/* 公司名称（区块内唯一视觉焦点）+ 岗位业务定位 */}
+                  <h4 className="mb-1 text-xl font-semibold tracking-tight text-text-white">
+                    {exp.company}
+                  </h4>
+                  {exp.subtitle && (
+                    <p className="mb-3 text-[13px] leading-relaxed text-text-on-dark/75">
+                      {exp.subtitle}
+                    </p>
+                  )}
+
+                  {/* 亮点列表：开头【项目名】加粗为白色视觉锚点，其余文本保持弱化 */}
+                  <ul className="space-y-1.5">
+                    {exp.highlights.map((h, j) => {
+                      const prefix = h.match(/^(【[^】]+】)/)?.[0];
+                      return (
+                        <li
+                          key={j}
+                          className="flex items-start gap-2 text-sm text-text-on-dark/90"
+                        >
+                          <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-gold-500/50" />
+                          <span>
+                            {prefix && (
+                              <strong className="font-semibold text-text-white">{prefix}</strong>
+                            )}
+                            {prefix ? h.slice(prefix.length) : h}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
-
-                {/* 公司名称（区块内唯一视觉焦点）+ 岗位业务定位 */}
-                <h4 className="mb-1 text-xl font-semibold tracking-tight text-text-white">
-                  {exp.company}
-                </h4>
-                {exp.subtitle && (
-                  <p className="mb-3 text-[13px] leading-relaxed text-text-on-dark/75">
-                    {exp.subtitle}
-                  </p>
-                )}
-
-                {/* 亮点列表：开头【项目名】加粗为白色视觉锚点，其余文本保持弱化 */}
-                <ul className="space-y-1.5">
-                  {exp.highlights.map((h, j) => {
-                    const prefix = h.match(/^(【[^】]+】)/)?.[0];
-                    return (
-                      <li
-                        key={j}
-                        className="flex items-start gap-2 text-sm text-text-on-dark/90"
-                      >
-                        <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-gold-500/50" />
-                        <span>
-                          {prefix && (
-                            <strong className="font-semibold text-text-white">{prefix}</strong>
-                          )}
-                          {prefix ? h.slice(prefix.length) : h}
-                        </span>
-                      </li>
-                    );
-                  })}
-                </ul>
               </motion.div>
             ))}
           </div>
@@ -163,7 +173,8 @@ export default function TechStack() {
                   key={cat}
                   variants={itemVariants}
                   className={cn(
-                    glassCard,
+                    readingGlass,
+                    readingGlassHover,
                     // 重点卡专属语言：左金线（全站「重点卡=左金线」体系）。用伪元素渐变光带替代纯色
                     // border-l：顶部亮金→底部隐入夜色，hover 整条提亮；边框整体提亮一档与普通卡分层；
                     // 顶部发丝高光线与普通卡同族呼应，两种「光」叠加不突兀
@@ -218,7 +229,8 @@ export default function TechStack() {
                   key={cat}
                   variants={itemVariants}
                   className={cn(
-                    glassCard,
+                    readingGlass,
+                    readingGlassHover,
                     "relative p-5 after:pointer-events-none after:absolute after:inset-x-6 after:top-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-white/20 after:to-transparent hover:after:via-white/35",
                   )}
                 >
