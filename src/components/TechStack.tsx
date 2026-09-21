@@ -74,9 +74,11 @@ export default function TechStack() {
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-text-white md:text-4xl">
             工作经历 &amp; 技术栈
           </h2>
-          <p className="max-w-xl leading-relaxed text-text-on-dark/90">
-            用 AI 原生思维做工程：Java、Python、C++、TypeScript 多语言实践，
-            横跨 MES、ERP、在线教育、机票交易多领域，让 AI Coding 成为日常生产力
+          <p className="max-w-2xl leading-relaxed text-text-on-dark/90">
+            四年 MES 与 ERP 攒下的幂等、对账、归因、兜底，恰好是今天 AI 系统最缺的工程纪律：
+            L2 数采报文按流水号幂等、钢材磅差按允差摊销超差走调整单、换货决策强制落 41 个归因码、
+            Agent 只暴露只读检索工具且知识库故障自动降级内置 Prompt。约束形态在变，
+            「让每个答案可追溯」这件事没变
           </p>
         </motion.div>
 
