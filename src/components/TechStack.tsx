@@ -1,260 +1,268 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { experiences, getSkillCategories, skills as allSkills } from "@/lib/knowledge";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: "easeOut" as const },
-  },
-};
+import {
+  experiences,
+  getSkillCategories,
+  skills as allSkills,
+} from "@/lib/knowledge";
 
 const featuredCategories = ["后端技术", "AI 与智能化"];
 
-// 分类英文尾注：复用区块标题的 mono 弱化语言（如 01 EXPERIENCE），卡片标题右侧低调点缀
 const categoryEnNames: Record<string, string> = {
-  "后端技术": "BACKEND",
-  "AI 与智能化": "AI",
-  "数据库": "DATABASE",
-  "消息与中间件": "MIDDLEWARE",
-  "前端技术": "FRONTEND",
-  "系统与工具": "TOOLING",
+  后端技术: "BACKEND",
+  "AI 与智能化": "AI ENGINEERING",
+  数据库: "DATABASE",
+  消息与中间件: "MIDDLEWARE",
+  前端技术: "FRONTEND",
+  系统与工具: "TOOLING",
 };
 
-// 本区块专属阅读玻璃底：比全站 glassCard 提亮一档（white/10%），
-// 弱化背后雪山纹理对长文本的干扰，回应「工作经历 & 技术栈费眼」反馈
-const readingGlass =
-  "rounded-xl border border-white/10 bg-white/[0.10] shadow-sm backdrop-blur-md";
-// 与 glassCard 同族的 hover 反馈（金边 + 阴影提亮），仅用于技术栈分类卡
-const readingGlassHover =
-  "transition-all hover:border-gold-500/40 hover:bg-white/[0.12] hover:shadow-xl hover:shadow-deep-blue-900/40";
-
 export default function TechStack() {
+  const reduce = useReducedMotion();
   const categories = getSkillCategories();
-  const featuredCats = categories.filter((c) => featuredCategories.includes(c));
-  const otherCats = categories.filter((c) => !featuredCategories.includes(c));
+  const featuredCats = categories.filter((category) =>
+    featuredCategories.includes(category),
+  );
+  const otherCats = categories.filter(
+    (category) => !featuredCategories.includes(category),
+  );
+
+  const reveal = (delay = 0) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 28 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true, margin: "-70px" },
+          transition: { duration: 0.58, delay },
+        };
 
   return (
     <section
       id="tech-stack"
-      className="relative py-24 overflow-hidden"
+      className="relative overflow-hidden"
       style={{
-        // 半透明夜色蒙版：雪山图从背后透出，起点与 Hero 底部过渡带终点同色（rgba(10,22,38,0.55)），
-        // 主体略加深保证卡片可读，尾端收敛到 rgba(12,26,44,0.68) 与项目区起点同色衔接，无生硬分界线
         background:
-          "linear-gradient(180deg, rgba(10,22,38,0.55) 0%, rgba(11,24,40,0.62) 30%, rgba(11,24,40,0.62) 70%, rgba(12,26,44,0.68) 100%)",
+          "linear-gradient(180deg, rgba(10,22,38,0.55) 0%, rgba(10,22,38,0.90) 18%, rgba(12,30,48,0.94) 72%, rgba(12,26,44,0.88) 100%)",
       }}
     >
-      <div className="container relative mx-auto max-w-6xl px-6">
-        {/* ===== 标题区 ===== */}
+      <div className="relative flex min-h-[520px] items-center overflow-hidden sm:min-h-[580px]">
+        <Image
+          src="/images/sections/experience-journey.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-[67%_center]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(6,16,28,0.96) 0%, rgba(6,16,28,0.82) 42%, rgba(6,16,28,0.24) 76%, rgba(6,16,28,0.15) 100%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(10,22,38,0.62) 0%, transparent 24%, transparent 68%, rgba(10,22,38,0.96) 100%)",
+          }}
+        />
+
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6 }}
-          className="mb-14"
+          {...reveal()}
+          className="container relative z-10 mx-auto max-w-6xl px-6 py-24"
         >
-          <div className="mb-3 flex items-baseline gap-3">
-            <span className="font-mono text-xs tracking-[0.25em] text-gold-400">01</span>
-            <span className="font-mono text-[10px] tracking-[0.25em] text-text-on-dark/70">EXPERIENCE</span>
+          <div className="max-w-2xl">
+            <div className="mb-5 flex items-center gap-3 font-mono text-xs tracking-[0.24em] text-gold-400">
+              <span>01</span>
+              <span className="text-text-on-dark/55">CAREER JOURNEY</span>
+            </div>
+            <h2 className="mb-6 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+              工作经历
+              <br />
+              <span className="text-text-on-dark/58">&amp; 技术能力</span>
+            </h2>
+            <p className="max-w-xl text-base leading-relaxed text-text-on-dark/82 sm:text-lg">
+              从 7×24 钢铁产线到机票交易与 LLM Agent，系统形态一直在变，工程纪律始终不变：幂等、对账、归因、兜底，让每个答案可验证、可追溯。
+            </p>
           </div>
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-text-white md:text-4xl">
-            工作经历 &amp; 技术栈
-          </h2>
-          <p className="max-w-2xl leading-relaxed text-text-on-dark/90">
-            四年 MES 与 ERP 攒下的幂等、对账、归因、兜底，恰好是今天 AI 系统最缺的工程纪律：
-            L2 数采报文按流水号幂等、钢材磅差按允差摊销超差走调整单、换货决策强制落 41 个归因码、
-            Agent 只暴露只读检索工具且知识库故障自动降级内置 Prompt。约束形态在变，
-            「让每个答案可追溯」这件事没变
-          </p>
         </motion.div>
+      </div>
 
-        {/* ===== 工作经历（紧凑双卡） ===== */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          className="mb-16"
-        >
-          {/* 小标题 */}
-          <motion.div variants={itemVariants} className="mb-6 flex items-center gap-4">
-            <h3 className="text-xl font-semibold tracking-tight text-text-white">工作经历</h3>
-            <span className="h-px flex-1 bg-white/10" />
-          </motion.div>
+      <div className="container relative mx-auto max-w-6xl px-6 pb-28">
+        <motion.div {...reveal()} className="mb-24">
+          <div className="mb-8 flex items-end justify-between gap-6">
+            <div>
+              <p className="mb-2 text-xs font-semibold tracking-[0.2em] text-gold-400">
+                EXPERIENCE
+              </p>
+              <h3 className="text-2xl font-semibold text-white sm:text-3xl">
+                职业路径
+              </h3>
+            </div>
+            <span className="hidden text-sm text-text-on-dark/45 sm:block">
+              MES → ERP → 在线交易 → 飞猪 → Agent
+            </span>
+          </div>
 
-          {/* 时间轴：左侧竖线贯穿，金色描边节点标记各段经历；每段经历包在玻璃卡内，
-              内容不再直压雪山图（卡片与下方技术栈卡同族玻璃底） */}
-          <div className="relative space-y-8 before:absolute before:bottom-2 before:left-[5px] before:top-6 before:w-px before:bg-white/10">
-            {experiences.map((exp, i) => (
-              <motion.div
-                key={i}
-                variants={itemVariants}
-                className="relative pl-8"
+          <div className="space-y-5">
+            {experiences.map((experience, index) => (
+              <motion.article
+                key={`${experience.company}-${experience.period}`}
+                {...reveal(index * 0.08)}
+                className="grid overflow-hidden rounded-2xl border border-white/10 bg-deep-blue-900/65 shadow-2xl shadow-black/10 backdrop-blur-xl md:grid-cols-[12rem_1fr]"
               >
-                {/* 时间轴节点（卡片外，锚在时间轴上，与卡内首行文字基线对齐） */}
-                <span className="absolute left-0 top-6 h-[11px] w-[11px] rounded-full border-2 border-gold-400 bg-deep-blue-900/70" />
+                <div className="border-b border-white/10 p-6 md:border-b-0 md:border-r md:p-7">
+                  <span className="mb-8 block font-mono text-4xl font-semibold text-gold-400/80">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <p className="font-mono text-xs tracking-wide text-gold-300">
+                    {experience.period}
+                  </p>
+                  <p className="mt-2 text-sm text-text-on-dark/58">
+                    {experience.role}
+                  </p>
+                </div>
 
-                <div className={cn(readingGlass, "p-5")}>
-                  {/* 头部：mono 时间段做金色锚点，角色降为弱文本（徽章归零） */}
-                  <div className="mb-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <span className="font-mono text-xs tracking-wider text-gold-400">
-                      {exp.period}
-                    </span>
-                    <span className="text-xs text-text-on-dark/70">{exp.role}</span>
-                  </div>
-
-                  {/* 公司名称（区块内唯一视觉焦点）+ 岗位业务定位 */}
-                  <h4 className="mb-1 text-xl font-semibold tracking-tight text-text-white">
-                    {exp.company}
+                <div className="p-6 md:p-7 lg:p-8">
+                  <h4 className="mb-2 text-xl font-semibold tracking-tight text-white sm:text-2xl">
+                    {experience.company}
                   </h4>
-                  {exp.subtitle && (
-                    <p className="mb-3 text-[13px] leading-relaxed text-text-on-dark/75">
-                      {exp.subtitle}
+                  {experience.subtitle && (
+                    <p className="mb-5 max-w-3xl text-sm leading-relaxed text-text-on-dark/68">
+                      {experience.subtitle}
                     </p>
                   )}
-
-                  {/* 亮点列表：开头【项目名】加粗为白色视觉锚点，其余文本保持弱化 */}
-                  <ul className="space-y-1.5">
-                    {exp.highlights.map((h, j) => {
-                      const prefix = h.match(/^(【[^】]+】)/)?.[0];
+                  <ul className="grid gap-x-8 gap-y-3 lg:grid-cols-2">
+                    {experience.highlights.map((highlight) => {
+                      const prefix = highlight.match(/^(【[^】]+】)/)?.[0];
                       return (
                         <li
-                          key={j}
-                          className="flex items-start gap-2 text-sm text-text-on-dark/90"
+                          key={highlight}
+                          className="flex items-start gap-3 text-sm leading-relaxed text-text-on-dark/82"
                         >
-                          <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-gold-500/50" />
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-400" />
                           <span>
                             {prefix && (
-                              <strong className="font-semibold text-text-white">{prefix}</strong>
+                              <strong className="font-semibold text-white">
+                                {prefix}
+                              </strong>
                             )}
-                            {prefix ? h.slice(prefix.length) : h}
+                            {prefix ? highlight.slice(prefix.length) : highlight}
                           </span>
                         </li>
                       );
                     })}
                   </ul>
                 </div>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
         </motion.div>
 
-        {/* ===== 技术栈 ===== */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-        >
-          {/* 小标题 */}
-          <motion.div variants={itemVariants} className="mb-6 flex items-center gap-4">
-            <h3 className="text-xl font-semibold tracking-tight text-text-white">技术栈</h3>
-            <span className="h-px flex-1 bg-white/10" />
-          </motion.div>
+        <motion.div {...reveal()}>
+          <div className="mb-8 flex items-end justify-between gap-6">
+            <div>
+              <p className="mb-2 text-xs font-semibold tracking-[0.2em] text-gold-400">
+                CAPABILITY MATRIX
+              </p>
+              <h3 className="text-2xl font-semibold text-white sm:text-3xl">
+                技术能力
+              </h3>
+            </div>
+            <span className="hidden text-sm text-text-on-dark/45 sm:block">
+              确定性工程 × AI 应用
+            </span>
+          </div>
 
-          {/* ★ 重点卡片：后端 + AI */}
-          <div className="mb-4 grid gap-4 md:grid-cols-2">
-            {featuredCats.map((cat) => {
-              const skills = allSkills.filter((s) => s.category === cat);
+          <div className="mb-5 grid gap-5 md:grid-cols-2">
+            {featuredCats.map((category, index) => {
+              const categorySkills = allSkills.filter(
+                (skill) => skill.category === category,
+              );
               return (
-                <motion.div
-                  key={cat}
-                  variants={itemVariants}
-                  className={cn(
-                    readingGlass,
-                    readingGlassHover,
-                    // 重点卡专属语言：左金线（全站「重点卡=左金线」体系）。用伪元素渐变光带替代纯色
-                    // border-l：顶部亮金→底部隐入夜色，hover 整条提亮；边框整体提亮一档与普通卡分层；
-                    // 顶部发丝高光线与普通卡同族呼应，两种「光」叠加不突兀
-                    "relative overflow-hidden border-white/[0.14] p-5",
-                    "before:absolute before:left-0 before:top-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-gold-400 before:via-gold-500/40 before:to-transparent hover:before:via-gold-500/75",
-                    "after:pointer-events-none after:absolute after:inset-x-6 after:top-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-white/20 after:to-transparent hover:after:via-white/35",
-                  )}
+                <motion.article
+                  key={category}
+                  {...reveal(index * 0.08)}
+                  className="relative overflow-hidden rounded-2xl border border-gold-500/25 bg-gradient-to-br from-white/[0.09] to-gold-500/[0.06] p-6 backdrop-blur-xl sm:p-7"
                 >
-                  <div className="mb-3 flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
-                    <h4 className="text-base font-semibold text-text-white">
-                      {cat}
-                    </h4>
-                    <span className="ml-auto font-mono text-[10px] font-normal tracking-[0.2em] text-text-on-dark/40">
-                      {categoryEnNames[cat]}
+                  <div className="mb-6 flex items-start justify-between gap-4">
+                    <div>
+                      <span className="mb-2 block font-mono text-3xl font-semibold text-gold-400/75">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <h4 className="text-xl font-semibold text-white">
+                        {category}
+                      </h4>
+                    </div>
+                    <span className="font-mono text-[10px] tracking-[0.18em] text-text-on-dark/38">
+                      {categoryEnNames[category]}
                     </span>
                   </div>
-                  {/* 核心技能：统一宽度标签列 + 一句技术理解（深度叙事，区别于其他类别的纯标签墙）。
-                      标签列 sm+ 固定 8.5rem 居中，长短标签视觉归一、描述起点严格对齐；
-                      窄屏降级为标签与描述上下堆叠，避免小容器内挤压换行 */}
-                  <div className="space-y-2.5">
-                    {skills.map((s) => (
+
+                  <div className="space-y-3">
+                    {categorySkills.map((skill) => (
                       <div
-                        key={s.name}
-                        className="grid grid-cols-1 gap-x-3 gap-y-1 sm:grid-cols-[8.5rem_1fr] sm:items-baseline"
+                        key={skill.name}
+                        className="grid gap-1.5 border-t border-white/[0.08] pt-3 sm:grid-cols-[8.5rem_1fr] sm:items-baseline sm:gap-4"
                       >
-                        <Badge
-                          variant="skill"
-                          className="justify-self-start whitespace-nowrap text-text-on-dark transition-all hover:bg-gold-500/15 hover:text-gold-400 sm:w-full sm:justify-center"
-                        >
-                          {s.name}
-                        </Badge>
-                        {s.subtext && (
-                          <span className="text-[13px] leading-relaxed text-text-on-dark/75">
-                            {s.subtext}
+                        <span className="text-sm font-medium text-gold-200">
+                          {skill.name}
+                        </span>
+                        {skill.subtext && (
+                          <span className="text-[13px] leading-relaxed text-text-on-dark/67">
+                            {skill.subtext}
                           </span>
                         )}
                       </div>
                     ))}
                   </div>
-                </motion.div>
+                </motion.article>
               );
             })}
           </div>
 
-          {/* 其他技能卡片：与重点卡同族的顶部发丝高光线（弱一档），hover 微提亮 */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {otherCats.map((cat) => {
-              const skills = allSkills.filter((s) => s.category === cat);
+            {otherCats.map((category, index) => {
+              const categorySkills = allSkills.filter(
+                (skill) => skill.category === category,
+              );
               return (
-                <motion.div
-                  key={cat}
-                  variants={itemVariants}
-                  className={cn(
-                    readingGlass,
-                    readingGlassHover,
-                    "relative p-5 after:pointer-events-none after:absolute after:inset-x-6 after:top-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-white/20 after:to-transparent hover:after:via-white/35",
-                  )}
+                <motion.article
+                  key={category}
+                  {...reveal(index * 0.06)}
+                  className="border-t border-white/15 py-5"
                 >
-                  <h4 className="mb-3 flex items-center gap-2 text-sm font-semibold text-text-white">
-                    <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
-                    {cat}
-                    <span className="ml-auto font-mono text-[10px] font-normal tracking-[0.2em] text-text-on-dark/40">
-                      {categoryEnNames[cat]}
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <h4 className="text-sm font-semibold text-white">
+                      {category}
+                    </h4>
+                    <span className="font-mono text-[9px] tracking-[0.14em] text-text-on-dark/35">
+                      {categoryEnNames[category]}
                     </span>
-                  </h4>
-                  <div className="flex flex-wrap gap-1.5">
-                    {skills.map((s) => (
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {categorySkills.map((skill) => (
                       <Badge
-                        key={s.name}
+                        key={skill.name}
                         variant="skill"
-                        className="border-white/10 bg-white/[0.08] text-text-on-dark text-xs transition-all hover:bg-gold-500/15 hover:text-gold-400"
+                        className={cn(
+                          "border-white/10 bg-white/[0.065] text-[11px] text-text-on-dark/78",
+                          "hover:bg-gold-500/15 hover:text-gold-300",
+                        )}
                       >
-                        {s.name}
+                        {skill.name}
                       </Badge>
                     ))}
                   </div>
-                </motion.div>
+                </motion.article>
               );
             })}
           </div>

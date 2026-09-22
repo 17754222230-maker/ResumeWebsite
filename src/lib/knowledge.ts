@@ -136,6 +136,7 @@ export const projects: Project[] = [
   {
     slug: "fliggy-flight-booking",
     title: "飞猪机票自营采购预订系统",
+    thumbnail: "/images/projects/fliggy-flight-booking-hero.webp",
     logo: "/logos/feizhu.svg",
     category: "fliggy",
     description:
@@ -200,6 +201,7 @@ export const projects: Project[] = [
   {
     slug: "fliggy-merchant-ai",
     title: "飞猪机票代理人经营工作站（航班管理工作站）",
+    thumbnail: "/images/projects/fliggy-merchant-ai-hero.webp",
     logo: "/logos/feizhu.svg",
     category: "fliggy",
     description:
@@ -269,6 +271,7 @@ export const projects: Project[] = [
   {
     slug: "bp-agent",
     title: "英魂之刃赛事 BP 智能决策系统（BP Agent）",
+    thumbnail: "/images/projects/bp-agent-hero.webp",
     logo: "/logos/yhzr.png",
     logoWide: true,
     category: "personal",
@@ -325,6 +328,7 @@ export const projects: Project[] = [
   {
     slug: "resume-website",
     title: "个人简历与智能知识站",
+    thumbnail: "/images/projects/resume-website-hero.webp",
     logo: "/logos/resume-w.svg",
     category: "personal",
     description:
@@ -372,6 +376,7 @@ export const projects: Project[] = [
   {
     slug: "chalco-erp",
     title: "中铝国贸 1.0 系统（ERP）",
+    thumbnail: "/images/projects/chalco-erp-hero.webp",
     logo: "/logos/chalco.svg",
     category: "techpark",
     description:
@@ -423,6 +428,7 @@ export const projects: Project[] = [
   {
     slug: "online-education-platform",
     title: "皖江在线教育云平台",
+    thumbnail: "/images/projects/online-education-platform-hero.webp",
     logo: "/logos/education.svg",
     category: "techpark",
     description:
@@ -476,6 +482,7 @@ export const projects: Project[] = [
   {
     slug: "sangang-smart-operations",
     title: "福建三钢闽光智能运营系统",
+    thumbnail: "/images/projects/sangang-smart-operations-hero.webp",
     logo: "/logos/sangang.png",
     category: "techpark",
     description:
@@ -529,6 +536,7 @@ export const projects: Project[] = [
   {
     slug: "masteel-mes",
     title: "马钢股份制造管理系统（MES）",
+    thumbnail: "/images/projects/masteel-mes-hero.webp",
     logo: "/logos/masteel.svg",
     category: "techpark",
     description:
