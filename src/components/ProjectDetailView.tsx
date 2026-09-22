@@ -23,6 +23,8 @@ const THEME: Record<
     badge: "gold" | "sky" | "emerald";
     icon: string;
     glow: string;
+    bg: string;
+    dot: string;
     divider: string;
     stat: string;
     bullet: string;
@@ -37,7 +39,9 @@ const THEME: Record<
     label: "飞猪 · 阿里巴巴",
     badge: "gold",
     icon: "text-gold-400",
-    glow: "rgba(255,167,81,0.20)",
+    glow: "rgba(255,167,81,0.30)",
+    bg: "linear-gradient(180deg, #0A1626 0%, #122A3B 10%, #3A342D 34%, #54432F 58%, #243445 82%, #0A1626 100%)",
+    dot: "rgba(255,167,81,0.14)",
     divider: "from-gold-500/40 via-gold-500/15 to-transparent",
     stat: "text-gold-400",
     bullet: "bg-gold-400",
@@ -51,7 +55,9 @@ const THEME: Record<
     label: "科技园 · 企业系统",
     badge: "sky",
     icon: "text-sky-300",
-    glow: "rgba(56,189,248,0.18)",
+    glow: "rgba(56,189,248,0.24)",
+    bg: "linear-gradient(180deg, #0A1626 0%, #0D2A3C 10%, #10475D 36%, #16647A 60%, #173D52 82%, #0A1626 100%)",
+    dot: "rgba(56,189,248,0.12)",
     divider: "from-sky-400/40 via-sky-400/15 to-transparent",
     stat: "text-sky-300",
     bullet: "bg-sky-300",
@@ -65,7 +71,9 @@ const THEME: Record<
     label: "个人项目",
     badge: "emerald",
     icon: "text-emerald-300",
-    glow: "rgba(16,185,129,0.16)",
+    glow: "rgba(16,185,129,0.22)",
+    bg: "linear-gradient(180deg, #0A1626 0%, #0C2930 10%, #10483F 36%, #176454 60%, #173D3D 82%, #0A1626 100%)",
+    dot: "rgba(16,185,129,0.12)",
     divider: "from-emerald-400/40 via-emerald-400/15 to-transparent",
     stat: "text-emerald-300",
     bullet: "bg-emerald-300",
@@ -103,11 +111,21 @@ export default function ProjectDetailView({ project }: { project: Project }) {
   return (
     <div
       className="relative min-h-screen"
-      style={{
-        background:
-          "linear-gradient(180deg, #0F2138 0%, #163450 32%, #234A70 72%, #0F2138 100%)",
-      }}
+      style={{ background: theme.bg }}
     >
+      {/* 分类色 hero 点阵纹理（向下渐隐，不干扰正文可读性） */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[520px]"
+        style={{
+          backgroundImage: `radial-gradient(${theme.dot} 1px, transparent 1px)`,
+          backgroundSize: "22px 22px",
+          maskImage:
+            "linear-gradient(180deg, #000 0%, #000 28%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(180deg, #000 0%, #000 28%, transparent 100%)",
+        }}
+      />
       {/* 分类色 hero 柔光晕 */}
       <div
         aria-hidden
@@ -118,7 +136,7 @@ export default function ProjectDetailView({ project }: { project: Project }) {
       />
 
       {/* 顶栏 */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-deep-blue-900/80 backdrop-blur-md">
+      <header className="sticky top-0 z-30 bg-deep-blue-900/70 shadow-[0_10px_30px_rgba(10,22,38,0.18)] backdrop-blur-md">
         <div className="mx-auto flex max-w-4xl items-center gap-4 px-6 py-4">
           <Link
             href="/#projects"

@@ -2,12 +2,15 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { Code2, Mail, ArrowUp, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { profile } from "@/lib/knowledge";
 
 export default function Footer() {
   const [copied, setCopied] = useState(false);
+  const pathname = usePathname();
+  const isProjectDetail = pathname.startsWith("/projects/");
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -26,8 +29,10 @@ export default function Footer() {
 
   return (
     <footer id="footer" className="relative bg-deep-blue-900">
-      {/* 顶部水波纹装饰 */}
-      <div className="h-px bg-gradient-to-r from-transparent via-gold-500/30 to-transparent" />
+      {/* 项目详情页与页尾同色衔接，不再用分割线切断背景 */}
+      {!isProjectDetail && (
+        <div className="h-px bg-gradient-to-r from-transparent via-gold-500/30 to-transparent" />
+      )}
 
       <div className="container mx-auto px-6 py-16">
         <div className="flex flex-col items-center gap-8 md:flex-row md:justify-between">
