@@ -49,6 +49,8 @@ export interface Project {
   // 详情页扩展字段
   period?: string;
   company?: string;
+  /** 详情页顶部关键指标带（大号数字 + 短标签），值均取自 achievements/highlights 的真实数据 */
+  metrics?: { value: string; label: string }[];
   responsibilities?: string[];
   challenges?: { challenge: string; solution: string }[];
   achievements?: string[];
@@ -149,6 +151,12 @@ export const projects: Project[] = [
     ],
     period: "2026.04 - 至今",
     company: "飞猪（阿里巴巴旗下）",
+    metrics: [
+      { value: "100%", label: "保障出票承诺" },
+      { value: "650万", label: "VCC 支付预估年化收益" },
+      { value: "13", label: "核心业务流统一通道" },
+      { value: "41", label: "换货归因码全覆盖" },
+    ],
     responsibilities: [
       "参与 DDD 六边形架构（10 个 Maven 模块、约 10 万行代码）下的领域建模：adaptor 防腐→application 编排→domain→infrastructure 四层，核心聚合根 BookInfoAggregate 坚持‘聚合根唯一写入口 + CQRS 读写分离’，JSON 宽表持久化让 schema 演进不用改 DDL",
       "开发收益换货决策引擎：收益分单实时选货、静默换货失败兜底、显式重订、备货准备、控比/覆盖 5 大场景，基于 AbsChangeByConfigValue 的模板方法+责任链实现 30 档可配置策略链",
@@ -207,6 +215,12 @@ export const projects: Project[] = [
     ],
     period: "2026.04 - 至今",
     company: "飞猪（阿里巴巴旗下）",
+    metrics: [
+      { value: "20+", label: "家航司政策解析覆盖" },
+      { value: "天→分钟", label: "政策处理时效" },
+      { value: "30万", label: "行代码 DDD 分层不腐化" },
+      { value: "23+", label: "篇规则文档可注入" },
+    ],
     responsibilities: [
       "负责政策（policy/policytask）、政策校验（policycheck）、SOP、航线管理等子域的领域建模与开发：充血模型、FieldChangeValue/FieldSet 做字段级变更追踪、框架级 ResultDO<T> 统一返回，DDD 分层模式都有 Checkstyle 门禁卡着",
       "基于 Spring AI Alibaba（DashScope）开发航司政策文件（PDF/Excel/文本）的解析链路，比如 MU 中转航线政策；Prompt 用 @Switch 做版本化管理，改提示词像发版一样可灰度可回滚",
@@ -271,6 +285,12 @@ export const projects: Project[] = [
     ],
     period: "2026.05 - 至今",
     company: "个人项目",
+    metrics: [
+      { value: "0", label: "决策链路超时（30s 时限）" },
+      { value: "490", label: "场真实赛事数据底座" },
+      { value: "285", label: "场 BO5 量化回测" },
+      { value: "319", label: "个测试用例覆盖" },
+    ],
     responsibilities: [
       "用 LangGraph（StateGraph + MemorySaver）编排决策链路：规则引擎快筛 → qwen-plus 完整推理（含工具调用）→ 条件边路由，节点失败或超时按剩余延迟预算逐级降档到 qwen-flash 与确定性规则兜底",
       "实现延迟预算与熔断机制：全局 deadline 注入，各节点按剩余预算收缩超时并为降级链预留缓冲，LLM 调用外包一层 CircuitBreaker，保证 30 秒 BP 时限内决策链路零超时",
@@ -366,6 +386,12 @@ export const projects: Project[] = [
     ],
     period: "2025.03 - 2025.12",
     company: "安徽工业大学科技园有限公司",
+    metrics: [
+      { value: "3s→200ms", label: "核心 SQL 优化" },
+      { value: "800→100ms", label: "客商接口响应" },
+      { value: "0", label: "GaussDB 迁移数据丢失" },
+      { value: "400+", label: "处代码走查" },
+    ],
     responsibilities: [
       "负责付款、结算、发票等财务核心模块的需求分析与开发",
       "负责客商基础信息模块的缓存架构优化，缓解高频调用下的数据库压力",
@@ -411,6 +437,12 @@ export const projects: Project[] = [
     ],
     period: "2024.07 - 2024.11",
     company: "安徽工业大学科技园有限公司",
+    metrics: [
+      { value: "150+", label: "QPS 开抢零超卖" },
+      { value: "350→90ms", label: "详情页 P95 响应" },
+      { value: "5万+", label: "注册用户" },
+      { value: "20+→3", label: "日均慢 SQL 治理" },
+    ],
     responsibilities: [
       "负责交易链路的表结构设计与接口开发，覆盖课程、订单、支付回调等核心表与接口",
       "设计热门课程限时开抢方案：名额预热至 Redis，Lua 脚本原子扣减，下单请求经 RocketMQ 异步落库，Nginx 层做入口限流",
@@ -458,6 +490,12 @@ export const projects: Project[] = [
     ],
     period: "2023.09 - 2024.05",
     company: "安徽工业大学科技园有限公司",
+    metrics: [
+      { value: "300+", label: "户重复客商合并" },
+      { value: "5→2天", label: "月结周期压缩" },
+      { value: "50+→个位", label: "月对账差异单" },
+      { value: "2min→15s", label: "月报生成提速" },
+    ],
     responsibilities: [
       "负责客商主数据模块：客户/供应商档案、开票信息、银行账户、信用额度与启停状态管理，向销售、采购、财务提供统一主数据接口",
       "开发应收结算链路：销售出库对接计量系统过磅数据生成应收结算单，状态机（草稿/审核/已开票/部分核销/关闭）控制合法迁移，金额全链路 BigDecimal + DECIMAL 保证精度",
@@ -505,6 +543,12 @@ export const projects: Project[] = [
     ],
     period: "2022.07 - 2026.01",
     company: "安徽工业大学科技园有限公司",
+    metrics: [
+      { value: "20万+", label: "条/日 L2 数采报文" },
+      { value: "99.5%", label: "物料账实一致率" },
+      { value: "40+", label: "张业务报表落地" },
+      { value: "2h→30min", label: "人工核账提速" },
+    ],
     responsibilities: [
       "负责型材 L4/L3 计划模块：承接 L4 合同订单分解为轧制批次作业计划，处理插单、改判、余材利用等调整场景，生产实绩按批次回传 L4",
       "负责热轧物料跟踪：坯料投入→轧制→精整→入库全程卷号跟踪，维护切分/合卷时的母子卷继承关系与堆场库位信息",
@@ -540,7 +584,7 @@ export const projects: Project[] = [
 // ===== 工作经历 =====
 export const experiences: Experience[] = [
   {
-    company: "飞猪旅行（外派阿里巴巴旗下飞猪-机票经营项目组，易宝软件）",
+    company: "飞猪-机票经营项目（易宝软件，外派阿里巴巴飞猪）",
     role: "Java 开发工程师",
     period: "2026.04 - 至今",
     subtitle:
