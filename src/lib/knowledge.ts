@@ -271,7 +271,7 @@ export const projects: Project[] = [
   {
     slug: "bp-agent",
     title: "英魂之刃赛事 BP 智能决策系统（BP Agent）",
-    thumbnail: "/images/projects/bp-agent-hero.webp",
+    thumbnail: "/images/projects/bp-agent-three-lanes.webp",
     logo: "/logos/yhzr.png",
     logoWide: true,
     category: "personal",
@@ -328,7 +328,7 @@ export const projects: Project[] = [
   {
     slug: "resume-website",
     title: "个人简历与智能知识站",
-    thumbnail: "/images/projects/resume-website-hero.webp",
+    thumbnail: "/images/projects/resume-website-sunrise.webp",
     logo: "/logos/resume-w.svg",
     category: "personal",
     description:

@@ -156,7 +156,11 @@ export default function ProjectDetailView({ project }: { project: Project }) {
               alt=""
               fill
               preload
-              sizes="100vw"
+              sizes={
+                project.category === "personal"
+                  ? "(max-width: 1024px) 1600px, 100vw"
+                  : "100vw"
+              }
               className="object-cover object-[68%_center] sm:object-center"
             />
           </motion.div>
@@ -178,18 +182,20 @@ export default function ProjectDetailView({ project }: { project: Project }) {
               "linear-gradient(180deg, rgba(10,22,38,0.32) 0%, transparent 38%, rgba(10,22,38,0.20) 66%, #0A1626 100%)",
           }}
         />
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-70"
-          style={{
-            backgroundImage: `radial-gradient(${theme.dot} 1px, transparent 1px)`,
-            backgroundSize: "24px 24px",
-            maskImage:
-              "linear-gradient(90deg, #000 0%, #000 28%, transparent 66%)",
-            WebkitMaskImage:
-              "linear-gradient(90deg, #000 0%, #000 28%, transparent 66%)",
-          }}
-        />
+        {project.slug !== "resume-website" && (
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-70"
+            style={{
+              backgroundImage: `radial-gradient(${theme.dot} 1px, transparent 1px)`,
+              backgroundSize: "24px 24px",
+              maskImage:
+                "linear-gradient(90deg, #000 0%, #000 28%, transparent 66%)",
+              WebkitMaskImage:
+                "linear-gradient(90deg, #000 0%, #000 28%, transparent 66%)",
+            }}
+          />
+        )}
 
         <motion.div
           className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-24 pt-36 sm:pb-28"
