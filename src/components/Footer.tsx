@@ -67,10 +67,10 @@ export default function Footer() {
               className="group h-auto gap-2 rounded-lg border-white/10 bg-white/[0.07] px-4 py-2.5 text-sm font-medium text-text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-gold-400/60 hover:bg-white/[0.10] hover:shadow-lg hover:shadow-deep-blue-900/50 active:scale-[0.98]"
             >
               <a
-                href="/resume/王仔研_Agent应用工程师_20261030.pdf"
+                href="/resume/王仔研_Agent应用工程师_17754222230.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                download="王仔研_Agent应用工程师_20261030.pdf"
+                download="王仔研_Agent应用工程师_17754222230.pdf"
                 aria-label="下载简历"
               >
                 <Code2 size={16} className="text-gold-400 transition-transform duration-300 group-hover:scale-110" />
