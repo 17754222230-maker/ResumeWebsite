@@ -49,9 +49,9 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-12 max-w-xl text-base leading-relaxed text-text-on-dark/80 md:text-lg"
-          style={{ textShadow: "0 1px 3px rgba(10,22,38,0.9), 0 2px 12px rgba(10,22,38,0.85)" }}
+          style={{ whiteSpace: "pre-line", textShadow: "0 1px 3px rgba(10,22,38,0.9), 0 2px 12px rgba(10,22,38,0.85)" }}
         >
-          “{profile.slogan}”
+          {profile.slogan}
         </motion.p>
 
         {/* CTA 按钮 */}

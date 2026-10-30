@@ -198,7 +198,7 @@ export default function ProjectDetailView({ project }: { project: Project }) {
         )}
 
         <motion.div
-          className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-24 pt-36 sm:pb-28"
+          className="relative z-10 mx-auto min-w-0 w-full max-w-6xl px-6 pb-24 pt-36 sm:pb-28"
           style={
             reduce
               ? undefined
@@ -237,7 +237,7 @@ export default function ProjectDetailView({ project }: { project: Project }) {
                   />
                 </div>
               )}
-              <h1 className="max-w-full text-3xl font-bold leading-tight tracking-tight text-white drop-shadow-xl sm:text-4xl md:text-5xl">
+              <h1 className="min-w-0 max-w-full break-words text-3xl font-bold leading-tight tracking-tight text-white drop-shadow-xl sm:text-4xl md:text-5xl">
                 {project.title}
               </h1>
             </div>
